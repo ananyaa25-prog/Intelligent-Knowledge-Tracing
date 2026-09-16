@@ -1,11 +1,12 @@
 # src/evaluate_test.py
 
 import pickle
+import numpy as np
 import torch
 
 from model import GatedKTModel
 from graph_encoder import adjacency_to_edge_index
-from train import run_epoch  # reuse the same masked-AUC logic, no reimplementation
+from train import run_epoch, compute_rt_stats
 
 
 def load_and_eval(name, use_graph, use_gate, num_skills, test_data,
@@ -31,17 +32,24 @@ def main():
 
     adj_matrix = torch.tensor(graph_data["adjacency_matrix"], dtype=torch.float32)
     edge_index, edge_weight = adjacency_to_edge_index(adj_matrix)
-
-    # Must reuse the SAME rt_mean/rt_std computed from TRAINING data during
-    # actual training -- recomputing from test data here would be its own
-    # small leak (normalizing test data using test data's own statistics).
-    from train import compute_rt_stats
     rt_mean, rt_std = compute_rt_stats(train_data)
 
+    SEEDS = [42, 123, 2024]
+    conditions = {
+        "dkt_only": (False, False),
+        "graph_no_gate": (True, False),
+        "full_gated": (True, True),
+    }
+
     print("\n=== FINAL TEST SET RESULTS (report these, not val AUC) ===")
-    load_and_eval("dkt_only", False, False, num_skills, test_data, edge_index, edge_weight, rt_mean, rt_std)
-    load_and_eval("graph_no_gate", True, False, num_skills, test_data, edge_index, edge_weight, rt_mean, rt_std)
-    load_and_eval("full_gated", True, True, num_skills, test_data, edge_index, edge_weight, rt_mean, rt_std)
+    for cond_name, (use_graph, use_gate) in conditions.items():
+        aucs = []
+        for seed in SEEDS:
+            checkpoint_name = f"{cond_name}_seed{seed}"
+            auc = load_and_eval(checkpoint_name, use_graph, use_gate, num_skills,
+                                 test_data, edge_index, edge_weight, rt_mean, rt_std)
+            aucs.append(auc)
+        print(f"  {cond_name}: {aucs} -> mean={np.mean(aucs):.4f}, std={np.std(aucs):.4f}\n")
 
 
 if __name__ == "__main__":
