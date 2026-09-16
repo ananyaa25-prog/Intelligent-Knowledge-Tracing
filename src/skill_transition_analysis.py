@@ -30,7 +30,7 @@ def main():
 
     model = GatedKTModel(num_skills=num_skills, rt_log_mean=rt_mean, rt_log_std=rt_std,
                           use_graph=True, use_gate=True)
-    model.load_state_dict(torch.load("data/processed/best_full_gated.pt"))
+    model.load_state_dict(torch.load("data/processed/best_full_gated_seed42.pt"))
     model.eval()
 
     mask = test_data["mask"]
