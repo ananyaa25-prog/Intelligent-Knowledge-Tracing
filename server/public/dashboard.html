@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GatedKT - Class Mastery Dashboard (Demo)</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .heatmap-container {
+      overflow-x: auto;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      background: white;
+      margin-top: 16px;
+      max-height: 600px;
+      overflow-y: auto;
+    }
+    .heatmap-table {
+      border-collapse: separate;
+      border-spacing: 0;
+      width: max-content;
+      font-size: 0.78rem;
+    }
+    .heatmap-table th {
+      background: #f8fafc;
+      padding: 10px 8px;
+      font-weight: 700;
+      text-align: center;
+      border-bottom: 2px solid var(--border-color);
+      border-right: 1px solid var(--border-color);
+      white-space: nowrap;
+      position: sticky;
+      top: 0;
+      z-index: 2;
+    }
+    .heatmap-table th.sticky-col, .heatmap-table td.sticky-col {
+      position: sticky;
+      left: 0;
+      background: #f8fafc;
+      z-index: 3;
+      text-align: left;
+      font-weight: 700;
+      padding-left: 12px;
+      padding-right: 12px;
+      border-right: 2px solid var(--border-color);
+      min-width: 120px;
+    }
+    .heatmap-table td {
+      padding: 8px;
+      text-align: center;
+      border-bottom: 1px solid #f1f5f9;
+      border-right: 1px solid #f1f5f9;
+      min-width: 68px;
+      transition: transform 0.1s;
+    }
+    .heatmap-table td:hover:not(.empty-cell) {
+      outline: 2px solid var(--text-primary);
+      z-index: 1;
+      cursor: pointer;
+    }
+    .cell-high {
+      background-color: #d1fae5;
+      color: #065f46;
+      font-weight: 700;
+    }
+    .cell-med {
+      background-color: #fef3c7;
+      color: #92400e;
+      font-weight: 700;
+    }
+    .cell-low {
+      background-color: #fee2e2;
+      color: #991b1b;
+      font-weight: 700;
+    }
+    .empty-cell {
+      background-color: #fafafa;
+      color: #cbd5e1;
+    }
+    .legend-bar {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-top: 16px;
+      font-size: 0.8rem;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .legend-box {
+      width: 18px;
+      height: 18px;
+      border-radius: 4px;
+      border: 1px solid rgba(0,0,0,0.1);
+    }
+    .disclaimer-banner {
+      background: #f1f5f9;
+      border-left: 4px solid var(--text-secondary);
+      padding: 12px 16px;
+      margin-bottom: 24px;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div class="nav-brand">
+      <span>GatedKT</span>
+      <span class="nav-tag">Class Dashboard Demo</span>
+    </div>
+    <div class="nav-links">
+      <a href="/" class="nav-link">Single Student Tracker</a>
+      <a href="/dashboard.html" class="nav-link active">Teacher Dashboard (Demo)</a>
+    </div>
+  </nav>
+
+  <div class="container" style="max-width: 1400px;">
+    
+    <!-- Required Honest Scope Labeling -->
+    <div class="disclaimer-banner">
+      <strong>Notice:</strong> This is a demo dashboard for visualizing model output across multiple students, built for presentation purposes — not a research contribution.
+    </div>
+
+    <div class="page-header" style="display: flex; justify-content: space-between; align-items: flex-end;">
+      <div>
+        <h1 class="page-title">Class-Level Skill Mastery Heatmap</h1>
+        <p class="page-subtitle">
+          Visualizes per-skill mastery predictions across 15 students sampled directly from the test split.
+        </p>
+      </div>
+      <button id="refreshBtn" class="btn-secondary btn-sm">
+        Refresh Dashboard
+      </button>
+    </div>
+
+    <!-- Summary Stats -->
+    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px;">
+      <div class="card" style="padding: 16px;">
+        <div style="font-size: 0.75rem; color: var(--text-secondary); font-weight: 600;">Total Students</div>
+        <div id="statStudentCount" style="font-size: 1.5rem; font-weight: 800; margin-top: 4px;">--</div>
+      </div>
+      <div class="card" style="padding: 16px;">
+        <div style="font-size: 0.75rem; color: var(--text-secondary); font-weight: 600;">Unique Skills Observed</div>
+        <div id="statSkillCount" style="font-size: 1.5rem; font-weight: 800; margin-top: 4px;">--</div>
+      </div>
+      <div class="card" style="padding: 16px;">
+        <div style="font-size: 0.75rem; color: var(--text-secondary); font-weight: 600;">Total Interactions Modelled</div>
+        <div id="statInteractionCount" style="font-size: 1.5rem; font-weight: 800; margin-top: 4px;">--</div>
+      </div>
+      <div class="card" style="padding: 16px;">
+        <div style="font-size: 0.75rem; color: var(--text-secondary); font-weight: 600;">Class Average Mastery</div>
+        <div id="statAvgMastery" style="font-size: 1.5rem; font-weight: 800; margin-top: 4px;">--</div>
+      </div>
+    </div>
+
+    <!-- Heatmap Card -->
+    <div class="card">
+      <div class="card-title">
+        <span>Student × Skill Mastery Matrix</span>
+        <div class="legend-bar" style="margin: 0;">
+          <div class="legend-item">
+            <div class="legend-box" style="background: #d1fae5;"></div>
+            <span>High (≥75%)</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-box" style="background: #fef3c7;"></div>
+            <span>Moderate (50-74%)</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-box" style="background: #fee2e2;"></div>
+            <span>Low (&lt;50%)</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-box" style="background: #fafafa; border-color: #e2e8f0;"></div>
+            <span>No Interactions</span>
+          </div>
+        </div>
+      </div>
+
+      <div id="loadingIndicator" style="text-align: center; padding: 40px; color: var(--text-secondary);">
+        Loading class mastery matrix from inference pipeline...
+      </div>
+
+      <div id="heatmapWrapper" class="heatmap-container" style="display: none;">
+        <table class="heatmap-table" id="heatmapTable">
+          <thead id="heatmapThead"></thead>
+          <tbody id="heatmapTbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="dashboard.js"></script>
+</body>
+</html>

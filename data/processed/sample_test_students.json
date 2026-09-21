@@ -1,0 +1,7519 @@
+[
+  {
+    "student_id": "Student_01",
+    "history": [
+      {
+        "skill_id": 277,
+        "correct": 0,
+        "response_time_ms": 11358.0,
+        "attempt_count": 4,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 277,
+        "correct": 0,
+        "response_time_ms": 7905.0,
+        "attempt_count": 3,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 277,
+        "correct": 1,
+        "response_time_ms": 7995.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 277,
+        "correct": 1,
+        "response_time_ms": 4689.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 277,
+        "correct": 1,
+        "response_time_ms": 11871.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 277,
+        "correct": 1,
+        "response_time_ms": 16740.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 277,
+        "correct": 0,
+        "response_time_ms": 8400.0,
+        "attempt_count": 2,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 277,
+        "correct": 1,
+        "response_time_ms": 7622.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 277,
+        "correct": 0,
+        "response_time_ms": 7674.0,
+        "attempt_count": 3,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 277,
+        "correct": 1,
+        "response_time_ms": 11791.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 277,
+        "correct": 1,
+        "response_time_ms": 8268.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 277,
+        "correct": 1,
+        "response_time_ms": 2844.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 277,
+        "correct": 1,
+        "response_time_ms": 5877.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 279,
+        "correct": 0,
+        "response_time_ms": 9135.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 279,
+        "correct": 0,
+        "response_time_ms": 2964.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 279,
+        "correct": 1,
+        "response_time_ms": 20230.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 279,
+        "correct": 1,
+        "response_time_ms": 6757.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 279,
+        "correct": 1,
+        "response_time_ms": 10286.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 279,
+        "correct": 1,
+        "response_time_ms": 4312.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 279,
+        "correct": 1,
+        "response_time_ms": 5822.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 279,
+        "correct": 1,
+        "response_time_ms": 8449.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 279,
+        "correct": 1,
+        "response_time_ms": 3821.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 279,
+        "correct": 1,
+        "response_time_ms": 5204.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 279,
+        "correct": 0,
+        "response_time_ms": 18572.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 279,
+        "correct": 0,
+        "response_time_ms": 4872.0,
+        "attempt_count": 3,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 279,
+        "correct": 1,
+        "response_time_ms": 3648.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 279,
+        "correct": 1,
+        "response_time_ms": 6660.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 279,
+        "correct": 1,
+        "response_time_ms": 7129.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 279,
+        "correct": 1,
+        "response_time_ms": 8636.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 279,
+        "correct": 1,
+        "response_time_ms": 4143.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 58,
+        "correct": 1,
+        "response_time_ms": 5238.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 85,
+        "correct": 1,
+        "response_time_ms": 5238.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 58,
+        "correct": 1,
+        "response_time_ms": 6867.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 85,
+        "correct": 1,
+        "response_time_ms": 6867.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 74,
+        "correct": 1,
+        "response_time_ms": 8659.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 85,
+        "correct": 1,
+        "response_time_ms": 8659.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 74,
+        "correct": 1,
+        "response_time_ms": 6377.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 85,
+        "correct": 1,
+        "response_time_ms": 6377.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 58,
+        "correct": 1,
+        "response_time_ms": 5157.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 85,
+        "correct": 1,
+        "response_time_ms": 5157.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 86,
+        "correct": 1,
+        "response_time_ms": 3934.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 86,
+        "correct": 1,
+        "response_time_ms": 48546.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 86,
+        "correct": 1,
+        "response_time_ms": 53268.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 86,
+        "correct": 0,
+        "response_time_ms": 10071.0,
+        "attempt_count": 47,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 86,
+        "correct": 1,
+        "response_time_ms": 2929.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 86,
+        "correct": 1,
+        "response_time_ms": 8510.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 86,
+        "correct": 1,
+        "response_time_ms": 11536.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 86,
+        "correct": 1,
+        "response_time_ms": 16240.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 86,
+        "correct": 1,
+        "response_time_ms": 2341.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 86,
+        "correct": 1,
+        "response_time_ms": 5750.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 86,
+        "correct": 1,
+        "response_time_ms": 3419.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 86,
+        "correct": 1,
+        "response_time_ms": 7053.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 86,
+        "correct": 1,
+        "response_time_ms": 2357.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 86,
+        "correct": 1,
+        "response_time_ms": 6515.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 86,
+        "correct": 1,
+        "response_time_ms": 4387.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 86,
+        "correct": 1,
+        "response_time_ms": 6693.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 86,
+        "correct": 0,
+        "response_time_ms": 14166.0,
+        "attempt_count": 203,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 86,
+        "correct": 1,
+        "response_time_ms": 41306.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 86,
+        "correct": 0,
+        "response_time_ms": 65793.0,
+        "attempt_count": 12,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 86,
+        "correct": 1,
+        "response_time_ms": 14772.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 86,
+        "correct": 1,
+        "response_time_ms": 20033.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 86,
+        "correct": 1,
+        "response_time_ms": 52225.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 86,
+        "correct": 1,
+        "response_time_ms": 5940.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 86,
+        "correct": 0,
+        "response_time_ms": 16974.0,
+        "attempt_count": 16,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 86,
+        "correct": 0,
+        "response_time_ms": 137585.0,
+        "attempt_count": 14,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 86,
+        "correct": 1,
+        "response_time_ms": 42124.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 86,
+        "correct": 1,
+        "response_time_ms": 249234.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 86,
+        "correct": 1,
+        "response_time_ms": 59074.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 86,
+        "correct": 1,
+        "response_time_ms": 56897.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 86,
+        "correct": 1,
+        "response_time_ms": 124930.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 86,
+        "correct": 1,
+        "response_time_ms": 68437.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 86,
+        "correct": 1,
+        "response_time_ms": 18590.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 86,
+        "correct": 1,
+        "response_time_ms": 91562.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 86,
+        "correct": 1,
+        "response_time_ms": 52715.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      }
+    ],
+    "num_interactions": 74
+  },
+  {
+    "student_id": "Student_02",
+    "history": [
+      {
+        "skill_id": 280,
+        "correct": 0,
+        "response_time_ms": 124599.0,
+        "attempt_count": 2,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 280,
+        "correct": 1,
+        "response_time_ms": 4906.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 280,
+        "correct": 1,
+        "response_time_ms": 9094.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 280,
+        "correct": 1,
+        "response_time_ms": 5922.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 278,
+        "correct": 0,
+        "response_time_ms": 15532.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 278,
+        "correct": 0,
+        "response_time_ms": 8063.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 278,
+        "correct": 0,
+        "response_time_ms": 42877.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 278,
+        "correct": 0,
+        "response_time_ms": 20032.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 278,
+        "correct": 0,
+        "response_time_ms": 11625.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 280,
+        "correct": 0,
+        "response_time_ms": 34937.0,
+        "attempt_count": 6,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 280,
+        "correct": 0,
+        "response_time_ms": 7907.0,
+        "attempt_count": 2,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 280,
+        "correct": 1,
+        "response_time_ms": 9969.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 280,
+        "correct": 1,
+        "response_time_ms": 6453.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 280,
+        "correct": 0,
+        "response_time_ms": 8859.0,
+        "attempt_count": 2,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 280,
+        "correct": 0,
+        "response_time_ms": 8547.0,
+        "attempt_count": 2,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 280,
+        "correct": 0,
+        "response_time_ms": 4578.0,
+        "attempt_count": 3,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 280,
+        "correct": 0,
+        "response_time_ms": 6110.0,
+        "attempt_count": 2,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 58,
+        "correct": 0,
+        "response_time_ms": 114508.0,
+        "attempt_count": 2,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 279,
+        "correct": 1,
+        "response_time_ms": 41813.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 278,
+        "correct": 0,
+        "response_time_ms": 113349.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 278,
+        "correct": 0,
+        "response_time_ms": 187621.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 278,
+        "correct": 0,
+        "response_time_ms": 50899.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 54,
+        "correct": 0,
+        "response_time_ms": 73427.0,
+        "attempt_count": 5,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 54,
+        "correct": 0,
+        "response_time_ms": 9909.0,
+        "attempt_count": 2,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 54,
+        "correct": 1,
+        "response_time_ms": 11383.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 54,
+        "correct": 1,
+        "response_time_ms": 5574.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 54,
+        "correct": 0,
+        "response_time_ms": 4671.0,
+        "attempt_count": 3,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 74,
+        "correct": 1,
+        "response_time_ms": 127101.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 85,
+        "correct": 1,
+        "response_time_ms": 127101.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 74,
+        "correct": 0,
+        "response_time_ms": 11170.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 85,
+        "correct": 0,
+        "response_time_ms": 11170.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 58,
+        "correct": 0,
+        "response_time_ms": 17332.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 85,
+        "correct": 0,
+        "response_time_ms": 17332.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 58,
+        "correct": 1,
+        "response_time_ms": 8789.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 85,
+        "correct": 1,
+        "response_time_ms": 8789.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 58,
+        "correct": 1,
+        "response_time_ms": 15361.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 85,
+        "correct": 1,
+        "response_time_ms": 15361.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 74,
+        "correct": 0,
+        "response_time_ms": 15568.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 85,
+        "correct": 0,
+        "response_time_ms": 15568.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 277,
+        "correct": 0,
+        "response_time_ms": 16449.0,
+        "attempt_count": 2,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 277,
+        "correct": 0,
+        "response_time_ms": 13653.0,
+        "attempt_count": 6,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 277,
+        "correct": 1,
+        "response_time_ms": 7617.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 277,
+        "correct": 1,
+        "response_time_ms": 14938.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 277,
+        "correct": 0,
+        "response_time_ms": 6410.0,
+        "attempt_count": 2,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 277,
+        "correct": 0,
+        "response_time_ms": 10931.0,
+        "attempt_count": 3,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 277,
+        "correct": 0,
+        "response_time_ms": 50181.0,
+        "attempt_count": 2,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 27,
+        "correct": 0,
+        "response_time_ms": 185135.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 27,
+        "correct": 0,
+        "response_time_ms": 215682.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 12,
+        "correct": 0,
+        "response_time_ms": 203434.0,
+        "attempt_count": 8,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 15,
+        "correct": 1,
+        "response_time_ms": 34366.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 10,
+        "correct": 1,
+        "response_time_ms": 29878.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 14,
+        "correct": 1,
+        "response_time_ms": 29878.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 10,
+        "correct": 1,
+        "response_time_ms": 13389.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 14,
+        "correct": 1,
+        "response_time_ms": 13389.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 277,
+        "correct": 1,
+        "response_time_ms": 35345.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 58,
+        "correct": 1,
+        "response_time_ms": 65167.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 85,
+        "correct": 1,
+        "response_time_ms": 65167.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 10,
+        "correct": 1,
+        "response_time_ms": 94624.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 15,
+        "correct": 1,
+        "response_time_ms": 94624.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 10,
+        "correct": 1,
+        "response_time_ms": 18969.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 15,
+        "correct": 1,
+        "response_time_ms": 18969.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 79,
+        "correct": 1,
+        "response_time_ms": 30342.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 79,
+        "correct": 0,
+        "response_time_ms": 27954.0,
+        "attempt_count": 2,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 79,
+        "correct": 1,
+        "response_time_ms": 17376.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 79,
+        "correct": 1,
+        "response_time_ms": 20645.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 79,
+        "correct": 1,
+        "response_time_ms": 10392.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 79,
+        "correct": 1,
+        "response_time_ms": 17744.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 79,
+        "correct": 1,
+        "response_time_ms": 12865.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 84,
+        "correct": 1,
+        "response_time_ms": 61411.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 32,
+        "correct": 1,
+        "response_time_ms": 38432.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 58,
+        "correct": 1,
+        "response_time_ms": 138710.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 58,
+        "correct": 1,
+        "response_time_ms": 172807.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 58,
+        "correct": 1,
+        "response_time_ms": 34656.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 58,
+        "correct": 1,
+        "response_time_ms": 41818.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 58,
+        "correct": 1,
+        "response_time_ms": 31880.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 278,
+        "correct": 0,
+        "response_time_ms": 26346.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 278,
+        "correct": 0,
+        "response_time_ms": 40682.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 278,
+        "correct": 0,
+        "response_time_ms": 85467.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 4,
+        "correct": 0,
+        "response_time_ms": 44842.0,
+        "attempt_count": 3,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 4,
+        "correct": 1,
+        "response_time_ms": 93159.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 4,
+        "correct": 0,
+        "response_time_ms": 147020.0,
+        "attempt_count": 12,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 4,
+        "correct": 0,
+        "response_time_ms": 20076.0,
+        "attempt_count": 1,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 4,
+        "correct": 1,
+        "response_time_ms": 22223.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 27,
+        "correct": 0,
+        "response_time_ms": 343477.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 278,
+        "correct": 0,
+        "response_time_ms": 15982.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 278,
+        "correct": 0,
+        "response_time_ms": 31213.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 278,
+        "correct": 1,
+        "response_time_ms": 66900.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 278,
+        "correct": 1,
+        "response_time_ms": 20996.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 278,
+        "correct": 1,
+        "response_time_ms": 17057.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 279,
+        "correct": 1,
+        "response_time_ms": 29940.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 279,
+        "correct": 1,
+        "response_time_ms": 19568.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 277,
+        "correct": 1,
+        "response_time_ms": 17052.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 4,
+        "correct": 0,
+        "response_time_ms": 58698.0,
+        "attempt_count": 5,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 4,
+        "correct": 0,
+        "response_time_ms": 63439.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 27,
+        "correct": 0,
+        "response_time_ms": 41559.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 27,
+        "correct": 0,
+        "response_time_ms": 56981.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 27,
+        "correct": 0,
+        "response_time_ms": 16176.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 27,
+        "correct": 0,
+        "response_time_ms": 3558.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 321,
+        "correct": 0,
+        "response_time_ms": 3558.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 27,
+        "correct": 0,
+        "response_time_ms": 37104.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 280,
+        "correct": 1,
+        "response_time_ms": 43028.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 280,
+        "correct": 1,
+        "response_time_ms": 34387.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 49,
+        "correct": 0,
+        "response_time_ms": 16619.0,
+        "attempt_count": 3,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 49,
+        "correct": 1,
+        "response_time_ms": 12732.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 49,
+        "correct": 1,
+        "response_time_ms": 8417.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 49,
+        "correct": 0,
+        "response_time_ms": 16139.0,
+        "attempt_count": 5,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 49,
+        "correct": 0,
+        "response_time_ms": 11741.0,
+        "attempt_count": 2,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 49,
+        "correct": 1,
+        "response_time_ms": 4928.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 49,
+        "correct": 1,
+        "response_time_ms": 6499.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 47,
+        "correct": 0,
+        "response_time_ms": 25466.0,
+        "attempt_count": 3,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 47,
+        "correct": 0,
+        "response_time_ms": 14221.0,
+        "attempt_count": 7,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 67,
+        "correct": 1,
+        "response_time_ms": 18289.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 279,
+        "correct": 1,
+        "response_time_ms": 12300.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 309,
+        "correct": 1,
+        "response_time_ms": 22956.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 86,
+        "correct": 0,
+        "response_time_ms": 26258.0,
+        "attempt_count": 2,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 86,
+        "correct": 1,
+        "response_time_ms": 7849.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 86,
+        "correct": 1,
+        "response_time_ms": 2345.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 86,
+        "correct": 0,
+        "response_time_ms": 9365.0,
+        "attempt_count": 2,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 86,
+        "correct": 1,
+        "response_time_ms": 2457.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 86,
+        "correct": 1,
+        "response_time_ms": 8982.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 86,
+        "correct": 0,
+        "response_time_ms": 2792.0,
+        "attempt_count": 2,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 75,
+        "correct": 1,
+        "response_time_ms": 20899.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 27,
+        "correct": 0,
+        "response_time_ms": 44892.0,
+        "attempt_count": 9,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 27,
+        "correct": 1,
+        "response_time_ms": 8848.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 27,
+        "correct": 1,
+        "response_time_ms": 6911.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 27,
+        "correct": 1,
+        "response_time_ms": 8013.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 4,
+        "correct": 0,
+        "response_time_ms": 31596.0,
+        "attempt_count": 3,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 4,
+        "correct": 0,
+        "response_time_ms": 14337.0,
+        "attempt_count": 1,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 4,
+        "correct": 0,
+        "response_time_ms": 45476.0,
+        "attempt_count": 2,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 4,
+        "correct": 0,
+        "response_time_ms": 13538.0,
+        "attempt_count": 3,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 4,
+        "correct": 0,
+        "response_time_ms": 8392.0,
+        "attempt_count": 3,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 4,
+        "correct": 0,
+        "response_time_ms": 4815.0,
+        "attempt_count": 1,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 4,
+        "correct": 0,
+        "response_time_ms": 7671.0,
+        "attempt_count": 1,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 4,
+        "correct": 0,
+        "response_time_ms": 30213.0,
+        "attempt_count": 2,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 47,
+        "correct": 0,
+        "response_time_ms": 1946.0,
+        "attempt_count": 6,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 79,
+        "correct": 1,
+        "response_time_ms": 137447.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 79,
+        "correct": 1,
+        "response_time_ms": 154093.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 79,
+        "correct": 1,
+        "response_time_ms": 48802.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 79,
+        "correct": 1,
+        "response_time_ms": 38854.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 309,
+        "correct": 0,
+        "response_time_ms": 8932.0,
+        "attempt_count": 2,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 309,
+        "correct": 0,
+        "response_time_ms": 10486.0,
+        "attempt_count": 4,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 309,
+        "correct": 0,
+        "response_time_ms": 15269.0,
+        "attempt_count": 3,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 309,
+        "correct": 1,
+        "response_time_ms": 32762.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 309,
+        "correct": 1,
+        "response_time_ms": 12244.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 309,
+        "correct": 1,
+        "response_time_ms": 6850.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 310,
+        "correct": 0,
+        "response_time_ms": 181760.0,
+        "attempt_count": 3,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 310,
+        "correct": 0,
+        "response_time_ms": 27649.0,
+        "attempt_count": 2,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 310,
+        "correct": 0,
+        "response_time_ms": 11497.0,
+        "attempt_count": 5,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 63,
+        "correct": 1,
+        "response_time_ms": 577074.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 75,
+        "correct": 1,
+        "response_time_ms": 577074.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 63,
+        "correct": 0,
+        "response_time_ms": 11778.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 75,
+        "correct": 0,
+        "response_time_ms": 11778.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 63,
+        "correct": 0,
+        "response_time_ms": 14273.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 75,
+        "correct": 0,
+        "response_time_ms": 14273.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 63,
+        "correct": 0,
+        "response_time_ms": 9681.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 75,
+        "correct": 0,
+        "response_time_ms": 9681.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 63,
+        "correct": 0,
+        "response_time_ms": 19801.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 75,
+        "correct": 0,
+        "response_time_ms": 19801.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 63,
+        "correct": 0,
+        "response_time_ms": 18760.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 75,
+        "correct": 0,
+        "response_time_ms": 18760.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 63,
+        "correct": 1,
+        "response_time_ms": 19470.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 75,
+        "correct": 1,
+        "response_time_ms": 19470.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 63,
+        "correct": 1,
+        "response_time_ms": 54425.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 75,
+        "correct": 1,
+        "response_time_ms": 54425.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 63,
+        "correct": 1,
+        "response_time_ms": 19315.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 75,
+        "correct": 1,
+        "response_time_ms": 19315.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 63,
+        "correct": 1,
+        "response_time_ms": 15409.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 75,
+        "correct": 1,
+        "response_time_ms": 15409.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 63,
+        "correct": 1,
+        "response_time_ms": 9813.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 75,
+        "correct": 1,
+        "response_time_ms": 9813.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 47,
+        "correct": 1,
+        "response_time_ms": 136876.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 47,
+        "correct": 1,
+        "response_time_ms": 64145.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 70,
+        "correct": 0,
+        "response_time_ms": 400315.0,
+        "attempt_count": 1,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 70,
+        "correct": 0,
+        "response_time_ms": 87766.0,
+        "attempt_count": 2,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 70,
+        "correct": 1,
+        "response_time_ms": 33889.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 70,
+        "correct": 1,
+        "response_time_ms": 30640.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 70,
+        "correct": 0,
+        "response_time_ms": 21639.0,
+        "attempt_count": 5,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 70,
+        "correct": 0,
+        "response_time_ms": 49895.0,
+        "attempt_count": 4,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 70,
+        "correct": 0,
+        "response_time_ms": 25122.0,
+        "attempt_count": 3,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 79,
+        "correct": 1,
+        "response_time_ms": 129679.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 79,
+        "correct": 1,
+        "response_time_ms": 39635.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 34,
+        "correct": 0,
+        "response_time_ms": 774567.0,
+        "attempt_count": 2,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 69,
+        "correct": 0,
+        "response_time_ms": 774567.0,
+        "attempt_count": 2,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 34,
+        "correct": 0,
+        "response_time_ms": 25486.0,
+        "attempt_count": 2,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 81,
+        "correct": 0,
+        "response_time_ms": 25486.0,
+        "attempt_count": 2,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 34,
+        "correct": 0,
+        "response_time_ms": 31284.0,
+        "attempt_count": 4,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 81,
+        "correct": 0,
+        "response_time_ms": 31284.0,
+        "attempt_count": 4,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 34,
+        "correct": 0,
+        "response_time_ms": 36911.0,
+        "attempt_count": 3,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 34,
+        "correct": 0,
+        "response_time_ms": 19689.0,
+        "attempt_count": 2,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 34,
+        "correct": 0,
+        "response_time_ms": 11364.0,
+        "attempt_count": 1,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 81,
+        "correct": 0,
+        "response_time_ms": 11364.0,
+        "attempt_count": 1,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 34,
+        "correct": 0,
+        "response_time_ms": 30017.0,
+        "attempt_count": 3,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 276,
+        "correct": 1,
+        "response_time_ms": 24467.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 61,
+        "correct": 1,
+        "response_time_ms": 27328.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 279,
+        "correct": 0,
+        "response_time_ms": 81902.0,
+        "attempt_count": 2,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 279,
+        "correct": 0,
+        "response_time_ms": 28109.0,
+        "attempt_count": 1,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 279,
+        "correct": 0,
+        "response_time_ms": 69767.0,
+        "attempt_count": 1,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 279,
+        "correct": 1,
+        "response_time_ms": 19800.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 279,
+        "correct": 0,
+        "response_time_ms": 33169.0,
+        "attempt_count": 2,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 70,
+        "correct": 1,
+        "response_time_ms": 11523.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 77,
+        "correct": 0,
+        "response_time_ms": 48395.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 77,
+        "correct": 0,
+        "response_time_ms": 23263.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 77,
+        "correct": 0,
+        "response_time_ms": 21499.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 77,
+        "correct": 1,
+        "response_time_ms": 61902.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 77,
+        "correct": 1,
+        "response_time_ms": 40953.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 77,
+        "correct": 0,
+        "response_time_ms": 50803.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 77,
+        "correct": 1,
+        "response_time_ms": 22983.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 77,
+        "correct": 1,
+        "response_time_ms": 21033.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 77,
+        "correct": 1,
+        "response_time_ms": 26635.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 76,
+        "correct": 0,
+        "response_time_ms": 251795.0,
+        "attempt_count": 3,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 277,
+        "correct": 1,
+        "response_time_ms": 7278.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 280,
+        "correct": 1,
+        "response_time_ms": 21780.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 49,
+        "correct": 0,
+        "response_time_ms": 211860.0,
+        "attempt_count": 4,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 49,
+        "correct": 1,
+        "response_time_ms": 9135.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 47,
+        "correct": 1,
+        "response_time_ms": 17121.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 47,
+        "correct": 1,
+        "response_time_ms": 8945.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 47,
+        "correct": 1,
+        "response_time_ms": 7514.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 34,
+        "correct": 0,
+        "response_time_ms": 575481.0,
+        "attempt_count": 1,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 69,
+        "correct": 0,
+        "response_time_ms": 575481.0,
+        "attempt_count": 1,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 34,
+        "correct": 0,
+        "response_time_ms": 53157.0,
+        "attempt_count": 3,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 27,
+        "correct": 0,
+        "response_time_ms": 78757.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 27,
+        "correct": 0,
+        "response_time_ms": 63019.0,
+        "attempt_count": 3,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 27,
+        "correct": 0,
+        "response_time_ms": 42568.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 27,
+        "correct": 0,
+        "response_time_ms": 51110.0,
+        "attempt_count": 2,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 27,
+        "correct": 0,
+        "response_time_ms": 23761.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 27,
+        "correct": 0,
+        "response_time_ms": 9377.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 27,
+        "correct": 0,
+        "response_time_ms": 27127.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 70,
+        "correct": 1,
+        "response_time_ms": 161498.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 76,
+        "correct": 0,
+        "response_time_ms": 100895.0,
+        "attempt_count": 5,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 76,
+        "correct": 1,
+        "response_time_ms": 47213.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 76,
+        "correct": 0,
+        "response_time_ms": 75129.0,
+        "attempt_count": 2,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 76,
+        "correct": 0,
+        "response_time_ms": 68267.0,
+        "attempt_count": 3,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 76,
+        "correct": 1,
+        "response_time_ms": 245721.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 76,
+        "correct": 1,
+        "response_time_ms": 108739.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 76,
+        "correct": 0,
+        "response_time_ms": 86693.0,
+        "attempt_count": 2,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 279,
+        "correct": 1,
+        "response_time_ms": 45179.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 47,
+        "correct": 1,
+        "response_time_ms": 26322.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 34,
+        "correct": 1,
+        "response_time_ms": 111330.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 86,
+        "correct": 1,
+        "response_time_ms": 72559.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 279,
+        "correct": 1,
+        "response_time_ms": 28342.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 86,
+        "correct": 1,
+        "response_time_ms": 76366.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 83,
+        "correct": 0,
+        "response_time_ms": 103917.0,
+        "attempt_count": 1,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 83,
+        "correct": 1,
+        "response_time_ms": 118828.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 83,
+        "correct": 1,
+        "response_time_ms": 28693.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 83,
+        "correct": 1,
+        "response_time_ms": 19341.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 83,
+        "correct": 1,
+        "response_time_ms": 15943.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 83,
+        "correct": 1,
+        "response_time_ms": 48698.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 65,
+        "correct": 0,
+        "response_time_ms": 66980.0,
+        "attempt_count": 3,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 65,
+        "correct": 1,
+        "response_time_ms": 52436.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 65,
+        "correct": 1,
+        "response_time_ms": 23551.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 65,
+        "correct": 0,
+        "response_time_ms": 12862.0,
+        "attempt_count": 2,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 65,
+        "correct": 1,
+        "response_time_ms": 37150.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 65,
+        "correct": 1,
+        "response_time_ms": 27092.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 65,
+        "correct": 1,
+        "response_time_ms": 66470.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 76,
+        "correct": 1,
+        "response_time_ms": 119088.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 65,
+        "correct": 1,
+        "response_time_ms": 88887.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 65,
+        "correct": 1,
+        "response_time_ms": 34657.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 67,
+        "correct": 0,
+        "response_time_ms": 19274.0,
+        "attempt_count": 2,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 67,
+        "correct": 1,
+        "response_time_ms": 85654.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 67,
+        "correct": 1,
+        "response_time_ms": 25462.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 67,
+        "correct": 1,
+        "response_time_ms": 53396.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 49,
+        "correct": 1,
+        "response_time_ms": 27715.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 50,
+        "correct": 1,
+        "response_time_ms": 27715.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 49,
+        "correct": 1,
+        "response_time_ms": 15548.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 49,
+        "correct": 1,
+        "response_time_ms": 12194.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 50,
+        "correct": 1,
+        "response_time_ms": 90187.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 50,
+        "correct": 1,
+        "response_time_ms": 73643.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 50,
+        "correct": 1,
+        "response_time_ms": 19844.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 50,
+        "correct": 1,
+        "response_time_ms": 83075.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 50,
+        "correct": 1,
+        "response_time_ms": 66865.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 50,
+        "correct": 1,
+        "response_time_ms": 45305.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 51,
+        "correct": 1,
+        "response_time_ms": 33618.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 51,
+        "correct": 1,
+        "response_time_ms": 16966.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 51,
+        "correct": 0,
+        "response_time_ms": 86259.0,
+        "attempt_count": 3,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 53,
+        "correct": 0,
+        "response_time_ms": 86259.0,
+        "attempt_count": 3,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 75,
+        "correct": 0,
+        "response_time_ms": 86259.0,
+        "attempt_count": 3,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 51,
+        "correct": 1,
+        "response_time_ms": 100386.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 53,
+        "correct": 1,
+        "response_time_ms": 100386.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 75,
+        "correct": 1,
+        "response_time_ms": 100386.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 51,
+        "correct": 1,
+        "response_time_ms": 106226.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 53,
+        "correct": 1,
+        "response_time_ms": 106226.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 75,
+        "correct": 1,
+        "response_time_ms": 106226.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 51,
+        "correct": 1,
+        "response_time_ms": 42494.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 53,
+        "correct": 1,
+        "response_time_ms": 42494.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 75,
+        "correct": 1,
+        "response_time_ms": 42494.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 51,
+        "correct": 1,
+        "response_time_ms": 54949.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 53,
+        "correct": 1,
+        "response_time_ms": 54949.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 75,
+        "correct": 1,
+        "response_time_ms": 54949.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 51,
+        "correct": 1,
+        "response_time_ms": 41101.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 53,
+        "correct": 1,
+        "response_time_ms": 41101.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 75,
+        "correct": 1,
+        "response_time_ms": 41101.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 310,
+        "correct": 1,
+        "response_time_ms": 43259.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 310,
+        "correct": 0,
+        "response_time_ms": 55347.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 310,
+        "correct": 0,
+        "response_time_ms": 60294.0,
+        "attempt_count": 6,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 310,
+        "correct": 0,
+        "response_time_ms": 40732.0,
+        "attempt_count": 1,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 310,
+        "correct": 0,
+        "response_time_ms": 11455.0,
+        "attempt_count": 7,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 310,
+        "correct": 1,
+        "response_time_ms": 53575.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 310,
+        "correct": 1,
+        "response_time_ms": 82012.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 310,
+        "correct": 1,
+        "response_time_ms": 61217.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 75,
+        "correct": 1,
+        "response_time_ms": 26252.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 75,
+        "correct": 1,
+        "response_time_ms": 33684.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 75,
+        "correct": 0,
+        "response_time_ms": 31235.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 75,
+        "correct": 1,
+        "response_time_ms": 23439.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 75,
+        "correct": 1,
+        "response_time_ms": 32064.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 75,
+        "correct": 1,
+        "response_time_ms": 40957.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 75,
+        "correct": 1,
+        "response_time_ms": 57204.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 75,
+        "correct": 1,
+        "response_time_ms": 25153.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 54,
+        "correct": 0,
+        "response_time_ms": 30074.0,
+        "attempt_count": 2,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 54,
+        "correct": 1,
+        "response_time_ms": 135744.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 54,
+        "correct": 1,
+        "response_time_ms": 129071.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 54,
+        "correct": 1,
+        "response_time_ms": 63334.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 80,
+        "correct": 1,
+        "response_time_ms": 228643.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 82,
+        "correct": 1,
+        "response_time_ms": 55438.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 82,
+        "correct": 1,
+        "response_time_ms": 44526.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 82,
+        "correct": 1,
+        "response_time_ms": 59729.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 82,
+        "correct": 1,
+        "response_time_ms": 26497.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 82,
+        "correct": 1,
+        "response_time_ms": 15396.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 70,
+        "correct": 1,
+        "response_time_ms": 36880.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 77,
+        "correct": 0,
+        "response_time_ms": 36656.0,
+        "attempt_count": 3,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 77,
+        "correct": 1,
+        "response_time_ms": 71362.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 2,
+        "correct": 1,
+        "response_time_ms": 73826.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 70,
+        "correct": 1,
+        "response_time_ms": 73826.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 2,
+        "correct": 1,
+        "response_time_ms": 27432.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 70,
+        "correct": 1,
+        "response_time_ms": 27432.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 27,
+        "correct": 1,
+        "response_time_ms": 159538.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 27,
+        "correct": 1,
+        "response_time_ms": 88508.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 81,
+        "correct": 1,
+        "response_time_ms": 107388.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 81,
+        "correct": 0,
+        "response_time_ms": 30162.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 81,
+        "correct": 0,
+        "response_time_ms": 68331.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 81,
+        "correct": 0,
+        "response_time_ms": 96944.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 81,
+        "correct": 1,
+        "response_time_ms": 244683.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 81,
+        "correct": 0,
+        "response_time_ms": 128319.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 27,
+        "correct": 1,
+        "response_time_ms": 40101.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 27,
+        "correct": 0,
+        "response_time_ms": 27927.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 27,
+        "correct": 1,
+        "response_time_ms": 81444.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 27,
+        "correct": 1,
+        "response_time_ms": 111023.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 27,
+        "correct": 1,
+        "response_time_ms": 105288.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 0,
+        "response_time_ms": 24931.0,
+        "attempt_count": 2,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 256144.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 55796.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 35107.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 307,
+        "correct": 1,
+        "response_time_ms": 22930.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 303,
+        "correct": 0,
+        "response_time_ms": 35486.0,
+        "attempt_count": 3,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 81,
+        "correct": 1,
+        "response_time_ms": 118478.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 24,
+        "correct": 1,
+        "response_time_ms": 33193.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 25,
+        "correct": 1,
+        "response_time_ms": 121750.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 110,
+        "correct": 0,
+        "response_time_ms": 93804.0,
+        "attempt_count": 3,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 110,
+        "correct": 1,
+        "response_time_ms": 24572.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 105,
+        "correct": 1,
+        "response_time_ms": 12809.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 110,
+        "correct": 1,
+        "response_time_ms": 17656.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 27,
+        "correct": 0,
+        "response_time_ms": 85098.0,
+        "attempt_count": 2,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 27,
+        "correct": 0,
+        "response_time_ms": 98476.0,
+        "attempt_count": 2,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 27,
+        "correct": 1,
+        "response_time_ms": 34361.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 27,
+        "correct": 1,
+        "response_time_ms": 55199.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 27,
+        "correct": 1,
+        "response_time_ms": 31353.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 110,
+        "correct": 0,
+        "response_time_ms": 43606.0,
+        "attempt_count": 3,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 110,
+        "correct": 1,
+        "response_time_ms": 43092.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 110,
+        "correct": 1,
+        "response_time_ms": 56223.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 110,
+        "correct": 1,
+        "response_time_ms": 12464.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 27,
+        "correct": 1,
+        "response_time_ms": 143697.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 27,
+        "correct": 1,
+        "response_time_ms": 42415.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 27,
+        "correct": 1,
+        "response_time_ms": 137787.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 27,
+        "correct": 0,
+        "response_time_ms": 18995.0,
+        "attempt_count": 3,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 27,
+        "correct": 1,
+        "response_time_ms": 53425.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 27,
+        "correct": 1,
+        "response_time_ms": 45407.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 27,
+        "correct": 1,
+        "response_time_ms": 77021.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 25,
+        "correct": 1,
+        "response_time_ms": 54560.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 46,
+        "correct": 1,
+        "response_time_ms": 55974.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 46,
+        "correct": 1,
+        "response_time_ms": 27703.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 46,
+        "correct": 1,
+        "response_time_ms": 101070.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 46,
+        "correct": 1,
+        "response_time_ms": 80123.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 46,
+        "correct": 1,
+        "response_time_ms": 90723.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 21,
+        "correct": 0,
+        "response_time_ms": 108954.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 22,
+        "correct": 0,
+        "response_time_ms": 108954.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 21,
+        "correct": 1,
+        "response_time_ms": 85172.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 22,
+        "correct": 1,
+        "response_time_ms": 85172.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 21,
+        "correct": 1,
+        "response_time_ms": 196813.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 22,
+        "correct": 1,
+        "response_time_ms": 196813.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 21,
+        "correct": 1,
+        "response_time_ms": 63266.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 22,
+        "correct": 1,
+        "response_time_ms": 63266.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 21,
+        "correct": 0,
+        "response_time_ms": 8110.0,
+        "attempt_count": 2,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 21,
+        "correct": 1,
+        "response_time_ms": 3859.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 21,
+        "correct": 1,
+        "response_time_ms": 133579.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 22,
+        "correct": 1,
+        "response_time_ms": 12516.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 292,
+        "correct": 0,
+        "response_time_ms": 377188.0,
+        "attempt_count": 1,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 293,
+        "correct": 0,
+        "response_time_ms": 5178.0,
+        "attempt_count": 5,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 10,
+        "correct": 0,
+        "response_time_ms": 139741.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 13,
+        "correct": 0,
+        "response_time_ms": 139741.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 10,
+        "correct": 0,
+        "response_time_ms": 124099.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 13,
+        "correct": 0,
+        "response_time_ms": 124099.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 10,
+        "correct": 1,
+        "response_time_ms": 154043.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 13,
+        "correct": 1,
+        "response_time_ms": 154043.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 10,
+        "correct": 0,
+        "response_time_ms": 75970.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 13,
+        "correct": 0,
+        "response_time_ms": 75970.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 10,
+        "correct": 1,
+        "response_time_ms": 92517.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 13,
+        "correct": 1,
+        "response_time_ms": 92517.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 0,
+        "response_time_ms": 85829.0,
+        "attempt_count": 3,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 46119.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 94392.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 28956.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 312,
+        "correct": 0,
+        "response_time_ms": 66514.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 312,
+        "correct": 1,
+        "response_time_ms": 19718.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 312,
+        "correct": 1,
+        "response_time_ms": 14754.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 312,
+        "correct": 1,
+        "response_time_ms": 6015.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 312,
+        "correct": 1,
+        "response_time_ms": 32703.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 101,
+        "correct": 0,
+        "response_time_ms": 49135.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 312,
+        "correct": 0,
+        "response_time_ms": 72836.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 312,
+        "correct": 1,
+        "response_time_ms": 8418.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 312,
+        "correct": 1,
+        "response_time_ms": 3127.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 312,
+        "correct": 1,
+        "response_time_ms": 3247.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 312,
+        "correct": 0,
+        "response_time_ms": 92592.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 312,
+        "correct": 1,
+        "response_time_ms": 3385.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 312,
+        "correct": 1,
+        "response_time_ms": 3091.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 312,
+        "correct": 1,
+        "response_time_ms": 5353.0,
+        "attempt_count": 2,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 312,
+        "correct": 0,
+        "response_time_ms": 36516.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 312,
+        "correct": 1,
+        "response_time_ms": 42877.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 312,
+        "correct": 0,
+        "response_time_ms": 52535.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 312,
+        "correct": 1,
+        "response_time_ms": 11777.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 312,
+        "correct": 1,
+        "response_time_ms": 5064.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 312,
+        "correct": 1,
+        "response_time_ms": 5112.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 312,
+        "correct": 1,
+        "response_time_ms": 63579.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 312,
+        "correct": 0,
+        "response_time_ms": 18172.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 312,
+        "correct": 1,
+        "response_time_ms": 22742.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 101,
+        "correct": 0,
+        "response_time_ms": 80406.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 312,
+        "correct": 0,
+        "response_time_ms": 73511.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 312,
+        "correct": 1,
+        "response_time_ms": 17989.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 312,
+        "correct": 1,
+        "response_time_ms": 17792.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 312,
+        "correct": 1,
+        "response_time_ms": 6198.0,
+        "attempt_count": 2,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 312,
+        "correct": 1,
+        "response_time_ms": 22178.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 42,
+        "correct": 0,
+        "response_time_ms": 173739.0,
+        "attempt_count": 2,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 9,
+        "correct": 0,
+        "response_time_ms": 404529.0,
+        "attempt_count": 2,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 13,
+        "correct": 0,
+        "response_time_ms": 404529.0,
+        "attempt_count": 2,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 9,
+        "correct": 1,
+        "response_time_ms": 742273.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 13,
+        "correct": 1,
+        "response_time_ms": 742273.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 9,
+        "correct": 1,
+        "response_time_ms": 23307.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 14,
+        "correct": 1,
+        "response_time_ms": 23307.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 9,
+        "correct": 1,
+        "response_time_ms": 51184.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 13,
+        "correct": 1,
+        "response_time_ms": 51184.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 18,
+        "correct": 0,
+        "response_time_ms": 14821.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 290,
+        "correct": 0,
+        "response_time_ms": 114537.0,
+        "attempt_count": 1,
+        "hint_used": 1
+      }
+    ],
+    "num_interactions": 440
+  },
+  {
+    "student_id": "Student_03",
+    "history": [
+      {
+        "skill_id": 9,
+        "correct": 0,
+        "response_time_ms": 12234.0,
+        "attempt_count": 1,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 14,
+        "correct": 0,
+        "response_time_ms": 12234.0,
+        "attempt_count": 1,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 18,
+        "correct": 0,
+        "response_time_ms": 18469.0,
+        "attempt_count": 5,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 18,
+        "correct": 1,
+        "response_time_ms": 15485.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 18,
+        "correct": 1,
+        "response_time_ms": 21563.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 18,
+        "correct": 1,
+        "response_time_ms": 16079.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 9,
+        "correct": 1,
+        "response_time_ms": 14438.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 14,
+        "correct": 1,
+        "response_time_ms": 14438.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 9,
+        "correct": 1,
+        "response_time_ms": 21266.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 15,
+        "correct": 1,
+        "response_time_ms": 21266.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 9,
+        "correct": 0,
+        "response_time_ms": 12063.0,
+        "attempt_count": 1,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 12,
+        "correct": 0,
+        "response_time_ms": 12063.0,
+        "attempt_count": 1,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 9,
+        "correct": 0,
+        "response_time_ms": 8969.0,
+        "attempt_count": 1,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 12,
+        "correct": 0,
+        "response_time_ms": 8969.0,
+        "attempt_count": 1,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 9,
+        "correct": 1,
+        "response_time_ms": 16469.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 15,
+        "correct": 1,
+        "response_time_ms": 16469.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 9,
+        "correct": 1,
+        "response_time_ms": 8468.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 15,
+        "correct": 1,
+        "response_time_ms": 8468.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 11,
+        "correct": 1,
+        "response_time_ms": 44329.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 11,
+        "correct": 1,
+        "response_time_ms": 24469.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 11,
+        "correct": 0,
+        "response_time_ms": 18251.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 11,
+        "correct": 1,
+        "response_time_ms": 22735.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 11,
+        "correct": 1,
+        "response_time_ms": 17234.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 11,
+        "correct": 1,
+        "response_time_ms": 16516.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 2,
+        "correct": 0,
+        "response_time_ms": 21969.0,
+        "attempt_count": 1,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 37,
+        "correct": 0,
+        "response_time_ms": 21969.0,
+        "attempt_count": 1,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 70,
+        "correct": 0,
+        "response_time_ms": 21969.0,
+        "attempt_count": 1,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 2,
+        "correct": 0,
+        "response_time_ms": 20754.0,
+        "attempt_count": 2,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 37,
+        "correct": 0,
+        "response_time_ms": 20754.0,
+        "attempt_count": 2,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 48,
+        "correct": 0,
+        "response_time_ms": 20754.0,
+        "attempt_count": 2,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 77,
+        "correct": 0,
+        "response_time_ms": 20754.0,
+        "attempt_count": 2,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 10,
+        "correct": 0,
+        "response_time_ms": 273191.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 12,
+        "correct": 0,
+        "response_time_ms": 273191.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 58,
+        "correct": 1,
+        "response_time_ms": 51954.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 85,
+        "correct": 1,
+        "response_time_ms": 51954.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 9,
+        "correct": 1,
+        "response_time_ms": 36320.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 13,
+        "correct": 1,
+        "response_time_ms": 36320.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 18,
+        "correct": 0,
+        "response_time_ms": 91942.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 18,
+        "correct": 0,
+        "response_time_ms": 7654.0,
+        "attempt_count": 1,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 18,
+        "correct": 1,
+        "response_time_ms": 9159.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 18,
+        "correct": 0,
+        "response_time_ms": 5842.0,
+        "attempt_count": 4,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 18,
+        "correct": 1,
+        "response_time_ms": 13118.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 18,
+        "correct": 0,
+        "response_time_ms": 52498.0,
+        "attempt_count": 4,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 18,
+        "correct": 1,
+        "response_time_ms": 35955.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 18,
+        "correct": 1,
+        "response_time_ms": 46586.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 18,
+        "correct": 0,
+        "response_time_ms": 6913.0,
+        "attempt_count": 1,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 18,
+        "correct": 0,
+        "response_time_ms": 3282.0,
+        "attempt_count": 1,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 18,
+        "correct": 0,
+        "response_time_ms": 23505.0,
+        "attempt_count": 2,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 18,
+        "correct": 0,
+        "response_time_ms": 49470.0,
+        "attempt_count": 4,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 18,
+        "correct": 1,
+        "response_time_ms": 19552.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 18,
+        "correct": 1,
+        "response_time_ms": 51845.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      }
+    ],
+    "num_interactions": 51
+  },
+  {
+    "student_id": "Student_04",
+    "history": [
+      {
+        "skill_id": 311,
+        "correct": 0,
+        "response_time_ms": 45640.0,
+        "attempt_count": 7,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 24625.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 16922.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 24437.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 0,
+        "response_time_ms": 18766.0,
+        "attempt_count": 1,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 49483.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 23187.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 6891.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 23140.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 0,
+        "response_time_ms": 45593.0,
+        "attempt_count": 3,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 311,
+        "correct": 0,
+        "response_time_ms": 5078.0,
+        "attempt_count": 2,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 26077.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 49389.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 18093.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 0,
+        "response_time_ms": 73108.0,
+        "attempt_count": 2,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 311,
+        "correct": 0,
+        "response_time_ms": 39984.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 0,
+        "response_time_ms": 13406.0,
+        "attempt_count": 20,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 312,
+        "correct": 0,
+        "response_time_ms": 81045.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 312,
+        "correct": 0,
+        "response_time_ms": 52076.0,
+        "attempt_count": 6,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 0,
+        "response_time_ms": 13516.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 94,
+        "correct": 0,
+        "response_time_ms": 22500.0,
+        "attempt_count": 1,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 94,
+        "correct": 1,
+        "response_time_ms": 5344.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 94,
+        "correct": 1,
+        "response_time_ms": 9438.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 94,
+        "correct": 1,
+        "response_time_ms": 11875.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 0,
+        "response_time_ms": 4328.0,
+        "attempt_count": 1,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 311,
+        "correct": 0,
+        "response_time_ms": 9000.0,
+        "attempt_count": 5,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 311,
+        "correct": 0,
+        "response_time_ms": 10109.0,
+        "attempt_count": 5,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 311,
+        "correct": 0,
+        "response_time_ms": 12249.0,
+        "attempt_count": 1,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 311,
+        "correct": 0,
+        "response_time_ms": 22218.0,
+        "attempt_count": 1,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 311,
+        "correct": 0,
+        "response_time_ms": 22609.0,
+        "attempt_count": 3,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 311,
+        "correct": 0,
+        "response_time_ms": 18984.0,
+        "attempt_count": 2,
+        "hint_used": 1
+      }
+    ],
+    "num_interactions": 31
+  },
+  {
+    "student_id": "Student_05",
+    "history": [
+      {
+        "skill_id": 277,
+        "correct": 0,
+        "response_time_ms": 325262.0,
+        "attempt_count": 2,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 277,
+        "correct": 1,
+        "response_time_ms": 7663.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 277,
+        "correct": 0,
+        "response_time_ms": 9765.0,
+        "attempt_count": 2,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 277,
+        "correct": 1,
+        "response_time_ms": 3137.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 277,
+        "correct": 1,
+        "response_time_ms": 11689.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 277,
+        "correct": 1,
+        "response_time_ms": 11654.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 0,
+        "response_time_ms": 22660.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 14451.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 0,
+        "response_time_ms": 638863.0,
+        "attempt_count": 3,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 9333.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 8734.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 0,
+        "response_time_ms": 6345.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 9757.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 13641.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 6617.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 6240.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 6321.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 9665.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 0,
+        "response_time_ms": 7137.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 7997.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 0,
+        "response_time_ms": 7921.0,
+        "attempt_count": 3,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 16210.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 12928.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 8185.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 6993.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      }
+    ],
+    "num_interactions": 25
+  },
+  {
+    "student_id": "Student_06",
+    "history": [
+      {
+        "skill_id": 309,
+        "correct": 0,
+        "response_time_ms": 2965.0,
+        "attempt_count": 2,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 309,
+        "correct": 0,
+        "response_time_ms": 1759.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 309,
+        "correct": 0,
+        "response_time_ms": 1329.0,
+        "attempt_count": 1,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 309,
+        "correct": 0,
+        "response_time_ms": 1602.0,
+        "attempt_count": 1,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 309,
+        "correct": 0,
+        "response_time_ms": 1210.0,
+        "attempt_count": 1,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 309,
+        "correct": 0,
+        "response_time_ms": 1880.0,
+        "attempt_count": 1,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 309,
+        "correct": 0,
+        "response_time_ms": 2436.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 309,
+        "correct": 0,
+        "response_time_ms": 996.0,
+        "attempt_count": 1,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 309,
+        "correct": 0,
+        "response_time_ms": 3713.0,
+        "attempt_count": 1,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 309,
+        "correct": 0,
+        "response_time_ms": 3250.0,
+        "attempt_count": 1,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 309,
+        "correct": 0,
+        "response_time_ms": 1322.0,
+        "attempt_count": 1,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 310,
+        "correct": 0,
+        "response_time_ms": 1286.0,
+        "attempt_count": 1,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 309,
+        "correct": 0,
+        "response_time_ms": 1711.0,
+        "attempt_count": 1,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 309,
+        "correct": 0,
+        "response_time_ms": 1960.0,
+        "attempt_count": 1,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 310,
+        "correct": 0,
+        "response_time_ms": 1633.0,
+        "attempt_count": 1,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 310,
+        "correct": 0,
+        "response_time_ms": 1437.0,
+        "attempt_count": 1,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 18,
+        "correct": 0,
+        "response_time_ms": 1793.0,
+        "attempt_count": 1,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 18,
+        "correct": 0,
+        "response_time_ms": 1400.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 18,
+        "correct": 0,
+        "response_time_ms": 1223.0,
+        "attempt_count": 1,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 18,
+        "correct": 0,
+        "response_time_ms": 1744.0,
+        "attempt_count": 1,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 18,
+        "correct": 0,
+        "response_time_ms": 1179.0,
+        "attempt_count": 1,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 18,
+        "correct": 0,
+        "response_time_ms": 1127.0,
+        "attempt_count": 1,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 18,
+        "correct": 0,
+        "response_time_ms": 1348.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 18,
+        "correct": 0,
+        "response_time_ms": 1150.0,
+        "attempt_count": 2,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 18,
+        "correct": 0,
+        "response_time_ms": 1419.0,
+        "attempt_count": 1,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 18,
+        "correct": 0,
+        "response_time_ms": 4499.0,
+        "attempt_count": 1,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 18,
+        "correct": 0,
+        "response_time_ms": 1119.0,
+        "attempt_count": 1,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 18,
+        "correct": 0,
+        "response_time_ms": 25274.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 18,
+        "correct": 0,
+        "response_time_ms": 2966.0,
+        "attempt_count": 4,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 18,
+        "correct": 0,
+        "response_time_ms": 1235.0,
+        "attempt_count": 1,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 18,
+        "correct": 0,
+        "response_time_ms": 1603.0,
+        "attempt_count": 1,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 18,
+        "correct": 0,
+        "response_time_ms": 1447.0,
+        "attempt_count": 1,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 18,
+        "correct": 0,
+        "response_time_ms": 2497.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 18,
+        "correct": 0,
+        "response_time_ms": 1533.0,
+        "attempt_count": 2,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 18,
+        "correct": 0,
+        "response_time_ms": 958.0,
+        "attempt_count": 1,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 18,
+        "correct": 0,
+        "response_time_ms": 1206.0,
+        "attempt_count": 1,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 18,
+        "correct": 0,
+        "response_time_ms": 1604.0,
+        "attempt_count": 1,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 18,
+        "correct": 0,
+        "response_time_ms": 1428.0,
+        "attempt_count": 22,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 18,
+        "correct": 0,
+        "response_time_ms": 1529.0,
+        "attempt_count": 1,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 18,
+        "correct": 0,
+        "response_time_ms": 1641.0,
+        "attempt_count": 1,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 18,
+        "correct": 0,
+        "response_time_ms": 7570.0,
+        "attempt_count": 2,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 18,
+        "correct": 0,
+        "response_time_ms": 1670.0,
+        "attempt_count": 1,
+        "hint_used": 1
+      }
+    ],
+    "num_interactions": 42
+  },
+  {
+    "student_id": "Student_07",
+    "history": [
+      {
+        "skill_id": 10,
+        "correct": 1,
+        "response_time_ms": 175487.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 12,
+        "correct": 1,
+        "response_time_ms": 175487.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 10,
+        "correct": 1,
+        "response_time_ms": 130859.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 12,
+        "correct": 1,
+        "response_time_ms": 130859.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 12,
+        "correct": 0,
+        "response_time_ms": 67106.0,
+        "attempt_count": 2,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 13,
+        "correct": 1,
+        "response_time_ms": 139231.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 13,
+        "correct": 0,
+        "response_time_ms": 109930.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 18,
+        "correct": 0,
+        "response_time_ms": 54932.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 18,
+        "correct": 1,
+        "response_time_ms": 19646.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 18,
+        "correct": 1,
+        "response_time_ms": 17591.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 18,
+        "correct": 1,
+        "response_time_ms": 10099.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      }
+    ],
+    "num_interactions": 11
+  },
+  {
+    "student_id": "Student_08",
+    "history": [
+      {
+        "skill_id": 86,
+        "correct": 0,
+        "response_time_ms": 17388.0,
+        "attempt_count": 1,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 86,
+        "correct": 0,
+        "response_time_ms": 5351.0,
+        "attempt_count": 4,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 86,
+        "correct": 1,
+        "response_time_ms": 7123.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 86,
+        "correct": 1,
+        "response_time_ms": 4596.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 86,
+        "correct": 1,
+        "response_time_ms": 3754.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 325,
+        "correct": 0,
+        "response_time_ms": 33890.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 325,
+        "correct": 0,
+        "response_time_ms": 5384.0,
+        "attempt_count": 3,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 325,
+        "correct": 0,
+        "response_time_ms": 11168.0,
+        "attempt_count": 2,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 325,
+        "correct": 1,
+        "response_time_ms": 45912.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 325,
+        "correct": 0,
+        "response_time_ms": 12986.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 325,
+        "correct": 0,
+        "response_time_ms": 18966.0,
+        "attempt_count": 1,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 325,
+        "correct": 0,
+        "response_time_ms": 15997.0,
+        "attempt_count": 2,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 325,
+        "correct": 1,
+        "response_time_ms": 29332.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 325,
+        "correct": 0,
+        "response_time_ms": 34435.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 325,
+        "correct": 0,
+        "response_time_ms": 24272.0,
+        "attempt_count": 3,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 325,
+        "correct": 1,
+        "response_time_ms": 9057.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 325,
+        "correct": 1,
+        "response_time_ms": 88616.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 325,
+        "correct": 0,
+        "response_time_ms": 36977.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 325,
+        "correct": 0,
+        "response_time_ms": 9572.0,
+        "attempt_count": 1,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 325,
+        "correct": 1,
+        "response_time_ms": 10573.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 325,
+        "correct": 1,
+        "response_time_ms": 21494.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 325,
+        "correct": 0,
+        "response_time_ms": 16209.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 325,
+        "correct": 0,
+        "response_time_ms": 2319.0,
+        "attempt_count": 1,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 325,
+        "correct": 1,
+        "response_time_ms": 8670.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 325,
+        "correct": 1,
+        "response_time_ms": 22448.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 325,
+        "correct": 0,
+        "response_time_ms": 31632.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 325,
+        "correct": 0,
+        "response_time_ms": 6028.0,
+        "attempt_count": 1,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 325,
+        "correct": 1,
+        "response_time_ms": 4173.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 325,
+        "correct": 1,
+        "response_time_ms": 18492.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 325,
+        "correct": 0,
+        "response_time_ms": 43121.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 325,
+        "correct": 0,
+        "response_time_ms": 38790.0,
+        "attempt_count": 2,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 325,
+        "correct": 1,
+        "response_time_ms": 5074.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 325,
+        "correct": 1,
+        "response_time_ms": 15866.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 325,
+        "correct": 0,
+        "response_time_ms": 45880.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 325,
+        "correct": 0,
+        "response_time_ms": 14959.0,
+        "attempt_count": 3,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 325,
+        "correct": 1,
+        "response_time_ms": 3553.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 325,
+        "correct": 1,
+        "response_time_ms": 10753.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 325,
+        "correct": 0,
+        "response_time_ms": 19970.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 325,
+        "correct": 0,
+        "response_time_ms": 4842.0,
+        "attempt_count": 1,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 325,
+        "correct": 0,
+        "response_time_ms": 6894.0,
+        "attempt_count": 2,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 325,
+        "correct": 1,
+        "response_time_ms": 15023.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 325,
+        "correct": 0,
+        "response_time_ms": 35030.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 325,
+        "correct": 0,
+        "response_time_ms": 17471.0,
+        "attempt_count": 2,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 325,
+        "correct": 1,
+        "response_time_ms": 4258.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 325,
+        "correct": 1,
+        "response_time_ms": 15484.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 0,
+        "response_time_ms": 70370.0,
+        "attempt_count": 2,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 0,
+        "response_time_ms": 46137.0,
+        "attempt_count": 2,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 0,
+        "response_time_ms": 24531.0,
+        "attempt_count": 5,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 23667.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 0,
+        "response_time_ms": 29204.0,
+        "attempt_count": 1,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 17390.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 38378.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 0,
+        "response_time_ms": 32373.0,
+        "attempt_count": 2,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 0,
+        "response_time_ms": 27329.0,
+        "attempt_count": 2,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 27268.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 0,
+        "response_time_ms": 50994.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 0,
+        "response_time_ms": 2489.0,
+        "attempt_count": 22,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 21508.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 10917.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 29660.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 0,
+        "response_time_ms": 5580.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 4417.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 3134.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 3374.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 0,
+        "response_time_ms": 22321.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 3675.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 3550.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 1430.0,
+        "attempt_count": 2,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 0,
+        "response_time_ms": 41627.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 6282.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 13773.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 5254.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 0,
+        "response_time_ms": 28226.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 3321.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 9998.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 4774.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 0,
+        "response_time_ms": 23885.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 3750.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 0,
+        "response_time_ms": 8821.0,
+        "attempt_count": 2,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 3863.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 0,
+        "response_time_ms": 21021.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 4325.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 5565.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 4086.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 0,
+        "response_time_ms": 114807.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 3010.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 3976.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 1543.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 0,
+        "response_time_ms": 18674.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 3089.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 3198.0,
+        "attempt_count": 2,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 2957.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 325,
+        "correct": 0,
+        "response_time_ms": 62326.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 325,
+        "correct": 0,
+        "response_time_ms": 15878.0,
+        "attempt_count": 9,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 325,
+        "correct": 1,
+        "response_time_ms": 5473.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 325,
+        "correct": 1,
+        "response_time_ms": 12689.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 325,
+        "correct": 0,
+        "response_time_ms": 52971.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 325,
+        "correct": 0,
+        "response_time_ms": 9389.0,
+        "attempt_count": 3,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 325,
+        "correct": 1,
+        "response_time_ms": 4374.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 325,
+        "correct": 1,
+        "response_time_ms": 7883.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 325,
+        "correct": 0,
+        "response_time_ms": 67844.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 325,
+        "correct": 0,
+        "response_time_ms": 9601.0,
+        "attempt_count": 4,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 325,
+        "correct": 1,
+        "response_time_ms": 30847.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 325,
+        "correct": 1,
+        "response_time_ms": 24350.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 325,
+        "correct": 0,
+        "response_time_ms": 32008.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 325,
+        "correct": 1,
+        "response_time_ms": 25888.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 325,
+        "correct": 1,
+        "response_time_ms": 8374.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 325,
+        "correct": 1,
+        "response_time_ms": 19583.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 325,
+        "correct": 0,
+        "response_time_ms": 35194.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 325,
+        "correct": 0,
+        "response_time_ms": 13370.0,
+        "attempt_count": 2,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 325,
+        "correct": 1,
+        "response_time_ms": 4258.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 325,
+        "correct": 1,
+        "response_time_ms": 24566.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 325,
+        "correct": 1,
+        "response_time_ms": 83653.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 325,
+        "correct": 0,
+        "response_time_ms": 16615.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 325,
+        "correct": 0,
+        "response_time_ms": 7523.0,
+        "attempt_count": 2,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 325,
+        "correct": 1,
+        "response_time_ms": 5420.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 325,
+        "correct": 1,
+        "response_time_ms": 11546.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 325,
+        "correct": 1,
+        "response_time_ms": 14122.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 325,
+        "correct": 0,
+        "response_time_ms": 38397.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 325,
+        "correct": 0,
+        "response_time_ms": 4750.0,
+        "attempt_count": 3,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 325,
+        "correct": 1,
+        "response_time_ms": 4217.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 325,
+        "correct": 1,
+        "response_time_ms": 14602.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 325,
+        "correct": 1,
+        "response_time_ms": 26853.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 325,
+        "correct": 0,
+        "response_time_ms": 27893.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 325,
+        "correct": 0,
+        "response_time_ms": 6654.0,
+        "attempt_count": 5,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 325,
+        "correct": 1,
+        "response_time_ms": 5902.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 325,
+        "correct": 0,
+        "response_time_ms": 13862.0,
+        "attempt_count": 2,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 50370.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 22187.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 0,
+        "response_time_ms": 40442.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 5139.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 3221.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 2020.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 0,
+        "response_time_ms": 63917.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 5728.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 4172.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 2062.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 0,
+        "response_time_ms": 44523.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 2761.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 1798.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 2518.0,
+        "attempt_count": 2,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 0,
+        "response_time_ms": 20054.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 4291.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 2416.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 1934.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 0,
+        "response_time_ms": 17936.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 2210.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 1198.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 1150.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 0,
+        "response_time_ms": 31088.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 2498.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 1254.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 2718.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 0,
+        "response_time_ms": 36209.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 5183.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 2504.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 1934.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 0,
+        "response_time_ms": 19809.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 5068.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 3547.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 1894.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 12915.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 0,
+        "response_time_ms": 17370.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 3128.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 3601.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 1341.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 0,
+        "response_time_ms": 16086.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 3542.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 1222.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 3918.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 15,
+        "correct": 1,
+        "response_time_ms": 28369.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 13,
+        "correct": 0,
+        "response_time_ms": 97228.0,
+        "attempt_count": 6,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 12,
+        "correct": 0,
+        "response_time_ms": 25697.0,
+        "attempt_count": 9,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 15,
+        "correct": 1,
+        "response_time_ms": 50774.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 13,
+        "correct": 0,
+        "response_time_ms": 7864.0,
+        "attempt_count": 1,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 12,
+        "correct": 0,
+        "response_time_ms": 26512.0,
+        "attempt_count": 2,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 13,
+        "correct": 0,
+        "response_time_ms": 4086.0,
+        "attempt_count": 1,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 13,
+        "correct": 0,
+        "response_time_ms": 3782.0,
+        "attempt_count": 2,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 13,
+        "correct": 0,
+        "response_time_ms": 7271.0,
+        "attempt_count": 2,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 13,
+        "correct": 0,
+        "response_time_ms": 7831.0,
+        "attempt_count": 1,
+        "hint_used": 1
+      }
+    ],
+    "num_interactions": 180
+  },
+  {
+    "student_id": "Student_09",
+    "history": [
+      {
+        "skill_id": 91,
+        "correct": 1,
+        "response_time_ms": 30265.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 120856.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 31608.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 91,
+        "correct": 1,
+        "response_time_ms": 27011.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 147200.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 312,
+        "correct": 1,
+        "response_time_ms": 105304.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 312,
+        "correct": 0,
+        "response_time_ms": 83835.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 312,
+        "correct": 1,
+        "response_time_ms": 20428.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 312,
+        "correct": 1,
+        "response_time_ms": 100651.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 312,
+        "correct": 1,
+        "response_time_ms": 96199.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 312,
+        "correct": 1,
+        "response_time_ms": 77735.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 101,
+        "correct": 1,
+        "response_time_ms": 767155.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 312,
+        "correct": 1,
+        "response_time_ms": 136327.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 0,
+        "response_time_ms": 103264.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 11978.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 10394.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 5457.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 0,
+        "response_time_ms": 231585.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 0,
+        "response_time_ms": 28654.0,
+        "attempt_count": 1,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 15840.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 5893.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 109639.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 130055.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 118416.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 0,
+        "response_time_ms": 14159.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 27528.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 2834.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 2569.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 84593.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 45915.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 86368.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 311,
+        "correct": 1,
+        "response_time_ms": 180791.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      }
+    ],
+    "num_interactions": 32
+  },
+  {
+    "student_id": "Student_10",
+    "history": [
+      {
+        "skill_id": 1,
+        "correct": 1,
+        "response_time_ms": 32459.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 13,
+        "correct": 1,
+        "response_time_ms": 32459.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 1,
+        "correct": 1,
+        "response_time_ms": 7733.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 15,
+        "correct": 1,
+        "response_time_ms": 7733.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 16,
+        "correct": 1,
+        "response_time_ms": 23900.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 16,
+        "correct": 1,
+        "response_time_ms": 11185.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 16,
+        "correct": 1,
+        "response_time_ms": 21340.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 16,
+        "correct": 0,
+        "response_time_ms": 9392.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 16,
+        "correct": 1,
+        "response_time_ms": 9251.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 16,
+        "correct": 1,
+        "response_time_ms": 6427.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 16,
+        "correct": 1,
+        "response_time_ms": 10874.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 16,
+        "correct": 1,
+        "response_time_ms": 6879.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 16,
+        "correct": 1,
+        "response_time_ms": 6302.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 18,
+        "correct": 1,
+        "response_time_ms": 49000.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 18,
+        "correct": 0,
+        "response_time_ms": 147000.0,
+        "attempt_count": 2,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 18,
+        "correct": 1,
+        "response_time_ms": 20828.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 18,
+        "correct": 1,
+        "response_time_ms": 48156.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 18,
+        "correct": 1,
+        "response_time_ms": 25625.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 18,
+        "correct": 1,
+        "response_time_ms": 24422.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 18,
+        "correct": 1,
+        "response_time_ms": 15640.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      }
+    ],
+    "num_interactions": 20
+  },
+  {
+    "student_id": "Student_11",
+    "history": [
+      {
+        "skill_id": 310,
+        "correct": 1,
+        "response_time_ms": 16955.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 309,
+        "correct": 1,
+        "response_time_ms": 7986.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 65,
+        "correct": 0,
+        "response_time_ms": 51048.0,
+        "attempt_count": 4,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 65,
+        "correct": 1,
+        "response_time_ms": 53185.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 65,
+        "correct": 1,
+        "response_time_ms": 10278.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 65,
+        "correct": 1,
+        "response_time_ms": 8424.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 50,
+        "correct": 1,
+        "response_time_ms": 8998.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 61,
+        "correct": 1,
+        "response_time_ms": 80511.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 61,
+        "correct": 0,
+        "response_time_ms": 43947.0,
+        "attempt_count": 2,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 61,
+        "correct": 1,
+        "response_time_ms": 17475.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 61,
+        "correct": 0,
+        "response_time_ms": 140375.0,
+        "attempt_count": 3,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 61,
+        "correct": 1,
+        "response_time_ms": 33062.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 61,
+        "correct": 1,
+        "response_time_ms": 23962.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 61,
+        "correct": 1,
+        "response_time_ms": 56444.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 67,
+        "correct": 1,
+        "response_time_ms": 49225.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 67,
+        "correct": 1,
+        "response_time_ms": 116152.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 47,
+        "correct": 1,
+        "response_time_ms": 18334.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 47,
+        "correct": 1,
+        "response_time_ms": 5594.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 47,
+        "correct": 1,
+        "response_time_ms": 3854.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 47,
+        "correct": 0,
+        "response_time_ms": 187233.0,
+        "attempt_count": 5,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 47,
+        "correct": 1,
+        "response_time_ms": 2652.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 47,
+        "correct": 1,
+        "response_time_ms": 3195.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 47,
+        "correct": 0,
+        "response_time_ms": 32177.0,
+        "attempt_count": 2,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 47,
+        "correct": 1,
+        "response_time_ms": 40592.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 47,
+        "correct": 1,
+        "response_time_ms": 27535.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 65,
+        "correct": 1,
+        "response_time_ms": 55161.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 65,
+        "correct": 1,
+        "response_time_ms": 27719.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 280,
+        "correct": 1,
+        "response_time_ms": 112345.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 280,
+        "correct": 1,
+        "response_time_ms": 96173.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 280,
+        "correct": 1,
+        "response_time_ms": 115263.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 280,
+        "correct": 1,
+        "response_time_ms": 85525.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 47,
+        "correct": 1,
+        "response_time_ms": 209147.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 47,
+        "correct": 1,
+        "response_time_ms": 7394.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 47,
+        "correct": 1,
+        "response_time_ms": 4907.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 47,
+        "correct": 1,
+        "response_time_ms": 8294.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 47,
+        "correct": 1,
+        "response_time_ms": 16618.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 77,
+        "correct": 0,
+        "response_time_ms": 324161.0,
+        "attempt_count": 34,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 70,
+        "correct": 1,
+        "response_time_ms": 940235.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 77,
+        "correct": 0,
+        "response_time_ms": 83994.0,
+        "attempt_count": 1,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 70,
+        "correct": 0,
+        "response_time_ms": 65217.0,
+        "attempt_count": 3,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 70,
+        "correct": 1,
+        "response_time_ms": 52811.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 70,
+        "correct": 0,
+        "response_time_ms": 39357.0,
+        "attempt_count": 2,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 70,
+        "correct": 1,
+        "response_time_ms": 37504.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 70,
+        "correct": 1,
+        "response_time_ms": 58820.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 70,
+        "correct": 1,
+        "response_time_ms": 31642.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 77,
+        "correct": 1,
+        "response_time_ms": 225138.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 70,
+        "correct": 1,
+        "response_time_ms": 22701.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 317,
+        "correct": 1,
+        "response_time_ms": 48817.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 303,
+        "correct": 1,
+        "response_time_ms": 134093.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 298,
+        "correct": 0,
+        "response_time_ms": 27826.0,
+        "attempt_count": 2,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 298,
+        "correct": 1,
+        "response_time_ms": 33288.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 298,
+        "correct": 1,
+        "response_time_ms": 34450.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 298,
+        "correct": 1,
+        "response_time_ms": 23890.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 317,
+        "correct": 1,
+        "response_time_ms": 0.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 297,
+        "correct": 0,
+        "response_time_ms": 1.0,
+        "attempt_count": 3,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 11,
+        "correct": 0,
+        "response_time_ms": 118107.0,
+        "attempt_count": 2,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 11,
+        "correct": 1,
+        "response_time_ms": 108949.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 11,
+        "correct": 1,
+        "response_time_ms": 49709.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 11,
+        "correct": 1,
+        "response_time_ms": 26148.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 70,
+        "correct": 0,
+        "response_time_ms": 119094.0,
+        "attempt_count": 6,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 70,
+        "correct": 0,
+        "response_time_ms": 54074.0,
+        "attempt_count": 2,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 70,
+        "correct": 1,
+        "response_time_ms": 99664.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 70,
+        "correct": 1,
+        "response_time_ms": 46953.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 70,
+        "correct": 1,
+        "response_time_ms": 28243.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 296,
+        "correct": 1,
+        "response_time_ms": 25273.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 296,
+        "correct": 1,
+        "response_time_ms": 6321.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 307,
+        "correct": 1,
+        "response_time_ms": 1.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 296,
+        "correct": 1,
+        "response_time_ms": 0.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 70,
+        "correct": 1,
+        "response_time_ms": 1.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 11,
+        "correct": 1,
+        "response_time_ms": 1.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      }
+    ],
+    "num_interactions": 70
+  },
+  {
+    "student_id": "Student_12",
+    "history": [
+      {
+        "skill_id": 1,
+        "correct": 0,
+        "response_time_ms": 18871.0,
+        "attempt_count": 26,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 15,
+        "correct": 0,
+        "response_time_ms": 18871.0,
+        "attempt_count": 26,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 1,
+        "correct": 0,
+        "response_time_ms": 1381.0,
+        "attempt_count": 1,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 15,
+        "correct": 0,
+        "response_time_ms": 1381.0,
+        "attempt_count": 1,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 1,
+        "correct": 0,
+        "response_time_ms": 1716.0,
+        "attempt_count": 1,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 13,
+        "correct": 0,
+        "response_time_ms": 1716.0,
+        "attempt_count": 1,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 1,
+        "correct": 0,
+        "response_time_ms": 2014.0,
+        "attempt_count": 1,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 13,
+        "correct": 0,
+        "response_time_ms": 2014.0,
+        "attempt_count": 1,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 1,
+        "correct": 0,
+        "response_time_ms": 1344.0,
+        "attempt_count": 1,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 13,
+        "correct": 0,
+        "response_time_ms": 1344.0,
+        "attempt_count": 1,
+        "hint_used": 1
+      }
+    ],
+    "num_interactions": 10
+  },
+  {
+    "student_id": "Student_13",
+    "history": [
+      {
+        "skill_id": 16,
+        "correct": 1,
+        "response_time_ms": 57453.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 18,
+        "correct": 1,
+        "response_time_ms": 44750.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 18,
+        "correct": 0,
+        "response_time_ms": 30359.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 18,
+        "correct": 1,
+        "response_time_ms": 67922.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 18,
+        "correct": 1,
+        "response_time_ms": 72406.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 18,
+        "correct": 1,
+        "response_time_ms": 34453.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 18,
+        "correct": 1,
+        "response_time_ms": 68813.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 18,
+        "correct": 1,
+        "response_time_ms": 41890.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 25,
+        "correct": 1,
+        "response_time_ms": 145750.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 46,
+        "correct": 0,
+        "response_time_ms": 165204.0,
+        "attempt_count": 1,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 46,
+        "correct": 1,
+        "response_time_ms": 16500.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 46,
+        "correct": 1,
+        "response_time_ms": 15984.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 46,
+        "correct": 1,
+        "response_time_ms": 15422.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 46,
+        "correct": 0,
+        "response_time_ms": 24657.0,
+        "attempt_count": 2,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 46,
+        "correct": 1,
+        "response_time_ms": 56672.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 46,
+        "correct": 0,
+        "response_time_ms": 6843.0,
+        "attempt_count": 2,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 46,
+        "correct": 1,
+        "response_time_ms": 19078.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 46,
+        "correct": 1,
+        "response_time_ms": 12859.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 46,
+        "correct": 1,
+        "response_time_ms": 43218.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 46,
+        "correct": 1,
+        "response_time_ms": 11203.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 46,
+        "correct": 1,
+        "response_time_ms": 59953.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 292,
+        "correct": 0,
+        "response_time_ms": 6687.0,
+        "attempt_count": 2,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 293,
+        "correct": 1,
+        "response_time_ms": 50859.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 292,
+        "correct": 0,
+        "response_time_ms": 9203.0,
+        "attempt_count": 12,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 293,
+        "correct": 0,
+        "response_time_ms": 15141.0,
+        "attempt_count": 2,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 290,
+        "correct": 1,
+        "response_time_ms": 79828.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 292,
+        "correct": 0,
+        "response_time_ms": 11984.0,
+        "attempt_count": 3,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 293,
+        "correct": 1,
+        "response_time_ms": 14907.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      }
+    ],
+    "num_interactions": 28
+  },
+  {
+    "student_id": "Student_14",
+    "history": [
+      {
+        "skill_id": 277,
+        "correct": 0,
+        "response_time_ms": 20036.0,
+        "attempt_count": 2,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 277,
+        "correct": 0,
+        "response_time_ms": 3408.0,
+        "attempt_count": 2,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 277,
+        "correct": 0,
+        "response_time_ms": 2793.0,
+        "attempt_count": 1,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 277,
+        "correct": 0,
+        "response_time_ms": 3866.0,
+        "attempt_count": 2,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 277,
+        "correct": 0,
+        "response_time_ms": 2020.0,
+        "attempt_count": 2,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 277,
+        "correct": 0,
+        "response_time_ms": 27629.0,
+        "attempt_count": 4,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 277,
+        "correct": 0,
+        "response_time_ms": 12498.0,
+        "attempt_count": 2,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 280,
+        "correct": 0,
+        "response_time_ms": 3293.0,
+        "attempt_count": 1,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 280,
+        "correct": 0,
+        "response_time_ms": 19491.0,
+        "attempt_count": 4,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 280,
+        "correct": 0,
+        "response_time_ms": 19771.0,
+        "attempt_count": 100,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 54,
+        "correct": 1,
+        "response_time_ms": 36239.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 79,
+        "correct": 0,
+        "response_time_ms": 41045.0,
+        "attempt_count": 1,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 79,
+        "correct": 0,
+        "response_time_ms": 13838.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 309,
+        "correct": 1,
+        "response_time_ms": 25054.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 51,
+        "correct": 1,
+        "response_time_ms": 36538.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 67,
+        "correct": 0,
+        "response_time_ms": 43965.0,
+        "attempt_count": 2,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 67,
+        "correct": 0,
+        "response_time_ms": 14149.0,
+        "attempt_count": 2,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 277,
+        "correct": 0,
+        "response_time_ms": 23062.0,
+        "attempt_count": 2,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 277,
+        "correct": 0,
+        "response_time_ms": 30541.0,
+        "attempt_count": 2,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 277,
+        "correct": 0,
+        "response_time_ms": 23613.0,
+        "attempt_count": 4,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 277,
+        "correct": 0,
+        "response_time_ms": 15987.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 1,
+        "correct": 1,
+        "response_time_ms": 13174.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 13,
+        "correct": 1,
+        "response_time_ms": 13174.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 1,
+        "correct": 1,
+        "response_time_ms": 8580.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 13,
+        "correct": 1,
+        "response_time_ms": 8580.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 4,
+        "correct": 1,
+        "response_time_ms": 48368.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 4,
+        "correct": 0,
+        "response_time_ms": 26723.0,
+        "attempt_count": 2,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 4,
+        "correct": 0,
+        "response_time_ms": 102829.0,
+        "attempt_count": 4,
+        "hint_used": 1
+      },
+      {
+        "skill_id": 10,
+        "correct": 1,
+        "response_time_ms": 230604.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 12,
+        "correct": 1,
+        "response_time_ms": 230604.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 10,
+        "correct": 0,
+        "response_time_ms": 217200.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 13,
+        "correct": 0,
+        "response_time_ms": 217200.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      }
+    ],
+    "num_interactions": 32
+  },
+  {
+    "student_id": "Student_15",
+    "history": [
+      {
+        "skill_id": 18,
+        "correct": 1,
+        "response_time_ms": 24595.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 18,
+        "correct": 1,
+        "response_time_ms": 9319.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 18,
+        "correct": 1,
+        "response_time_ms": 7339.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 18,
+        "correct": 1,
+        "response_time_ms": 8781.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 18,
+        "correct": 1,
+        "response_time_ms": 8932.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 18,
+        "correct": 1,
+        "response_time_ms": 4912.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 18,
+        "correct": 1,
+        "response_time_ms": 7156.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 18,
+        "correct": 1,
+        "response_time_ms": 7017.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 18,
+        "correct": 1,
+        "response_time_ms": 9506.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 18,
+        "correct": 1,
+        "response_time_ms": 6257.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 18,
+        "correct": 1,
+        "response_time_ms": 8070.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 18,
+        "correct": 1,
+        "response_time_ms": 5994.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 18,
+        "correct": 1,
+        "response_time_ms": 8567.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 18,
+        "correct": 1,
+        "response_time_ms": 16349.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      },
+      {
+        "skill_id": 18,
+        "correct": 1,
+        "response_time_ms": 19807.0,
+        "attempt_count": 1,
+        "hint_used": 0
+      }
+    ],
+    "num_interactions": 15
+  }
+]
