@@ -1150,6 +1150,11 @@ def get_session_gate_plot(session_id: str):
     return Response(content=buf.getvalue(), media_type="image/png")
 
 
+# ---- adaptive-v2 additive endpoints (profile, overview, feedback) ----------
+from serving.v2_routes import build_router as _build_v2_router
+app.include_router(_build_v2_router(sys.modules[__name__]))
+
+
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="127.0.0.1", port=8000)
