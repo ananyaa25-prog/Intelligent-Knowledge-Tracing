@@ -1,0 +1,13 @@
+{
+  "violation_rate": 0.0,
+  "violation_rate_next_skill": 0.0,
+  "violation_rate_quiz_topics": 0.0,
+  "tolerance": 0.005,
+  "monotone_warn": 0.1,
+  "reliable": true,
+  "n_cases": 600,
+  "n_quiz_topic_cases": 6000,
+  "data_source": "windowed_data.pkl validation split",
+  "seed": 7,
+  "generated_at": "2026-10-08T19:19:47.772200+00:00"
+}

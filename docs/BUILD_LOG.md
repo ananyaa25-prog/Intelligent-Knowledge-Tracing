@@ -9,3 +9,4 @@ Baseline (before any change, run on an isolated copy of the baseline commit):
 | Task | Status | Summary | Tests (pytest pass/fail; node suites pass/total) |
 |---|---|---|---|
 | T0 recon + restore point + baseline | DONE | git baseline on master, branch feature/adaptive-v2; DB/log backed up to data/backups; .venv; tests isolated via tests/conftest.py (KT_DB_PATH/KT_LOG_PATH temp copies) | 36/15; 0/3 |
+| T1 policy_config + monotonicity | DONE | policy_config.py (env-driven, defaults = old behaviour); check_monotonicity.py: 600 val cases + 6000 quiz-topic cases, violation rate 0.0% / 0.0% -> profile_reliable=true | 42/15; - |
