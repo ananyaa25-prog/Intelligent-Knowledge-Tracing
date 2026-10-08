@@ -693,6 +693,8 @@ def api_next_question(session_id: str):
             "unasked_predictions": predictions,
             "main_questions": MAIN_QUESTIONS,
             "total_answered": len(sess.history),
+            "total_questions": len(sess.history),
+            "session_mode": sess.session_mode,
         }
 
     return {
@@ -706,6 +708,11 @@ def api_next_question(session_id: str):
         "predicted_p": q["predicted_p"],
         "is_probe": q["is_probe"],
         "is_complete": False,
+        # adaptive-v2 additive fields
+        "total_questions": adaptive_manager.get(session_id).total_questions(),
+        "session_mode": adaptive_manager.get(session_id).session_mode,
+        "policy": adaptive_manager.get(session_id).policy,
+        "decision": q.get("decision"),
     }
 
 
