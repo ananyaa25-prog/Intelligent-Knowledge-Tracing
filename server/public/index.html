@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GatedKT - Live Knowledge Tracing Quiz</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .quiz-container {
+      max-width: 760px;
+      margin: 40px auto;
+      padding: 0 16px;
+    }
+    .progress-bar-container {
+      width: 100%;
+      height: 8px;
+      background: #e2e8f0;
+      border-radius: 4px;
+      overflow: hidden;
+      margin: 12px 0 24px 0;
+    }
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #3b82f6, #6366f1);
+      width: 10%;
+      transition: width 0.3s ease;
+    }
+    .question-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 32px;
+      box-shadow: var(--shadow-md);
+      margin-bottom: 24px;
+    }
+    .question-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .position-badge {
+      background: #eff6ff;
+      color: #2563eb;
+      font-weight: 700;
+      font-size: 0.85rem;
+      padding: 4px 12px;
+      border-radius: 9999px;
+    }
+    .student-badge {
+      background: #f3e8ff;
+      color: #7e22ce;
+      font-size: 0.82rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 6px;
+    }
+    .skill-tag {
+      background: #f1f5f9;
+      color: #475569;
+      font-size: 0.82rem;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 6px;
+    }
+    .question-title {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      line-height: 1.4;
+      margin-bottom: 24px;
+    }
+    .prediction-banner {
+      background: #eef2ff;
+      border-left: 4px solid #6366f1;
+      padding: 10px 14px;
+      border-radius: 0 8px 8px 0;
+      margin-bottom: 16px;
+      font-size: 0.9rem;
+      color: #3730a3;
+    }
+    .answer-group {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      margin-top: 16px;
+    }
+    .answer-input {
+      flex: 1;
+      padding: 12px 16px;
+      font-size: 1.05rem;
+      border: 2px solid var(--border-color);
+      border-radius: 8px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .answer-input:focus {
+      border-color: #3b82f6;
+    }
+    .submit-btn {
+      padding: 12px 28px;
+      font-size: 1rem;
+      font-weight: 600;
+      background: #2563eb;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .submit-btn:hover {
+      background: #1d4ed8;
+    }
+    .submit-btn:disabled {
+      background: #94a3b8;
+      cursor: not-allowed;
+    }
+    .timer-indicator {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-top: 10px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .mastery-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 32px;
+      box-shadow: var(--shadow-md);
+      display: none;
+    }
+    .mastery-item {
+      margin-bottom: 18px;
+    }
+    .mastery-meta {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 6px;
+      font-size: 0.92rem;
+      font-weight: 600;
+    }
+    .mastery-bar-bg {
+      height: 12px;
+      background: #f1f5f9;
+      border-radius: 6px;
+      overflow: hidden;
+    }
+    .mastery-bar-fill {
+      height: 100%;
+      border-radius: 6px;
+      transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .restart-btn {
+      padding: 12px 24px;
+      background: #0f172a;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .restart-btn:hover {
+      background: #1e293b;
+    }
+    .btn-secondary {
+      padding: 12px 20px;
+      background: #f1f5f9;
+      color: #334155;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .btn-secondary:hover {
+      background: #e2e8f0;
+    }
+    .cumulative-info-banner {
+      background: #eff6ff;
+      border-left: 4px solid #3b82f6;
+      padding: 12px 16px;
+      border-radius: 0 8px 8px 0;
+      margin-bottom: 20px;
+      font-size: 0.9rem;
+      color: #1e40af;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div class="nav-brand">
+      <span>GatedKT</span>
+      <span class="nav-tag">Live Mastery Tracker</span>
+    </div>
+    <div class="nav-links">
+      <a href="/" class="nav-link active">Live Quiz</a>
+      <a href="/dashboard.html" class="nav-link">Teacher Dashboard (Demo)</a>
+    </div>
+  </nav>
+
+  <div class="quiz-container">
+    <div class="page-header" style="margin-bottom: 16px;">
+      <h1 class="page-title">Live Knowledge Tracing Assessment</h1>
+      <p class="page-subtitle">
+        An adaptive assessment that selects the next topic from the model's predicted probability of success, and adjusts each topic's difficulty to your answers.
+      </p>
+    </div>
+
+    <!-- Feedback Banner -->
+    <div id="statusBanner" class="status-alert" style="display: none; margin-bottom: 16px;"></div>
+
+    <!-- Step 1: Student Login / ID Entry -->
+    <div id="loginSection" class="question-card">
+      <h2 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 6px;">Student Assessment Setup</h2>
+      <p style="color: var(--text-secondary); margin-bottom: 20px; font-size: 0.92rem;">
+        Enter your student identifier to persist and track your cumulative mastery over multiple quiz attempts.
+      </p>
+      <form id="loginForm">
+        <div class="answer-group">
+          <input
+            type="text"
+            id="studentIdInput"
+            class="answer-input"
+            placeholder="Enter Student ID (e.g. student_alex, user_42)"
+            autocomplete="off"
+            required
+          />
+          <button type="submit" id="loginStartBtn" class="submit-btn">
+            Start Assessment
+          </button>
+        </div>
+      </form>
+      <div id="studentWelcomeStatus" style="margin-top: 14px; font-size: 0.88rem; font-weight: 600; display: none;"></div>
+    </div>
+
+    <!-- Step 2: Active Quiz Card -->
+    <div id="quizSection" style="display: none;">
+      <div class="progress-bar-container">
+        <div id="progressBar" class="progress-bar-fill" style="width: 10%;"></div>
+      </div>
+
+      <div class="question-card">
+        <div class="question-meta">
+          <div>
+            <span id="activeStudentBadge" class="student-badge">Student: --</span>
+            <span id="questionProgressBadge" class="position-badge" style="margin-left: 8px;">Question 1 of 10</span>
+          </div>
+          <span id="questionSkillTag" class="skill-tag">Skill: Loading...</span>
+        </div>
+
+        <div id="questionText" class="question-title">
+          Loading question bank...
+        </div>
+
+        <div id="predictionBanner" class="prediction-banner" style="display: none;">
+          The model predicts a <strong id="predictedPText">--%</strong> chance you answer this correctly.
+        </div>
+
+        <form id="answerForm">
+          <div class="answer-group">
+            <input
+              type="text"
+              id="answerInput"
+              class="answer-input"
+              placeholder="Type your answer here..."
+              autocomplete="off"
+              required
+            />
+            <button type="submit" id="submitBtn" class="submit-btn">
+              Submit Answer
+            </button>
+          </div>
+        </form>
+
+        <div class="timer-indicator">
+          <span id="liveTimerText">Response time: 0.0s</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 3: Results Mastery Card -->
+    <div id="resultsSection" class="mastery-card">
+      <h2 style="font-size: 1.4rem; font-weight: 700; margin-bottom: 8px;">Assessment Completed</h2>
+
+      <div id="cumulativeInfoBanner" class="cumulative-info-banner">
+        Mastery estimate based on 10 total interactions across 1 session(s).
+      </div>
+
+      <div id="masteryBarsList">
+        <!-- Rendered dynamically -->
+      </div>
+
+      <!-- Task 19: Auto-generated Mastery Synthesis Summary -->
+      <div id="masterySummaryCard" style="display: none; margin-top: 18px; background: #f8fafc; border: 1px solid var(--border-color); border-left: 4px solid #3b82f6; border-radius: 0 8px 8px 0; padding: 14px 18px;">
+        <div style="font-weight: 700; font-size: 0.92rem; color: #1e293b; margin-bottom: 4px; display: flex; align-items: center; gap: 6px;">
+          <span>📊 Mastery Synthesis</span>
+        </div>
+        <p id="masterySummaryText" style="font-size: 0.88rem; color: #334155; line-height: 1.5; margin: 0;"></p>
+      </div>
+
+      <!-- Skill Relation Graph Visualizer (Task 8 & 10) -->
+      <div id="graphVisualizerCard" style="margin-top: 28px; padding-top: 20px; border-top: 1px solid var(--border-color);">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+          <h3 style="font-size: 1.15rem; font-weight: 700;">
+            PPMI Skill-Relation Graph
+          </h3>
+          <span style="font-size: 0.78rem; color: var(--text-muted);">Curriculum Co-occurrence Graph</span>
+        </div>
+        <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 12px;">
+          Visualizes the 10 monitored quiz skills connected by curriculum PPMI co-occurrence weights from <code>skill_graph.pkl</code>. Weak skills (<50% mastery) are highlighted in red; skills with &lt;3 interactions are indicated with low-confidence styling.
+        </p>
+        <div id="skillGraphEmptyState" class="empty-placeholder" style="display: none; background: #f8fafc; border-radius: 8px; border: 1px dashed var(--border-color); padding: 32px;">
+          <p style="color: var(--text-secondary); font-weight: 600;">Complete a session to see your skill graph.</p>
+        </div>
+        <div id="skillGraphContainer" style="position: relative; background: #ffffff; border-radius: 8px; border: 1px solid var(--border-color); overflow: hidden;">
+          <div id="skillGraphVis" style="height: 380px; width: 100%;"></div>
+          <div style="padding: 8px 12px; background: #f8fafc; border-top: 1px solid var(--border-color); display: flex; gap: 16px; font-size: 0.75rem; color: var(--text-secondary); flex-wrap: wrap; align-items: center;">
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <span style="display: inline-block; width: 12px; height: 12px; border-radius: 50%; background: #10b981;"></span>
+              <span>High Mastery (≥75%)</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <span style="display: inline-block; width: 12px; height: 12px; border-radius: 50%; background: #f59e0b;"></span>
+              <span>Moderate (50–74%)</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <span style="display: inline-block; width: 12px; height: 12px; border-radius: 50%; background: #f43f5e;"></span>
+              <span>Needs Attention (&lt;50%)</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <span class="low-data-chip">⚠️ Low Data (&lt;3)</span>
+            </div>
+            <div style="margin-left: auto; font-style: italic; color: var(--text-muted);">
+              Line thickness ∝ PPMI Relatedness
+            </div>
+          </div>
+        </div>
+
+        <!-- Task 16: Weak-Skill Relational Callouts -->
+        <div id="weakRelationalCallouts" style="display: none; margin-top: 12px; background: #fff1f2; border-left: 4px solid #f43f5e; padding: 12px 16px; border-radius: 0 8px 8px 0;">
+          <div style="font-weight: 700; color: #be123c; font-size: 0.88rem; margin-bottom: 4px; display: flex; align-items: center; gap: 6px;">
+            <span>💡 Relational Curriculum Insights</span>
+          </div>
+          <div id="weakRelationalCalloutsList" style="font-size: 0.82rem; color: #9f1239; line-height: 1.5;"></div>
+        </div>
+      </div>
+
+      <!-- Mastery Over Time Trend (Task 9) -->
+      <div id="trendVisualizerCard" style="margin-top: 28px; padding-top: 20px; border-top: 1px solid var(--border-color);">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+          <h3 style="font-size: 1.15rem; font-weight: 700;">
+            Mastery-over-Time Trajectory
+          </h3>
+          <span id="trendSessionBadge" class="badge">-- Session(s)</span>
+        </div>
+        <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 12px;">
+          Historical cumulative mastery computed at each historical session completion boundary using exact point-in-time response sequences.
+        </p>
+        <div id="trendSingleSessionNote" style="display: none; background: #eff6ff; border-left: 4px solid var(--accent-blue); padding: 10px 14px; border-radius: 0 6px 6px 0; margin-bottom: 12px; font-size: 0.84rem; color: #1e40af;">
+          <strong>Single session recorded:</strong> Showing initial baseline mastery point. Complete more sessions to reveal a historical progression trend.
+        </div>
+        <div style="display: flex; justify-content: flex-end; margin-bottom: 8px;">
+          <select id="trendSkillSelect" style="max-width: 280px; font-size: 0.8rem; padding: 4px 8px;">
+            <option value="all">View All 10 Skills</option>
+          </select>
+        </div>
+        <div style="background: #ffffff; border-radius: 8px; border: 1px solid var(--border-color); padding: 16px;">
+          <canvas id="trendChartCanvas" style="max-height: 280px; width: 100%;"></canvas>
+        </div>
+      </div>
+
+      <div style="display: flex; gap: 12px; margin-top: 24px; flex-wrap: wrap;">
+        <button id="takeAnotherQuizBtn" class="restart-btn">Take Another Quiz (Same Student)</button>
+        <button id="switchStudentBtn" class="btn-secondary">Start as New Student</button>
+        <a href="/dashboard.html" class="btn-secondary" style="display: inline-flex; align-items: center; text-decoration: none;">View Teacher Dashboard</a>
+      </div>
+    </div>
+
+    <!-- Page Footer with Technical Appendix Link -->
+    <footer style="margin-top: 48px; padding: 20px 0; text-align: center; font-size: 0.8rem; color: var(--text-muted); border-top: 1px solid var(--border-color);">
+      <span>GatedKT Assessment System &bull; </span>
+      <a href="/model-internals.html" style="color: var(--text-secondary); text-decoration: none;">Model Internals &amp; Mechanics (Technical Appendix)</a>
+    </footer>
+  </div>
+
+  <!-- Third-party Graph & Chart Libraries (vis-network and chart.js via CDN) -->
+  <script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

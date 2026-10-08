@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GatedKT - Model Internals & Architecture Interpretability</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .internals-container {
+      max-width: 1100px;
+      margin: 32px auto;
+      padding: 0 16px;
+    }
+    .disclaimer-banner {
+      background: #f8fafc;
+      border-left: 4px solid #64748b;
+      padding: 14px 18px;
+      border-radius: 0 8px 8px 0;
+      margin-bottom: 24px;
+      font-size: 0.9rem;
+      color: #334155;
+      line-height: 1.5;
+    }
+    .step-pill {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      padding: 8px 12px;
+      font-size: 0.8rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 100px;
+      text-align: center;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    .step-pill-val {
+      font-size: 1rem;
+      font-weight: 700;
+    }
+    .session-picker-card {
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow-sm);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div class="nav-brand">
+      <span>GatedKT</span>
+      <span class="nav-tag">Technical Appendix</span>
+    </div>
+    <div class="nav-links">
+      <a href="/" class="nav-link">Live Quiz</a>
+      <a href="/dashboard.html" class="nav-link">Teacher Dashboard</a>
+      <a href="/model-internals.html" class="nav-link active">Model Internals</a>
+    </div>
+  </nav>
+
+  <div class="internals-container">
+    <div class="page-header" style="margin-bottom: 16px;">
+      <h1 class="page-title">Model Internals &amp; Gate Fusion Interpretability</h1>
+      <p class="page-subtitle">
+        Inspect the learned gating mechanism dynamically weighting short-term response dynamics vs. long-term curriculum memory across quiz interaction steps.
+      </p>
+    </div>
+
+    <!-- Required Framing Sentence -->
+    <div class="disclaimer-banner">
+      <strong>Framing:</strong> This page shows internal details of how the prediction model processes answers. It is intended for understanding the system's mechanics, not as a tool for tracking student progress &mdash; see the <a href="/" style="color: #2563eb; text-decoration: underline;">main results page</a> or <a href="/dashboard.html" style="color: #2563eb; text-decoration: underline;">teacher dashboard</a> for student progress.
+    </div>
+
+    <!-- Session Selection / Input -->
+    <div class="session-picker-card">
+      <h3 style="font-size: 1.05rem; font-weight: 700; margin-bottom: 12px;">Select or Enter Session ID</h3>
+      <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
+        <input
+          type="text"
+          id="sessionIdInput"
+          class="answer-input"
+          placeholder="Enter Session UUID (e.g. 550e8400-e29b-41d4-a716-446655440000)"
+          style="flex: 1; min-width: 280px; padding: 10px 14px; font-size: 0.95rem; border: 1px solid var(--border-color); border-radius: 6px;"
+        />
+        <button id="inspectBtn" class="submit-btn" style="padding: 10px 20px; font-size: 0.95rem;">
+          Inspect Gate Dynamics
+        </button>
+        <button id="loadRecentBtn" class="btn-secondary" style="padding: 10px 16px; font-size: 0.88rem;">
+          Load Latest Session
+        </button>
+      </div>
+      <div id="sessionStatusMsg" style="margin-top: 10px; font-size: 0.84rem; color: var(--text-secondary); display: none;"></div>
+    </div>
+
+    <!-- Gate Visualization Results Card -->
+    <div id="gateVisualizerCard" class="card" style="display: none; padding: 24px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+        <h2 style="font-size: 1.25rem; font-weight: 700;">
+          Attention Gate Fusion Trajectory
+        </h2>
+        <span id="sessionMetaBadge" class="badge">Session: --</span>
+      </div>
+      <p style="font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 16px; line-height: 1.5;">
+        Examines how GatedKT's learned fusion gate weighted <strong>Short-Term Response Dynamics</strong> (<span style="color: #2563eb; font-weight: 600;">$g \rightarrow 1.0$</span>) vs. <strong>Long-Term Memory &amp; PPMI Graph Context</strong> (<span style="color: #059669; font-weight: 600;">$g \rightarrow 0.0$</span>) at each sequential interaction step.
+      </p>
+
+      <div id="gateInsufficientNote" style="display: none; background: #fef2f2; border-left: 4px solid var(--accent-rose); padding: 12px 16px; border-radius: 0 6px 6px 0; font-size: 0.88rem; color: #991b1b; margin-bottom: 16px;">
+        Not enough interactions recorded yet for gate interpretability (at least 3 interactions required).
+      </div>
+
+      <div id="gateActiveContent">
+        <h4 style="font-size: 0.9rem; font-weight: 700; margin-bottom: 8px; color: #1e293b;">Step-by-Step Gate Attention ($g_t$)</h4>
+        <div id="gateStepsContainer" style="display: flex; gap: 8px; flex-wrap: wrap; background: #f8fafc; padding: 16px; border-radius: 8px; border: 1px solid var(--border-color); margin-bottom: 20px;">
+          <!-- Rendered dynamically -->
+        </div>
+
+        <h4 style="font-size: 0.9rem; font-weight: 700; margin-bottom: 8px; color: #1e293b;">2-Panel Gate Heatmap &amp; Top-5 Active Dimension Trajectories</h4>
+        <div style="text-align: center; background: #ffffff; border: 1px solid var(--border-color); border-radius: 8px; padding: 16px;">
+          <img id="gatePlotImg" src="" alt="Session Gate Heatmap & Top-5 Active Dimensions" style="max-width: 100%; height: auto; border-radius: 6px; display: none;" />
+          <div id="gatePlotLoading" style="font-size: 0.88rem; color: var(--text-muted); padding: 24px;">
+            Generating gate attention plot...
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Error State Container -->
+    <div id="errorStateCard" class="card" style="display: none; padding: 32px; text-align: center; background: #fef2f2; border-color: #fecdd3;">
+      <h3 id="errorTitle" style="color: #991b1b; font-size: 1.1rem; font-weight: 700; margin-bottom: 8px;">Error Loading Gate Detail</h3>
+      <p id="errorMessage" style="color: #b91c1c; font-size: 0.9rem; margin-bottom: 16px;">The requested session could not be found or the backend service is currently unreachable.</p>
+      <button id="retryBtn" class="btn-secondary" style="background: #ffffff;">Retry</button>
+    </div>
+
+    <footer style="margin-top: 48px; padding: 20px 0; text-align: center; font-size: 0.8rem; color: var(--text-muted); border-top: 1px solid var(--border-color);">
+      <span>GatedKT Model Diagnostics &bull; </span>
+      <a href="/" style="color: var(--text-secondary); text-decoration: none;">Return to Live Quiz</a> &bull;
+      <a href="/dashboard.html" style="color: var(--text-secondary); text-decoration: none;">Teacher Dashboard</a>
+    </footer>
+  </div>
+
+  <script src="model-internals.js"></script>
+</body>
+</html>

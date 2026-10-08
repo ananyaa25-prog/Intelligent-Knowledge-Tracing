@@ -1,0 +1,12 @@
+[
+  "tests/test_inference_service.py::test_1_real_student_prediction",
+  "tests/test_inference_service.py::test_2_single_interaction_edge_case",
+  "tests/test_inference_service.py::test_3_invalid_skill_id",
+  "tests/test_inference_service.py::test_4_numerical_parity_against_evaluate_test",
+  "tests/test_inference_service.py::test_5_completed_session_from_task_0",
+  "tests/test_session.py::test_1_start_session",
+  "tests/test_session.py::test_2_submit_correct_answer_pos_1",
+  "tests/test_session.py::test_3_submit_wrong_answer_pos_2",
+  "tests/test_session.py::test_4_randomization_distribution",
+  "tests/test_session.py::test_5_full_session_skill_sequence_preservation"
+]
