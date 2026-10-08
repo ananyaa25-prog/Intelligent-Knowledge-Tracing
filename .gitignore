@@ -1,0 +1,17 @@
+# Python / env
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+# Node
+server/node_modules/
+# Large / immutable data (never modified by this project; kept out of git)
+data/raw/
+data/processed/*.pkl
+data/processed/*.pt
+data/processed/kt_sessions.db*
+data/processed/session_logs.jsonl
+data/backups/
+# temp
+_tmp*/
+reports/screenshots/*.tmp
