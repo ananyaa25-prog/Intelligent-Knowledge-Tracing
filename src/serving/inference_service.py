@@ -49,6 +49,9 @@ WINDOWED_DATA_PATH = PROJECT_ROOT / "data" / "processed" / "windowed_data.pkl"
 SKILL_GRAPH_PATH = PROJECT_ROOT / "data" / "processed" / "skill_graph.pkl"
 MODEL_CHECKPOINT_PATH = PROJECT_ROOT / "data" / "processed" / "best_full_gated.pt"
 SESSION_LOG_PATH = PROJECT_ROOT / "data" / "processed" / "session_logs.jsonl"
+# Optional override (policy_config KT_LOG_PATH), e.g. tests writing to a temp copy.
+if os.environ.get("KT_LOG_PATH"):
+    SESSION_LOG_PATH = Path(os.environ["KT_LOG_PATH"])
 
 # Fallback checkpoint if best_full_gated.pt is not directly named
 FALLBACK_CHECKPOINT_PATH = PROJECT_ROOT / "data" / "processed" / "best_full_gated_seed123.pt"

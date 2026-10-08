@@ -12,6 +12,7 @@ Stores:
 Uses Python's standard sqlite3 library with synchronous writes and WAL journal mode.
 """
 
+import os
 import sqlite3
 from pathlib import Path
 from typing import Dict, List, Any, Optional
@@ -21,6 +22,9 @@ from datetime import datetime
 MODULE_DIR = Path(__file__).resolve().parent
 PROJECT_ROOT = MODULE_DIR.parent.parent
 DEFAULT_DB_PATH = PROJECT_ROOT / "data" / "processed" / "kt_sessions.db"
+# Optional override (policy_config KT_DB_PATH), e.g. tests or demo seeding on a copy.
+if os.environ.get("KT_DB_PATH"):
+    DEFAULT_DB_PATH = Path(os.environ["KT_DB_PATH"])
 
 
 class Database:
