@@ -424,6 +424,48 @@ app.get('/api/dashboard/matrix', async (req, res) => {
   });
 });
 
+// -------------------------------------------------------------
+// adaptive-v2 pass-through routes (profile, class overview, feedback)
+// -------------------------------------------------------------
+
+app.get('/api/session/:sessionId/profile', async (req, res) => {
+  const { sessionId } = req.params;
+  const result = await forwardToPython(`/session/${encodeURIComponent(sessionId)}/profile`, 'GET');
+  if (result.error) return res.status(result.status).json(result.error);
+  return res.status(result.status).json(result.data);
+});
+
+app.get('/api/student/:studentId/profile', async (req, res) => {
+  const { studentId } = req.params;
+  const result = await forwardToPython(`/student/${encodeURIComponent(studentId)}/profile`, 'GET');
+  if (result.error) return res.status(result.status).json(result.error);
+  return res.status(result.status).json(result.data);
+});
+
+app.get('/api/class/overview', async (req, res) => {
+  const source = (req.query.source || 'live').toString().toLowerCase();
+  if (!['live', 'sample'].includes(source)) {
+    return res.status(400).json({ error: "source must be 'live' or 'sample'" });
+  }
+  const result = await forwardToPython(`/class/overview?source=${encodeURIComponent(source)}`, 'GET');
+  if (result.error) return res.status(result.status).json(result.error);
+  return res.status(result.status).json(result.data);
+});
+
+app.post('/api/session/:sessionId/feedback', async (req, res) => {
+  const { sessionId } = req.params;
+  const body = (req.body && typeof req.body === 'object') ? req.body : {};
+  const perceivedOk = ['too_easy', 'about_right', 'too_hard'].includes(body.perceived);
+  const helpfulOk = body.helpful === undefined || body.helpful === null ||
+    (Number.isInteger(body.helpful) && body.helpful >= 1 && body.helpful <= 5);
+  if (!perceivedOk || !helpfulOk) {
+    return res.status(400).json({ error: "Invalid feedback: perceived must be too_easy|about_right|too_hard and helpful an integer 1-5" });
+  }
+  const result = await forwardToPython(`/session/${encodeURIComponent(sessionId)}/feedback`, 'POST', body);
+  if (result.error) return res.status(result.status).json(result.error);
+  return res.status(result.status).json(result.data);
+});
+
 // Favicon handler to prevent browser 404 errors
 app.get('/favicon.ico', (req, res) => res.status(204).end());
 
