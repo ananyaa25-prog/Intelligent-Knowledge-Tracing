@@ -1,0 +1,14 @@
+# Decisions log
+
+Each entry: decision — reason. Decisions were taken autonomously because the requester could not be asked.
+
+- D1 Project root is `aiproj/aiproj` (the outer folder only holds it and `__MACOSX`). — Only that folder contains src/, server/, data/.
+- D2 Created a project-local virtualenv `.venv` instead of installing into the global Python. — Global Python had no torch/fastapi/pytest; a local venv cannot break other projects on the machine.
+- D3 `requirements.txt` is UTF-16 (a PowerShell `pip freeze`) and lacks fastapi, uvicorn, pydantic, pytest, httpx although the code imports them. These were installed into `.venv`; the file was left in its original encoding and they are listed in `requirements-serving.txt` (new, UTF-8). — Rule 7 says to use what is in requirements.txt; serving cannot run without these packages, and rewriting the original file's encoding is avoidable.
+- D4 Git: initialised a repository, committed the baseline on `master`, work happens on `feature/adaptive-v2`. `core.autocrlf=false` locally so commits/reverts keep each file's exact line endings. — Restore point required by the brief; the machine's global autocrlf=true would otherwise rewrite line endings on revert.
+- D5 The root `.gitignore` was a stray pytest-cache file containing `*` (ignore everything). Original kept as `.gitignore.pytest_orig.bak`; replaced with a real ignore list that excludes large data (data/raw, *.pkl, *.pt, the SQLite DB and the JSONL log). — Otherwise git would track nothing; the large/immutable data is never modified by this work.
+- D6 Before any test run the DB and log were backed up with the SQLite backup API to `data/backups/`. — Rule 2.
+- D7 Node.js is installed via WinGet but not on PATH; scripts locate it explicitly (see scripts/_env_util.py). `npm ci` was run in server/ (from the existing lockfile; package.json unchanged). — Needed to run the Node tests and the proxy.
+- D8 Test isolation: added `tests/conftest.py` that copies the DB (SQLite backup API) and the JSONL log to a temp dir and sets `KT_DB_PATH` / `KT_LOG_PATH` before the serving code is imported. `db.py` and `inference_service.py` honour these variables only when set (no change otherwise). — Existing tests (e.g. test_e2e_adaptive) wrote test students into the real DB and log; the brief forbids that.
+- D9 Pre-existing failing tests (15 pytest, 3 Node suites, all on the legacy fixed-quiz flow) were NOT modified or deleted. New behaviour is covered by new test files. "All existing tests must pass unchanged" is interpreted as "no test that passed at baseline may fail". — They failed before any change; editing them would hide that.
+- D10 Opening the DB with the SQLite backup API checkpointed the WAL into the main file (the -wal/-shm files disappeared). Row counts were unchanged (48 students, 334 interactions). — Side effect of the mandated backup method; no data changed.
