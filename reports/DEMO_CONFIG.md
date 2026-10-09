@@ -1,6 +1,6 @@
 # Demo configuration (decision gates)
 
-Generated 2026-10-09 04:21 UTC by `scripts/apply_gates.py`. Gates were fixed before the results existed and are applied mechanically.
+Generated 2026-10-09 04:34 UTC by `scripts/apply_gates.py`. Gates were fixed before the results existed and are applied mechanically.
 
 | Gate | Rule | Numbers | Result | Demo setting |
 |---|---|---|---|---|
