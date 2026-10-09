@@ -1,3 +1,10 @@
+// Shared band thresholds (BAND_HIGH / BAND_MID from adaptive_ui.js; old 75/50 as fallback).
+function bandCellClass(v) {
+  const hi = window.GKT ? window.GKT.BAND_HIGH : 0.75;
+  const mid = window.GKT ? window.GKT.BAND_MID : 0.50;
+  return v >= hi ? 'cell-high' : (v >= mid ? 'cell-med' : 'cell-low');
+}
+
 /**
  * server/public/dashboard.js
  * --------------------------
@@ -177,13 +184,7 @@ async function loadDashboardData() {
 
           td.title = `${st.student_id} on ${sk.name} (ID: ${sk.skill_id})\nMastery: ${(masteryVal * 100).toFixed(1)}%\nInteractions: ${intCount}${isLowData ? ' (⚠️ Low Data: <3 answers)' : ''}`;
 
-          if (masteryVal >= 0.75) {
-            td.className += 'cell-high';
-          } else if (masteryVal >= 0.50) {
-            td.className += 'cell-med';
-          } else {
-            td.className += 'cell-low';
-          }
+          td.className += bandCellClass(masteryVal); // shared band thresholds (adaptive_ui.js)
         } else {
           td.textContent = '—';
           td.className = 'empty-cell';
@@ -220,9 +221,7 @@ async function loadDashboardData() {
         const skillAvg = valsForSkill.reduce((a, b) => a + b, 0) / valsForSkill.length;
         td.textContent = `${(skillAvg * 100).toFixed(0)}%`;
         td.title = `Class Average for ${sk.name}: ${(skillAvg * 100).toFixed(1)}% across ${valsForSkill.length} students`;
-        if (skillAvg >= 0.75) td.className = 'cell-high';
-        else if (skillAvg >= 0.50) td.className = 'cell-med';
-        else td.className = 'cell-low';
+        td.className = bandCellClass(skillAvg);
       } else {
         td.textContent = '—';
         td.className = 'empty-cell';
@@ -297,6 +296,11 @@ async function openStudentDetailModal(studentId, stData, skillsList) {
         } else if (pct < 75) {
           nodeBg = '#f59e0b';
           borderCol = '#d97706';
+        }
+        if (window.GKT) { // shared band function
+          const b = window.GKT.band(m);
+          nodeBg = b.fg;
+          borderCol = '#0f172a';
         }
 
         return {

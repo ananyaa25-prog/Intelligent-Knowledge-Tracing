@@ -202,15 +202,15 @@
         <div class="legend-bar" style="margin: 0;">
           <div class="legend-item">
             <div class="legend-box" style="background: #d1fae5;"></div>
-            <span>High (≥75%)</span>
+            <span>High (≥70%)</span>
           </div>
           <div class="legend-item">
             <div class="legend-box" style="background: #fef3c7;"></div>
-            <span>Moderate (50-74%)</span>
+            <span>Moderate (40-69%)</span>
           </div>
           <div class="legend-item">
             <div class="legend-box" style="background: #fee2e2;"></div>
-            <span>Low (&lt;50%)</span>
+            <span>Low (&lt;40%)</span>
           </div>
           <div class="legend-item">
             <span class="low-data-chip" style="font-size: 0.72rem;">⚠️ &lt;3 answers</span>
@@ -240,6 +240,27 @@
           <thead id="heatmapThead"></thead>
           <tbody id="heatmapTbody"></tbody>
         </table>
+      </div>
+    </div>
+
+    <!-- adaptive-v2 (T8a): class overview by mastery status -->
+    <div class="card" id="classOverviewCard" style="margin-top: 24px;">
+      <div class="card-title" style="flex-wrap: wrap; gap: 10px;">
+        <span>Class overview: status per student and topic</span>
+        <div class="overview-toggle" role="group" aria-label="Data source">
+          <button type="button" id="overviewLiveBtn" class="active" aria-pressed="true">Live</button>
+          <button type="button" id="overviewSimBtn" aria-pressed="false">Simulated demo</button>
+        </div>
+      </div>
+      <div id="classOverviewLabel"></div>
+      <div id="classOverviewEmpty" class="empty-state-card" style="display: none;"></div>
+      <div id="classOverviewBody" style="display: none;">
+        <div id="classOverviewLegend" class="status-legend"></div>
+        <div class="overview-scroll"><table id="classOverviewHeatmap" class="status-heatmap"></table></div>
+        <p id="classOverviewCounts" class="small-note"></p>
+        <h3 class="section-h">Needs attention</h3>
+        <ul id="needsAttentionList" class="attention-list"></ul>
+        <p class="small-note">Statuses are rule-based estimates from the model and the student's answers; suggestions are rule-based, for the teacher to judge.</p>
       </div>
     </div>
 
@@ -302,6 +323,8 @@
   <!-- Third-party Graph & Chart Libraries (vis-network and chart.js via CDN) -->
   <script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="adaptive_ui.js"></script>
   <script src="dashboard.js"></script>
+  <script src="dashboard_overview.js"></script>
 </body>
 </html>
