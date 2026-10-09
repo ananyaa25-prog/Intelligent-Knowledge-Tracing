@@ -214,6 +214,14 @@
     <!-- Feedback Banner -->
     <div id="statusBanner" class="status-alert" style="display: none; margin-bottom: 16px;"></div>
 
+    <!-- adaptive-v2 (T8e): Context -> Who benefits -> Problem -> Action -->
+    <div id="contextCards" class="context-cards" aria-label="About this assessment">
+      <div class="context-card"><div class="cc-kicker">Context</div><p>Foundational maths practice (percents, fractions, linear systems, geometry) in classes where one teacher supports many learners.</p></div>
+      <div class="context-card"><div class="cc-kicker">Who benefits</div><p>Students get questions pitched near their level; teachers see which topic and level each student is stuck on.</p></div>
+      <div class="context-card"><div class="cc-kicker">Problem</div><p>A fixed quiz gives one overall score and hides which topic, and which difficulty level, is the actual gap.</p></div>
+      <div class="context-card"><div class="cc-kicker">Action</div><p>Before each question the model predicts your chance of success; that prediction picks the next topic and difficulty and flags topics that need support.</p></div>
+    </div>
+
     <!-- Step 1: Student Login / ID Entry -->
     <div id="loginSection" class="question-card">
       <h2 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 6px;">Student Assessment Setup</h2>
@@ -243,6 +251,7 @@
       <div class="progress-bar-container">
         <div id="progressBar" class="progress-bar-fill" style="width: 10%;"></div>
       </div>
+      <div id="levelSegments" class="level-segments" role="img" aria-label="Questions served so far coloured by difficulty level"></div>
 
       <div class="question-card">
         <div class="question-meta">
@@ -253,8 +262,33 @@
           <span id="questionSkillTag" class="skill-tag">Skill: Loading...</span>
         </div>
 
+        <div class="question-subhead">
+          <span id="difficultyPill" class="difficulty-pill level-medium" aria-live="polite">MEDIUM</span>
+          <span id="adaptToast" class="adapt-toast" role="status" aria-live="polite"></span>
+        </div>
+
         <div id="questionText" class="question-title">
           Loading question bank...
+        </div>
+
+        <!-- adaptive-v2 (T4): prediction card (pre-answer P(correct)) -->
+        <div id="predictionCard" class="pred-card band-neutral" style="display: none;">
+          <div class="pred-gauge" aria-hidden="true">
+            <svg viewBox="0 0 120 66" width="120" height="66">
+              <path d="M10 60 A50 50 0 0 1 110 60" pathLength="100" class="gauge-bg"></path>
+              <path id="predGaugeArc" d="M10 60 A50 50 0 0 1 110 60" pathLength="100" class="gauge-fg" style="stroke-dasharray: 100; stroke-dashoffset: 100;"></path>
+            </svg>
+          </div>
+          <div class="pred-body">
+            <div class="pred-value" id="predCardValue" aria-live="polite">--%</div>
+            <div class="pred-label" id="predCardLabel"></div>
+            <div class="pred-subtitle">
+              <span id="predCardSubtitle">Predicted by GatedKT before you answer</span>
+              <span class="info-tip" tabindex="0" role="note" aria-label="This is a probability estimated from your past answers, not a verdict on you or your answer.">i
+                <span class="info-tip-text">A probability estimated from your past answers - not a verdict on you or your answer.</span>
+              </span>
+            </div>
+          </div>
         </div>
 
         <div id="predictionBanner" class="prediction-banner" style="display: none;">
@@ -278,9 +312,22 @@
         </form>
 
         <div class="timer-indicator">
-          <span id="liveTimerText">Response time: 0.0s</span>
+          <span id="liveTimerText" class="timer-pill">Response time: 0.0s</span>
+        </div>
+
+        <div id="adaptingShimmer" class="adapting-shimmer" style="display: none;" role="status" aria-live="polite">
+          <span class="shimmer-bar"></span><span>Adapting to your answer...</span>
         </div>
       </div>
+
+      <!-- adaptive-v2 (T4): how the system is adapting -->
+      <details id="adaptPanel" class="adapt-panel" open style="display: none;">
+        <summary><span>How the system is adapting</span> <span id="policyBadge" class="policy-badge" style="display: none;"></span></summary>
+        <p id="decisionReason" class="decision-reason" style="display: none;"></p>
+        <div class="chart-box small"><canvas id="levelStepChart" role="img" aria-label="Difficulty level served for each question"></canvas></div>
+        <div id="topicChips" class="topic-chips" aria-label="Topics in play and their current level"></div>
+        <p class="small-note">Colours: <span class="lvl-key k-easy">Easy</span> <span class="lvl-key k-medium">Medium</span> <span class="lvl-key k-hard">Hard</span> <span class="lvl-key k-none">not asked yet</span></p>
+      </details>
     </div>
 
     <!-- Step 3: Results Mastery Card -->
@@ -291,6 +338,10 @@
         Mastery estimate based on 10 total interactions across 1 session(s).
       </div>
 
+      <!-- adaptive-v2 (T5): profile-based results (falls back to the bars below) -->
+      <div id="resultsV2" class="results-v2"></div>
+
+      <h3 class="section-h">Model mastery estimates (all 10 topics)</h3>
       <div id="masteryBarsList">
         <!-- Rendered dynamically -->
       </div>
@@ -322,15 +373,15 @@
           <div style="padding: 8px 12px; background: #f8fafc; border-top: 1px solid var(--border-color); display: flex; gap: 16px; font-size: 0.75rem; color: var(--text-secondary); flex-wrap: wrap; align-items: center;">
             <div style="display: flex; align-items: center; gap: 6px;">
               <span style="display: inline-block; width: 12px; height: 12px; border-radius: 50%; background: #10b981;"></span>
-              <span>High Mastery (≥75%)</span>
+              <span>High (≥70%)</span>
             </div>
             <div style="display: flex; align-items: center; gap: 6px;">
               <span style="display: inline-block; width: 12px; height: 12px; border-radius: 50%; background: #f59e0b;"></span>
-              <span>Moderate (50–74%)</span>
+              <span>Moderate (40–69%)</span>
             </div>
             <div style="display: flex; align-items: center; gap: 6px;">
               <span style="display: inline-block; width: 12px; height: 12px; border-radius: 50%; background: #f43f5e;"></span>
-              <span>Needs Attention (&lt;50%)</span>
+              <span>Low (&lt;40%)</span>
             </div>
             <div style="display: flex; align-items: center; gap: 6px;">
               <span class="low-data-chip">⚠️ Low Data (&lt;3)</span>
@@ -391,6 +442,7 @@
   <!-- Third-party Graph & Chart Libraries (vis-network and chart.js via CDN) -->
   <script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="adaptive_ui.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

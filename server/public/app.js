@@ -36,6 +36,27 @@ const SKILL_SEQUENCE = [
   { position: 10, skill_name: "Pythagorean Theorem",                              raw_skill_id: 27  }
 ];
 
+// Shared lookup for adaptive_ui.js topic chips.
+window.SKILL_NAME_BY_ID = {};
+SKILL_SEQUENCE.forEach(s => { window.SKILL_NAME_BY_ID[s.raw_skill_id] = s.skill_name; });
+
+// One band function for all colours (adaptive_ui.js); old thresholds as fallback.
+function bandColor(p) {
+  try {
+    if (window.GKT) return window.GKT.band(p).fg;
+  } catch (e) { /* fall through */ }
+  return p < 0.5 ? '#f43f5e' : (p < 0.75 ? '#f59e0b' : '#10b981');
+}
+
+function gktHook(name, ...args) {
+  try {
+    if (window.GKT && typeof window.GKT[name] === 'function') return window.GKT[name](...args);
+  } catch (e) {
+    console.warn(`GKT hook ${name} failed:`, e);
+  }
+  return undefined;
+}
+
 // DOM Elements
 const loginSection = document.getElementById('loginSection');
 const studentIdInput = document.getElementById('studentIdInput');
@@ -171,6 +192,7 @@ async function startQuizForStudent(studentId) {
     const data = await res.json();
     currentSessionId = data.session_id;
     currentStudentId = data.student_id;
+    gktHook('resetSession', currentSessionId);
 
     activeStudentBadge.textContent = `Student: ${currentStudentId}`;
 
@@ -229,6 +251,8 @@ function renderQuestion(q) {
   submitBtn.disabled = false;
   answerInput.focus();
 
+  gktHook('onQuestion', q);
+
   questionStartTime = performance.now();
   if (timerInterval) clearInterval(timerInterval);
   liveTimerText.textContent = 'Response time: 0.0s';
@@ -248,6 +272,7 @@ async function handleAnswerSubmit(e) {
 
   submitBtn.disabled = true;
   answerInput.disabled = true;
+  gktHook('onSubmitStart');
 
   try {
     const res = await fetch(`/api/session/${encodeURIComponent(currentSessionId)}/answer`, {
@@ -265,9 +290,14 @@ async function handleAnswerSubmit(e) {
       throw new Error(err.error || `Server responded with ${res.status}`);
     }
 
+    // Kept client-side for the results screen only; no verdict is shown here.
+    const answerData = await res.json().catch(() => null);
+    if (answerData) gktHook('onAnswer', answerData);
+
     // No correct/incorrect verdict is shown; go straight to the next question.
     await fetchNextQuestion();
   } catch (err) {
+    gktHook('onSubmitError');
     console.error('Answer submit error:', err);
     showStatus(`Submission error: ${err.message}`, true);
     submitBtn.disabled = false;
@@ -315,6 +345,7 @@ async function finishQuiz(unaskedPredictions) {
     }
     renderSkillGraph(currentStudentId, currentSessionId);
     renderMasteryTrend(currentStudentId);
+    gktHook('renderResultsV2', currentSessionId, currentStudentId);
   } catch (err) {
     console.error('Mastery prediction error:', err);
     showStatus(`Prediction error: ${err.message}`, true);
@@ -439,12 +470,7 @@ function renderMasteryBars(mastery, skillCounts = {}, lowConfidence = [], master
     const intCount = skillCounts[rawIdStr] !== undefined ? skillCounts[rawIdStr] : 1;
     const isLowData = intCount < 3 || lowConfidence.includes(rawIdStr);
 
-    let barColor = '#10b981'; // Green (high mastery)
-    if (pct < 50) {
-      barColor = '#f43f5e'; // Rose/Red (low mastery)
-    } else if (pct < 75) {
-      barColor = '#f59e0b'; // Amber (moderate mastery)
-    }
+    const barColor = bandColor(score); // shared band function (BAND_HIGH / BAND_MID)
 
     const dataChipHtml = isLowData
       ? `<span class="low-data-chip" title="Low data: based on ${intCount} answer(s). Minimum 3 recommended for high confidence.">⚠️ ${intCount} answer${intCount === 1 ? '' : 's'} (Low Data)</span>`
@@ -523,15 +549,9 @@ async function renderSkillGraph(studentId, sessionId) {
       const isWeak = masteryVal < 0.50;
       const isLowData = n.is_low_data || (n.interaction_count !== undefined && n.interaction_count < 3);
 
-      let nodeBg = '#10b981'; // Green
-      let borderCol = '#059669';
-      if (isWeak) {
-        nodeBg = '#f43f5e'; // Red/Rose
-        borderCol = '#be123c';
-      } else if (pct < 75) {
-        nodeBg = '#f59e0b'; // Amber
-        borderCol = '#d97706';
-      }
+      const bandObj = window.GKT ? window.GKT.band(masteryVal) : null; // shared band function
+      const nodeBg = bandObj ? bandObj.bg : bandColor(masteryVal);
+      const borderCol = bandObj ? bandObj.fg : '#0f172a';
 
       const shortLabel = n.name.length > 18 ? n.name.slice(0, 16) + '…' : n.name;
       const dataFlag = isLowData ? `\n(⚠️ ${n.interaction_count || 1} ans)` : `\n(${n.interaction_count || 1} ans)`;
@@ -551,7 +571,7 @@ async function renderSkillGraph(studentId, sessionId) {
           }
         },
         font: {
-          color: '#ffffff',
+          color: bandObj ? bandObj.text : '#ffffff',
           size: 11,
           face: 'sans-serif',
           bold: { mod: 'bold' }
