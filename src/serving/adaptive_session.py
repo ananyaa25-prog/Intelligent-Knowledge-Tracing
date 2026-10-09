@@ -373,6 +373,14 @@ class AdaptiveSession:
         return [t for t in TOPIC_IDS if t not in self.asked_topics]
 
 
+def _calibration_active() -> bool:
+    try:
+        from serving.calibration import is_active
+        return is_active()
+    except Exception:
+        return False
+
+
 def _check_answer(submitted: Any, correct: Any) -> bool:
     if submitted is None:
         return False
@@ -426,6 +434,7 @@ class AdaptiveSessionManager:
                 "policy": sess.policy,
                 "session_mode": sess.session_mode,
                 "decision": q.get("decision"),
+                "calibration_applied": _calibration_active(),
             }
             if q["is_probe"]:
                 event["predicted_before_probe"] = q["predicted_p"]

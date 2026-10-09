@@ -39,6 +39,7 @@ from model import GatedKTModel
 from graph_encoder import adjacency_to_edge_index
 from train import compute_rt_stats
 from serving.session import session_manager
+from serving.calibration import maybe_calibrate
 from serving.adaptive_session import (
     AdaptiveSession, AdaptiveSessionManager, MAIN_QUESTIONS, TOPIC_BY_ID, TOPIC_IDS,
 )
@@ -318,7 +319,8 @@ def _predictor(history: List[Dict[str, Any]], candidates: List[tuple]) -> List[f
                 edge_index=artifacts.edge_index, edge_weight=artifacts.edge_weight,
             )
         for j, i in enumerate(valid_idx):
-            scores[i] = max(0.0, min(1.0, float(preds[j].item())))
+            # Optional temperature scaling (APPLY_CALIBRATION); identity when disabled.
+            scores[i] = max(0.0, min(1.0, maybe_calibrate(float(preds[j].item()))))
     return scores
 
 
