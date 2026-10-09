@@ -258,8 +258,19 @@
         <div id="classOverviewLegend" class="status-legend"></div>
         <div class="overview-scroll"><table id="classOverviewHeatmap" class="status-heatmap"></table></div>
         <p id="classOverviewCounts" class="small-note"></p>
-        <h3 class="section-h">Needs attention</h3>
-        <ul id="needsAttentionList" class="attention-list"></ul>
+        <div class="na-head">
+          <h3 class="section-h" style="margin: 0;">Needs attention</h3>
+          <div class="overview-toggle" role="group" aria-label="Group needs-attention by">
+            <button type="button" id="naByStudentBtn" class="active" aria-pressed="true">By student</button>
+            <button type="button" id="naByTopicBtn" aria-pressed="false">By topic</button>
+          </div>
+        </div>
+        <div id="naSummary" class="na-summary"></div>
+        <div id="naByStudent" class="na-grid"></div>
+        <div id="naByTopic" class="na-topics" style="display: none;"></div>
+        <button type="button" id="naShowAll" class="btn-secondary btn-sm" style="display: none; margin-top: 8px;"></button>
+        <!-- flat list kept for compatibility (hidden) -->
+        <ul id="needsAttentionList" class="attention-list" style="display: none;"></ul>
         <p class="small-note">Statuses are rule-based estimates from the model and the student's answers; suggestions are rule-based, for the teacher to judge.</p>
       </div>
     </div>

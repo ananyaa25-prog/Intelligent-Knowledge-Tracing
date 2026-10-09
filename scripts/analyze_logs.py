@@ -95,7 +95,7 @@ def analyze(events, cfg, include_all=False):
             helpful[pol].append(int(e["helpful"]))
 
     return {"n_events": len(events), "excluded_answers": excluded, "sessions": len(sessions),
-            "students": len(students), "answers": len(answers), "usable": len(rows),
+            "students": len(students), "student_ids": sorted(str(x) for x in students), "answers": len(answers), "usable": len(rows),
             "brier": brier(rows), "acc05": acc05(rows), "mean_p": (sum(p for p, _ in rows) / len(rows)) if rows else None,
             "mean_y": (sum(y for _, y in rows) / len(rows)) if rows else None,
             "reliability": rel, "by_level": by_level, "probes": probes,
@@ -129,8 +129,11 @@ def main():
     if not meaningful:
         L += [f"> **Not meaningful yet:** only {r['usable']} usable answers with a pre-answer prediction "
               f"(minimum {MIN_USABLE}). The numbers below are shown for completeness only and must not be used as evidence.", ""]
-    L += ["| Quantity | Value |", "|---|---|",
+    L += ["> Check the ids below: developer or tester accounts that do not match the exclusion pattern are included. "
+          "Only a planned pilot with pseudonymous ids (docs/PILOT_GUIDE.md) counts as evidence.", "",
+          "| Quantity | Value |", "|---|---|",
           f"| Students / sessions | {r['students']} / {r['sessions']} |",
+          f"| Student ids included | {', '.join(r['student_ids'][:30])}{' ...' if len(r['student_ids']) > 30 else ''} |",
           f"| Answers (all) / usable (non-probe, with prediction) | {r['answers']} / {r['usable']} |",
           f"| Brier score (lower is better; 0.25 = always 50%) | {fmt(r['brier'])} |",
           f"| Accuracy of (p >= 0.5) | {fmt(r['acc05'], True)} |",

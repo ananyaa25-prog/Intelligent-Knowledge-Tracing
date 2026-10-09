@@ -643,3 +643,22 @@ html, body { overflow-x: hidden; }
 .heatmap-container { overflow-x: auto; max-width: 100%; }
 .container .card { min-width: 0; max-width: 100%; }
 .overview-scroll { position: relative; } /* contain .sr-only labels inside the scroll box */
+
+/* Needs attention (grouped) */
+.na-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; margin: 22px 0 8px; }
+.na-summary { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
+.na-stat { background: var(--grey-50); border: 1px solid var(--border-color); border-radius: 999px; padding: 3px 10px; font-size: 0.8rem; }
+.na-stat.muted { color: var(--text-secondary); }
+.na-stat.ok { background: var(--good-bg); color: var(--good-text); border-color: var(--good); }
+.na-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 10px; }
+.na-card { background: #fff; border: 1px solid var(--border-color); border-left: 4px solid var(--bad); border-radius: 10px; padding: 10px 12px; min-width: 0; }
+.na-card-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 6px; overflow-wrap: anywhere; }
+.na-count { display: inline-block; background: var(--bad-bg); color: var(--bad-text); border-radius: 999px; padding: 0 8px; font-size: 0.74rem; font-weight: 700; white-space: nowrap; }
+.na-chips { display: flex; flex-wrap: wrap; gap: 5px; }
+.na-chip { font-size: 0.74rem; font-weight: 600; padding: 1px 8px; border-radius: 999px; border: 1.5px solid; }
+.na-sub { font-size: 0.74rem; color: var(--text-secondary); margin-top: 4px; }
+.na-action { font-size: 0.8rem; color: #1e293b; margin-top: 6px; }
+.na-table { border-collapse: collapse; width: 100%; font-size: 0.82rem; }
+.na-table th, .na-table td { text-align: left; padding: 8px; border-bottom: 1px solid var(--border-color); vertical-align: top; }
+.na-table th { color: var(--text-secondary); font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.04em; }
+.na-more { background: var(--grey-100); color: var(--neutral-text); border-color: var(--grey-300); }

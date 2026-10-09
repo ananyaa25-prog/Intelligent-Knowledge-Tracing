@@ -1,0 +1,101 @@
+{
+  "seed": 2026,
+  "students_per_policy": 150,
+  "elapsed_s": 69.1,
+  "profile_reliable": true,
+  "summary": {
+    "random": {
+      "inband_share": 0.38461538461538464,
+      "inband_ci": [
+        0.35794871794871796,
+        0.4123076923076923
+      ],
+      "status_accuracy": 0.4498567335243553,
+      "status_accuracy_ci": [
+        0.4142138888888889,
+        0.5060055555555555
+      ],
+      "status_within_one": 0.9045555555555556,
+      "coverage": 0.4653333333333332,
+      "answers_before_status": 2.0,
+      "topics_with_status": 698,
+      "ready_flags": 69,
+      "ready_precision": 0.6231884057971014,
+      "level_mix": {
+        "easy": 0.3323076923076923,
+        "medium": 0.34717948717948716,
+        "hard": 0.32051282051282054
+      },
+      "policy_fallbacks": 0,
+      "n_questions_scored": 1950
+    },
+    "staircase": {
+      "inband_share": 0.32564102564102565,
+      "inband_ci": [
+        0.28615384615384615,
+        0.36666666666666664
+      ],
+      "status_accuracy": 0.4033333333333333,
+      "status_accuracy_ci": [
+        0.3804388888888889,
+        0.46822777777777785
+      ],
+      "status_within_one": 0.8731111111111112,
+      "coverage": 0.4,
+      "answers_before_status": 2.0,
+      "topics_with_status": 600,
+      "ready_flags": 66,
+      "ready_precision": 0.5909090909090909,
+      "level_mix": {
+        "easy": 0.016923076923076923,
+        "medium": 0.5882051282051282,
+        "hard": 0.39487179487179486
+      },
+      "policy_fallbacks": 0,
+      "n_questions_scored": 1950
+    },
+    "model": {
+      "inband_share": 0.5764102564102564,
+      "inband_ci": [
+        0.5410256410256411,
+        0.6128333333333333
+      ],
+      "status_accuracy": 0.4558139534883721,
+      "status_accuracy_ci": [
+        0.41944444444444445,
+        0.5037833333333332
+      ],
+      "status_within_one": 0.9296666666666666,
+      "coverage": 0.4299999999999999,
+      "answers_before_status": 2.0,
+      "topics_with_status": 645,
+      "ready_flags": 72,
+      "ready_precision": 0.5694444444444444,
+      "level_mix": {
+        "easy": 0.6374358974358975,
+        "medium": 0.34,
+        "hard": 0.022564102564102566
+      },
+      "policy_fallbacks": 0,
+      "n_questions_scored": 1950
+    }
+  },
+  "paired_model_minus_staircase": {
+    "inband_share": [
+      0.2507766666666667,
+      [
+        0.20152791666666664,
+        0.30205875
+      ]
+    ],
+    "status_accuracy": [
+      0.036888000000000004,
+      [
+        -0.005445333333333329,
+        0.07978143333333332
+      ]
+    ]
+  },
+  "gate_s_model_policy": true,
+  "generated_at": "2026-10-09T05:01:19.046437+00:00"
+}

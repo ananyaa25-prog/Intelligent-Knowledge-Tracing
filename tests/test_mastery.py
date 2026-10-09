@@ -77,7 +77,7 @@ def test_mastered_requires_correct_hard():
     assert s == "mastered" and note is None
     e_wrong_hard = ev(it(204, "medium", 1), it(204, "hard", 0))
     s, _, note = reliable_status(e_wrong_hard, P(0.95, 0.9, 0.8), CFG)
-    assert s == "proficient" and "Hard" in note
+    assert s == "developing" and note  # evidence (1 of 2 correct) caps it far below the model's Mastered
     e_easy = ev(it(204, "easy", 1), it(204, "easy", 1))
     s, _, note = reliable_status(e_easy, P(0.95, 0.9, 0.8), CFG)
     assert s == "developing"  # downgraded twice: no hard correct, no medium/hard attempt
@@ -192,10 +192,14 @@ def test_evidence_conflict_moves_one_step_toward_answers():
     e = ev(it(204, "medium", 1), it(204, "medium", 1), it(204, "easy", 1), it(204, "medium", 1))
     s, ready, note = reliable_status(e, P(0.43, 0.23, 0.11), CFG)
     assert s == "developing" and "4 of 4" in note and ready is False
-    # 0/4 correct but high model estimate -> one level lower than the model says.
+    # 0/4 correct but high model estimate -> the evidence-only status (Needs support).
     e = ev(it(204, "medium", 0), it(204, "hard", 0), it(204, "medium", 0), it(204, "medium", 0))
     s, _, note = reliable_status(e, P(0.9, 0.8, 0.5), CFG)
-    assert s == "developing" and "0 of 4" in note
+    assert s == "needs_support" and "0 of 4" in note
+    # 4/4 including two correct Hard answers, very low model estimate -> Proficient (evidence Mastered, one step toward model).
+    e = ev(it(204, "medium", 1), it(204, "hard", 1), it(204, "medium", 1), it(204, "hard", 1))
+    s, _, note = reliable_status(e, P(0.43, 0.23, 0.11), CFG)
+    assert s == "proficient" and "4 of 4" in note
     # No conflict -> unchanged.
     e = ev(it(204, "easy", 0), it(204, "easy", 1))
     s, _, note = reliable_status(e, P(0.5, 0.3, 0.2), CFG)

@@ -1,0 +1,103 @@
+{
+  "seed": 2026,
+  "students_per_policy": 150,
+  "session_mode": "full10",
+  "topic_selection": "evidence_blend",
+  "elapsed_s": 43.0,
+  "profile_reliable": true,
+  "summary": {
+    "random": {
+      "inband_share": 0.3717948717948718,
+      "inband_ci": [
+        0.3420384615384615,
+        0.40307692307692305
+      ],
+      "status_accuracy": 0.4937694704049844,
+      "status_accuracy_ci": [
+        0.4661055555555556,
+        0.5575555555555555
+      ],
+      "status_within_one": 0.9424444444444445,
+      "coverage": 0.42799999999999994,
+      "answers_before_status": 2.0,
+      "topics_with_status": 642,
+      "ready_flags": 57,
+      "ready_precision": 0.5964912280701754,
+      "level_mix": {
+        "easy": 0.3353846153846154,
+        "medium": 0.3446153846153846,
+        "hard": 0.32
+      },
+      "policy_fallbacks": 0,
+      "n_questions_scored": 1950
+    },
+    "staircase": {
+      "inband_share": 0.4158974358974359,
+      "inband_ci": [
+        0.381025641025641,
+        0.4497564102564103
+      ],
+      "status_accuracy": 0.5278246205733558,
+      "status_accuracy_ci": [
+        0.5015333333333333,
+        0.5910027777777779
+      ],
+      "status_within_one": 0.9365555555555557,
+      "coverage": 0.39533333333333326,
+      "answers_before_status": 2.0,
+      "topics_with_status": 593,
+      "ready_flags": 54,
+      "ready_precision": 0.5185185185185185,
+      "level_mix": {
+        "easy": 0.2323076923076923,
+        "medium": 0.6235897435897436,
+        "hard": 0.1441025641025641
+      },
+      "policy_fallbacks": 0,
+      "n_questions_scored": 1950
+    },
+    "model": {
+      "inband_share": 0.44871794871794873,
+      "inband_ci": [
+        0.4102435897435897,
+        0.4882051282051282
+      ],
+      "status_accuracy": 0.5015822784810127,
+      "status_accuracy_ci": [
+        0.4681075396825396,
+        0.5634527777777778
+      ],
+      "status_within_one": 0.9363174603174604,
+      "coverage": 0.4213333333333333,
+      "answers_before_status": 2.0,
+      "topics_with_status": 632,
+      "ready_flags": 64,
+      "ready_precision": 0.546875,
+      "level_mix": {
+        "easy": 0.21846153846153846,
+        "medium": 0.7415384615384616,
+        "hard": 0.04
+      },
+      "policy_fallbacks": 0,
+      "n_questions_scored": 1950
+    }
+  },
+  "paired_model_minus_staircase": {
+    "inband_share": [
+      0.032820666666666665,
+      [
+        0.016923983333333337,
+        0.048716666666666665
+      ]
+    ],
+    "status_accuracy": [
+      -0.029588666666666666,
+      [
+        -0.06851628333333333,
+        0.007493666666666663
+      ]
+    ]
+  },
+  "gate_s_model_policy": true,
+  "generated_at": "2026-10-09T06:08:46.658419+00:00"
+}

@@ -158,7 +158,7 @@ def main():
     demo_env = PROJECT_ROOT / "demo.env"
     if "demo" in wanted and demo_env.exists():
         d = load_env_file(demo_env)
-        d = {k: v for k, v in d.items() if k in ("POLICY", "APPLY_CALIBRATION", "SESSION_MODE", "TARGET_P")}
+        d = {k: v for k, v in d.items() if k in ("POLICY", "APPLY_CALIBRATION", "SESSION_MODE", "TARGET_P", "TOPIC_SELECTION")}
         configs.append(("demo", d, {"policy": d.get("POLICY", "staircase"), "mode": d.get("SESSION_MODE", "full10")}))
     results = [run_config(*c) for c in configs]
     REPORTS_DIR.mkdir(exist_ok=True)

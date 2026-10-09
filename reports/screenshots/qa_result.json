@@ -1,5 +1,5 @@
 {
-  "base": "http://127.0.0.1:59589",
+  "base": "http://127.0.0.1:60030",
   "viewports": {
     "375": {
       "landing_overflow": {
@@ -51,8 +51,8 @@
       },
       "dashboard": {
         "overview_section": true,
-        "heatmap_rows": 8,
-        "attention_items": 11,
+        "heatmap_rows": 9,
+        "attention_items": 42,
         "empty_state": ""
       },
       "dashboard_sim": {
@@ -111,8 +111,8 @@
       },
       "dashboard": {
         "overview_section": true,
-        "heatmap_rows": 7,
-        "attention_items": 11,
+        "heatmap_rows": 8,
+        "attention_items": 38,
         "empty_state": ""
       },
       "dashboard_sim": {

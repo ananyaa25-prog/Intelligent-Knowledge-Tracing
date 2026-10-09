@@ -38,6 +38,7 @@ def main():
     ap.add_argument("--env-file", default=str(PROJECT_ROOT / "demo.env"))
     ap.add_argument("--defaults", action="store_true")
     ap.add_argument("--quiet", action="store_true")
+    ap.add_argument("--seed", type=int, default=None, help="seed for reproducible warm-up/question choices")
     args = ap.parse_args()
     from serving.policy_config import load_env_file
     sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -47,6 +48,10 @@ def main():
     os.environ["KT_LOG_PATH"] = str(tmp / "logs.jsonl")
     if not args.defaults:
         os.environ.update(load_env_file(args.env_file))
+    if args.seed is not None:
+        import random
+        random.seed(args.seed)
+        print(f"[seed] {args.seed}")
     from fastapi.testclient import TestClient
     import serving.inference_service as svc
 
@@ -96,6 +101,20 @@ def main():
             levels = [q["level"] for q, _ in rows]
             ps = [q["predicted_p"] for q, _ in rows if q["predicted_p"] is not None]
             summary[scenario] = {"statuses": statuses, "levels": levels, "max_p": max(ps) if ps else None, "min_p": min(ps) if ps else None}
+
+        # Returning student: second session of the strong student must predict from
+        # question 1 (no blind warm-up) and resume topics at their earlier level.
+        sid2 = client.post("/session/start", json={"student_id": "dry_strong", "source": "live"}).json()["session_id"]
+        q1 = client.post(f"/session/{sid2}/next", json={}).json()
+        if q1.get("predicted_p") is None:
+            findings.append("returning: first question of session 2 has no prediction")
+        if q1.get("level") == "easy":
+            findings.append("returning: strong student restarted at Easy in session 2")
+        print(f"=== returning strong student, session 2, Q1: {q1.get('skill_name')} {q1.get('level')} "
+              f"P={q1.get('predicted_p')} | {(q1.get('decision') or {}).get('reason', '')[:120]}")
+        done = svc.session_manager.db.get_session(sid)["completed_at"]
+        if not done:
+            findings.append("completed sessions are not marked completed")
 
     s, w, m = summary["strong"], summary["struggling"], summary["mixed"]
     if "hard" not in s["levels"]:

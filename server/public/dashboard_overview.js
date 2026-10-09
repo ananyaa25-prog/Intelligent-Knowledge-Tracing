@@ -57,10 +57,94 @@
     $('classOverviewCounts').textContent = `${students.length} student(s). Topic statuses: ` +
       STATUS_ORDER.filter(s => counts[s]).map(s => `${meta(s).label} ${counts[s]}`).join(', ');
     const att = data.needs_attention || [];
-    $('needsAttentionList').innerHTML = att.length
-      ? att.slice(0, 10).map(a => `<li><strong>${esc(a.student_id)}</strong> - ${esc(a.skill_name)}: ${esc(meta(a.status).label)} (${a.n_answers} answers). Suggestion: ${esc(a.recommended_action)}</li>`).join('')
-        + (att.length > 10 ? `<li style="border-left-color:#64748b">+ ${att.length - 10} more student-topic pairs flagged (most-evidence first; see the heatmap).</li>` : '')
-      : '<li style="border-left-color:#16a34a">No student-topic pair is currently flagged as Needs support.</li>';
+    $('needsAttentionList').innerHTML = att.map(a => `<li><strong>${esc(a.student_id)}</strong> - ${esc(a.skill_name)}: ${esc(meta(a.status).label)} (${a.n_answers} answers). Suggestion: ${esc(a.recommended_action)}</li>`).join('');
+    renderAttention(data);
+  }
+
+  // ---- Needs attention: grouped by student and by topic -------------------
+  let naMode = 'student';
+  let naShowAll = false;
+  let lastData = null;
+  const NA_LIMIT = 6;
+
+  function chip(status, text, title) {
+    const m = meta(status);
+    return `<span class="na-chip" style="background:${m.bg};color:${m.text};border-color:${m.fg}" title="${esc(title || '')}"><span aria-hidden="true">${m.icon}</span> ${esc(text)}</span>`;
+  }
+
+  function renderAttention(data) {
+    const names = {};
+    (data.skills || []).forEach(s => { names[s.skill_id] = s.name; });
+    const students = data.students || [];
+    const byStudent = students.map(st => {
+      const support = [];
+      const developing = [];
+      Object.entries(st.topics || {}).forEach(([tid, c]) => {
+        const item = { tid, name: names[tid] || `Topic ${tid}`, n: c.n_answers };
+        if (c.status === 'needs_support') support.push(item);
+        else if (c.status === 'developing') developing.push(item);
+      });
+      support.sort((x, y) => y.n - x.n);
+      return { id: st.student_id, support, developing };
+    }).filter(r => r.support.length > 0)
+      .sort((x, y) => y.support.length - x.support.length || x.id.localeCompare(y.id));
+
+    const byTopic = {};
+    students.forEach(st => Object.entries(st.topics || {}).forEach(([tid, c]) => {
+      const t = byTopic[tid] || (byTopic[tid] = { tid, name: names[tid] || `Topic ${tid}`, support: [], developing: 0, assessed: 0 });
+      if (c.status !== 'not_enough_evidence') t.assessed += 1;
+      if (c.status === 'needs_support') t.support.push(st.student_id);
+      if (c.status === 'developing') t.developing += 1;
+    }));
+    const topics = Object.values(byTopic).filter(t => t.support.length > 0)
+      .sort((x, y) => y.support.length - x.support.length);
+
+    const top = topics[0];
+    $('naSummary').innerHTML = byStudent.length
+      ? `<span class="na-stat"><strong>${byStudent.length}</strong> of ${students.length} student(s) need support on at least one topic</span>`
+        + (top ? `<span class="na-stat">Most common: <strong>${esc(top.name)}</strong> (${top.support.length} student${top.support.length === 1 ? '' : 's'})</span>` : '')
+        + '<span class="na-stat muted">A topic gets a status only after 2 answers</span>'
+      : '<span class="na-stat ok">No student-topic pair is currently rated Needs support.</span>';
+
+    const list = naShowAll ? byStudent : byStudent.slice(0, NA_LIMIT);
+    $('naByStudent').innerHTML = list.map(r => `
+      <div class="na-card">
+        <div class="na-card-head"><strong>${esc(r.id)}</strong>
+          <span class="na-count">${r.support.length} topic${r.support.length === 1 ? '' : 's'}</span></div>
+        <div class="na-chips">${r.support.slice(0, 4).map(t => chip('needs_support', `${t.name} (${t.n} ans)`, `${t.name}: ${t.n} answers`)).join('')}${r.support.length > 4 ? `<span class="na-chip na-more" title="${esc(r.support.slice(4).map(t => t.name).join(', '))}">+${r.support.length - 4} more</span>` : ''}</div>
+        ${r.developing.length ? `<div class="na-sub">Also developing: ${r.developing.map(t => esc(t.name)).join(', ')}</div>` : ''}
+        <div class="na-action">${r.support.length >= 5
+          ? 'Suggested (rule-based): broad review - most assessed topics need support; start with Easy practice on <strong>' + esc(r.support[0].name) + '</strong>.'
+          : 'Suggested (rule-based): Easy practice on <strong>' + esc(r.support[0].name) + '</strong>' + (r.support.length > 1 ? ' first, then the other ' + (r.support.length - 1) + '.' : '.')}</div>
+      </div>`).join('');
+
+    $('naByTopic').innerHTML = topics.length ? `<div class="overview-scroll"><table class="na-table"><thead><tr><th>Topic</th><th>Needs support</th><th>Developing</th><th>Suggested (rule-based)</th></tr></thead><tbody>${
+      topics.map(t => {
+        const share = t.assessed ? t.support.length / t.assessed : 0;
+        const action = (t.support.length >= 3 || share >= 0.3) ? 'Re-teach to the group' : 'Individual Easy practice';
+        return `<tr><td><strong>${esc(t.name)}</strong><div class="na-sub">${t.assessed} student(s) with a status</div></td>
+          <td><span class="na-count">${t.support.length}</span><div class="na-sub">${t.support.map(id => esc(id)).join(', ')}</div></td>
+          <td>${t.developing}</td><td>${action}</td></tr>`;
+      }).join('')}</tbody></table></div>` : '';
+
+    const btn = $('naShowAll');
+    if (naMode === 'student' && byStudent.length > NA_LIMIT) {
+      btn.style.display = 'inline-block';
+      btn.textContent = naShowAll ? 'Show fewer' : `Show all ${byStudent.length} students`;
+    } else {
+      btn.style.display = 'none';
+    }
+    $('naByStudent').style.display = naMode === 'student' ? 'grid' : 'none';
+    $('naByTopic').style.display = naMode === 'topic' ? 'block' : 'none';
+  }
+
+  function setNaMode(m) {
+    naMode = m;
+    $('naByStudentBtn').classList.toggle('active', m === 'student');
+    $('naByTopicBtn').classList.toggle('active', m === 'topic');
+    $('naByStudentBtn').setAttribute('aria-pressed', String(m === 'student'));
+    $('naByTopicBtn').setAttribute('aria-pressed', String(m === 'topic'));
+    if (lastData) renderAttention(lastData);
   }
 
   async function load() {
@@ -68,7 +152,8 @@
     try {
       const r = await fetch(`/api/class/overview?source=${encodeURIComponent(source)}`);
       if (!r.ok) throw new Error(`HTTP ${r.status}`);
-      render(await r.json());
+      lastData = await r.json();
+      render(lastData);
     } catch (e) {
       $('classOverviewBody').style.display = 'none';
       empty.style.display = 'block';
@@ -91,6 +176,9 @@
       if (!$('classOverviewCard')) return;
       $('overviewLiveBtn').addEventListener('click', () => setSource('live'));
       $('overviewSimBtn').addEventListener('click', () => setSource('sample'));
+      $('naByStudentBtn').addEventListener('click', () => setNaMode('student'));
+      $('naByTopicBtn').addEventListener('click', () => setNaMode('topic'));
+      $('naShowAll').addEventListener('click', () => { naShowAll = !naShowAll; if (lastData) renderAttention(lastData); });
       const refresh = $('refreshBtn');
       if (refresh) refresh.addEventListener('click', load);
       load();

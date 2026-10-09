@@ -1,6 +1,6 @@
 # GatedKT adaptive assessment
 
-GatedKT is a dynamic maths assessment built around a knowledge-tracing model. Before every question the model predicts the student's probability of answering correctly. That prediction chooses the next **topic**, and (in the demo configuration) the **difficulty level** (Easy / Medium / Hard). After each answer the student's history is updated. At the end the system shows a per-topic **mastery / readiness profile** (Not enough evidence / Needs support / Developing / Proficient / Mastered, plus "ready for harder questions"). Teachers see a class overview with a "Needs attention" list.
+GatedKT is a dynamic maths assessment built around a knowledge-tracing model. Before every question the model predicts the student's probability of answering correctly. That prediction (blended with the student's own record on each topic) chooses the next **topic**; the **difficulty level** (Easy / Medium / Hard) follows a staircase in the demo configuration, with an optional model-guided policy. Answers from earlier sessions carry over. After each answer the student's history is updated. At the end the system shows a per-topic **mastery / readiness profile** (Not enough evidence / Needs support / Developing / Proficient / Mastered, plus "ready for harder questions"). Teachers see a class overview with a grouped "Needs attention" panel.
 
 This is an **integrated, evaluated system built from standard parts** (knowledge tracing, a skill-relation graph, a learned gate, adaptive difficulty). It is not a new model architecture. See [docs/PROJECT_OVERVIEW.md](docs/PROJECT_OVERVIEW.md) for what is and is not new, and [docs/LIMITATIONS.md](docs/LIMITATIONS.md).
 
@@ -18,7 +18,7 @@ flowchart LR
   F --> L[(session_logs.jsonl)]
 ```
 
-Per question: history -> `predict_candidates` scores every eligible topic -> lowest predicted P(correct) topic is chosen -> level: staircase (default) or the level whose predicted P is closest to 70% (POLICY=model, with guardrails) -> the prediction is shown before answering -> answer stored -> next question. Every question carries a `decision` object with the numbers behind the choice, shown in the "How the system is adapting" panel and written to the log.
+Per question: history (all sessions) -> `predict_candidates` scores every eligible topic -> topic with the lowest estimate is chosen (model prediction, or blended with the student's record when TOPIC_SELECTION=evidence_blend) -> level: staircase (default and demo) or POLICY=model (allowed levels follow the student's answers; the one closest to 70% predicted success) -> the prediction is shown before answering -> answer stored -> next question. Every question carries a `decision` object with the numbers behind the choice, shown in the "How the system is adapting" panel and written to the log.
 
 ## Setup
 
@@ -42,7 +42,7 @@ cd server && npm ci && cd ..
 
 Then open `http://127.0.0.1:3000/` (quiz) and `http://127.0.0.1:3000/dashboard.html` (teacher view).
 
-`demo.env` was produced mechanically by `scripts/apply_gates.py` from pre-registered decision gates ([reports/DEMO_CONFIG.md](reports/DEMO_CONFIG.md)): `POLICY=model`, `APPLY_CALIBRATION=true`, `SESSION_MODE=core5`, `TARGET_P=0.70`. All settings are environment variables documented in `src/serving/policy_config.py`.
+`demo.env` was produced by `scripts/apply_gates.py` from the decision gates ([reports/DEMO_CONFIG.md](reports/DEMO_CONFIG.md)): `POLICY=staircase` (Gate S failed for the revised model policy), `APPLY_CALIBRATION=true`, `SESSION_MODE=core5`, `TOPIC_SELECTION=evidence_blend` (post hoc rule after user testing), `TARGET_P=0.70`. All settings are environment variables documented in `src/serving/policy_config.py`.
 
 Optional simulated demo students for the dashboard's "Simulated demo" view (clearly labelled, ids `sim_*`):
 
@@ -71,10 +71,13 @@ The legacy Node smoke tests (`server/tests/test_server.js`, `test_frontend_smoke
 | [reports/monotonicity.md](reports/monotonicity.md) | Does the model order Easy >= Medium >= Hard? |
 | [reports/calibration.md](reports/calibration.md) | Temperature scaling: Brier / ECE / AUC before and after |
 | [reports/simulation.md](reports/simulation.md) + [notes](reports/simulation_notes.md) | Random vs staircase vs model-guided difficulty on synthetic students |
+| [reports/answer_response.md](reports/answer_response.md) | How the prediction reacts to correct/wrong answers |
 | [reports/DEMO_CONFIG.md](reports/DEMO_CONFIG.md) | Gate decisions behind demo.env |
 | [reports/e2e_http_check.md](reports/e2e_http_check.md) | End-to-end API contract check through the real services |
-| [reports/pilot.md](reports/pilot.md) | Analysis of real session logs (currently "not meaningful yet") |
+| [reports/pilot.md](reports/pilot.md) | Analysis of real session logs (so far mostly developer/tester sessions; not pilot evidence) |
 | [reports/screenshots/](reports/screenshots/) | Browser QA screenshots at 1280px and 375px |
 | [ADAPTIVE_KT_REPORT.md](ADAPTIVE_KT_REPORT.md) | Earlier model work: retraining and AUC ablation |
 
 Documentation: [PROJECT_OVERVIEW](docs/PROJECT_OVERVIEW.md) · [DEMO_SCRIPT](docs/DEMO_SCRIPT.md) · [VIVA_QA](docs/VIVA_QA.md) · [LIMITATIONS](docs/LIMITATIONS.md) · [PILOT_GUIDE](docs/PILOT_GUIDE.md) · [DECISIONS](docs/DECISIONS.md) · [ARCHITECTURE_NOTES](docs/ARCHITECTURE_NOTES.md) · [BUILD_LOG](docs/BUILD_LOG.md)
+
+Rehearsal: `.venv/Scripts/python scripts/dry_run.py --seed 1` plays a strong, a struggling, a mixed and a returning student through the real API on a temporary database.

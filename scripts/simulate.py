@@ -77,13 +77,13 @@ def make_students(n, seed, topic_ids):
     return out
 
 
-def run_one(svc, student, policy, seed, cfg, topics, reliable):
+def run_one(svc, student, policy, seed, cfg, topics, reliable, session_mode="full10", topic_selection="model"):
     from serving.adaptive_session import AdaptiveSession
     from serving.mastery import build_profile, STATUS_ORDER
     random.seed(seed * 100003 + student["idx"])           # same topic randomness across policies
     ans_rng = random.Random(seed * 7919 + student["idx"])  # same answer stream across policies
     sess = AdaptiveSession(f"sim-{policy}-{student['idx']}", f"simstu_{student['idx']}",
-                           policy=policy, session_mode="full10")
+                           policy=policy, session_mode=session_mode, topic_selection=topic_selection)
     served = []
     while True:
         q = sess.next_question(svc._predictor)
@@ -122,7 +122,11 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--students", type=int, default=150)
     ap.add_argument("--seed", type=int, default=2026)
+    ap.add_argument("--session-mode", default="full10", choices=["full10", "core5"])
+    ap.add_argument("--topic-selection", default="model", choices=["model", "evidence_blend"])
+    ap.add_argument("--tag", default="", help="suffix for output files (main report when empty)")
     args = ap.parse_args()
+    sfx = f"_{args.tag}" if args.tag else ""
     seed_everything(args.seed)
     t0 = time.time()
 
@@ -138,7 +142,7 @@ def main():
     per = {p: [] for p in POLICIES}
     for s in students:
         for p in POLICIES:
-            per[p].append(run_one(svc, s, p, args.seed, cfg, topics, reliable))
+            per[p].append(run_one(svc, s, p, args.seed, cfg, topics, reliable, args.session_mode, args.topic_selection))
     elapsed = time.time() - t0
 
     # ---- aggregate --------------------------------------------------------
@@ -215,15 +219,16 @@ def main():
                   and summary["model"]["status_accuracy"] >= summary["staircase"]["status_accuracy"] - 0.03)
 
     REPORTS_DIR.mkdir(exist_ok=True)
-    with open(REPORTS_DIR / "simulation.csv", "w", newline="", encoding="utf-8") as f:
+    with open(REPORTS_DIR / f"simulation{sfx}.csv", "w", newline="", encoding="utf-8") as f:
         w = csv.DictWriter(f, fieldnames=list(csv_rows[0].keys()))
         w.writeheader()
         w.writerows(csv_rows)
-    out = {"seed": args.seed, "students_per_policy": args.students, "elapsed_s": round(elapsed, 1),
+    out = {"seed": args.seed, "students_per_policy": args.students, "session_mode": args.session_mode,
+           "topic_selection": args.topic_selection, "elapsed_s": round(elapsed, 1),
            "profile_reliable": reliable, "summary": summary,
            "paired_model_minus_staircase": {"inband_share": diff_inband, "status_accuracy": diff_acc},
            "gate_s_model_policy": gate_s, "generated_at": datetime.now(timezone.utc).isoformat()}
-    (REPORTS_DIR / "simulation_summary.json").write_text(json.dumps(out, indent=2), encoding="utf-8")
+    (REPORTS_DIR / f"simulation_summary{sfx}.json").write_text(json.dumps(out, indent=2), encoding="utf-8")
 
     # ---- charts -------------------------------------------------------------
     import matplotlib
@@ -242,7 +247,7 @@ def main():
     ax.set_title(f"Difficulty fit by policy ({args.students} paired synthetic students each)")
     ax.legend(fontsize=8)
     plt.tight_layout()
-    plt.savefig(REPORTS_DIR / "simulation_inband.png", dpi=130)
+    plt.savefig(REPORTS_DIR / f"simulation_inband{sfx}.png", dpi=130)
     plt.close(fig)
 
     fig, ax = plt.subplots(figsize=(8, 4.2))
@@ -262,7 +267,7 @@ def main():
     ax.set_title("Simulation metrics by policy (synthetic students; decision logic only)")
     ax.legend(fontsize=8)
     plt.tight_layout()
-    plt.savefig(REPORTS_DIR / "simulation_status.png", dpi=130)
+    plt.savefig(REPORTS_DIR / f"simulation_status{sfx}.png", dpi=130)
     plt.close(fig)
 
     # ---- report ---------------------------------------------------------------
@@ -273,7 +278,9 @@ def main():
 
     L = ["# Policy simulation (T6)", "",
          f"Generated {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC')} by `scripts/simulate.py` "
-         f"(seed {args.seed}, {args.students} paired synthetic students per policy, {elapsed:.0f}s).",
+         f"(seed {args.seed}, {args.students} paired synthetic students per policy, {elapsed:.0f}s). "
+         f"Session mode {args.session_mode}, topic selection {args.topic_selection}; level rules as in "
+         "adaptive_session.py (revised D27).",
          "",
          "> **Scope.** Synthetic students are NOT drawn from the model's training distribution (ASSISTments). "
          "This validates the decision logic (which level gets served, how statuses are assigned) only. It says "
@@ -315,8 +322,8 @@ def main():
          f"{cfg.min_answers} answers, so metric 3 equals {cfg.min_answers} by construction; what differs between "
          "policies is coverage (2c), i.e. how many topics reach that many answers.",
          "",
-         "![in-band](simulation_inband.png)", "", "![metrics](simulation_status.png)", ""]
-    (REPORTS_DIR / "simulation.md").write_text("\n".join(L), encoding="utf-8")
+         f"![in-band](simulation_inband{sfx}.png)", "", f"![metrics](simulation_status{sfx}.png)", ""]
+    (REPORTS_DIR / f"simulation{sfx}.md").write_text("\n".join(L), encoding="utf-8")
     print(json.dumps({p: {k: summary[p][k] for k in ["inband_share", "status_accuracy", "coverage", "ready_precision"]} for p in POLICIES}, indent=1))
     print(f"[simulate] Gate S = {gate_s}; elapsed {elapsed:.0f}s")
 

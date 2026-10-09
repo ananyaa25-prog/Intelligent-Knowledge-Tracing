@@ -80,19 +80,34 @@ def test_model_picks_level_closest_to_target():
     assert lvl == "medium"
 
 
-def test_model_guardrail_hard_locked():
+def test_model_after_wrong_never_harder_and_hard_locked():
     s = _session_at("model", [(U, "medium", 1), (T, "medium", 0)], levels={T: "medium"})
     lvl, cand, guard, fb = s._decide_level(T, level_pred({1: 0.95, 2: 0.9, 3: 0.7}))
-    assert lvl != "hard" and guard == "hard_locked"
-    s2 = _session_at("model", [(U, "medium", 1), (T, "easy", 1)], levels={T: "medium"})
+    assert lvl in ("easy", "medium") and lvl != "hard"
+    s2 = _session_at("model", [(U, "medium", 1), (T, "hard", 0)])
     lvl, _, guard, _ = s2._decide_level(T, level_pred({1: 0.95, 2: 0.9, 3: 0.7}))
-    assert lvl == "medium" and guard == "hard_locked"  # never tested at medium/hard yet
+    assert lvl == "medium" and guard == "hard_locked"  # last Medium/Hard answer on T was wrong
 
 
-def test_model_guardrail_two_wrong_steps_down():
-    s = _session_at("model", [(T, "medium", 0), (U, "easy", 1), (T, "medium", 0)], levels={T: "medium"})
-    lvl, _, guard, _ = s._decide_level(T, level_pred({1: 0.2, 2: 0.7, 3: 0.69}))
-    assert lvl == "easy" and guard == "step_down_after_two_wrong"
+def test_model_first_question_on_topic_is_medium():
+    s = _session_at("model", [(U, "medium", 1), (U, "medium", 1)])
+    lvl, _, guard, _ = s._decide_level(T, level_pred({1: 0.7, 2: 0.2, 3: 0.1}))
+    assert (lvl, guard) == ("medium", "first_question_on_topic")
+
+
+def test_model_never_easier_after_correct():
+    s = _session_at("model", [(U, "medium", 1), (T, "medium", 1)])
+    lvl, *_ = s._decide_level(T, level_pred({1: 0.7, 2: 0.3, 3: 0.1}))
+    assert lvl in ("medium", "hard")  # easy would be closest to 70% but is not allowed
+
+
+def test_model_two_correct_step_up_reaches_hard():
+    s = _session_at("model", [(T, "easy", 1), (U, "medium", 1), (T, "easy", 1)])
+    lvl, _, guard, _ = s._decide_level(T, level_pred({1: 0.7, 2: 0.3, 3: 0.1}))
+    assert (lvl, guard) == ("medium", "step_up_after_two_correct")
+    s = _session_at("model", [(T, "medium", 1), (U, "medium", 1), (T, "medium", 1)])
+    lvl, _, guard, _ = s._decide_level(T, level_pred({1: 0.9, 2: 0.6, 3: 0.2}))
+    assert (lvl, guard) == ("hard", "step_up_after_two_correct")
 
 
 def test_model_falls_back_to_staircase_on_predictor_failure():
@@ -191,3 +206,66 @@ def test_full10_total_questions_and_probe_log_key():
     assert all("policy" in e and "decision" in e and e["student_id"] == "u" for e in qev)
     probe_ev = [e for e in qev if e["is_probe"]]
     assert all("predicted_before_probe" in e for e in probe_ev)
+
+
+def _prior(items):
+    return [{"skill_id": t, "correct": c, "level": l, "difficulty_bucket": {"easy": 1, "medium": 2, "hard": 3}[l],
+             "response_time_ms": 4000.0, "attempt_count": 1, "hint_used": 0} for t, l, c in items]
+
+
+def test_prior_history_removes_warmup_and_feeds_predictor():
+    seen = []
+
+    def pred(h, c):
+        seen.append(len(h))
+        return [0.5] * len(c)
+    random.seed(1)
+    s = AdaptiveSession("s", "u", prior_history=_prior([(T, "medium", 1), (U, "medium", 0), (T, "hard", 1)]))
+    q = s.next_question(pred)
+    assert q["predicted_p"] is not None and q["position"] == 1  # no blind warm-up for a returning student
+    assert seen and min(seen) == 3                               # predictor saw the 3 earlier answers
+    assert s.levels[T] == "hard"                                 # staircase resumed from earlier sessions
+
+
+def test_prior_history_ignored_when_empty_keeps_old_behaviour():
+    expected = json.loads(TRACE.read_text(encoding="utf-8"))
+    out = []
+    for seed in (1, 2, 3):
+        random.seed(seed)
+        s = AdaptiveSession("s", "u", prior_history=[])
+        k = 0
+        while True:
+            q = s.next_question(trace_predictor)
+            if q is None:
+                break
+            s.record_answer(q["correct_answer"] if (k * 5 + seed) % 3 else "wrong", 1000.0)
+            out.append([seed, q["topic"], q["level"], q["predicted_p"], q["is_probe"]])
+            k += 1
+    assert out == expected
+
+
+def test_no_repeated_question_text_within_session():
+    for seed in range(6):
+        random.seed(seed)
+        s = AdaptiveSession("s", "u", policy="model", session_mode="core5")
+        texts = []
+        while True:
+            q = s.next_question(level_pred({1: 0.8, 2: 0.6, 3: 0.4}))
+            if q is None:
+                break
+            texts.append(q["question_text"])
+            s.record_answer(q["correct_answer"], 1000.0)
+        assert len(texts) == len(set(texts)), [t for t in texts if texts.count(t) > 1]
+
+
+def test_strong_student_reaches_hard_under_model_policy():
+    random.seed(7)
+    s = AdaptiveSession("s", "u", policy="model", session_mode="core5")
+    levels = []
+    while True:
+        q = s.next_question(level_pred({1: 0.45, 2: 0.25, 3: 0.1}))  # pessimistic model
+        if q is None:
+            break
+        levels.append(q["level"])
+        s.record_answer(q["correct_answer"], 1000.0)
+    assert "hard" in levels

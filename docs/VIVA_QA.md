@@ -12,10 +12,10 @@ The full gated model reaches 0.8950 validation AUC vs 0.8915 for DKT-only (mean 
 graph_no_gate scored 0.8900, below DKT-only. Averaging the graph signal in with equal weight seems to add noise. Only with the learned gate, which can down-weight it, does the combined model come out ahead. We report it as a negative result.
 
 **4. How do you know the prediction is actually used?**
-The topic is chosen as the lowest predicted P among eligible topics, and in the demo configuration the level is the one whose predicted P is closest to 70%. Each question's `decision` object (topic scores, level predictions, chosen level, reason) is returned by `/next`, shown in the UI and written to the log. The end-to-end check asserts it on every question. (reports/e2e_http_check.md)
+The topic is chosen as the one with the lowest estimate among eligible topics (in the demo, the model's prediction blended with the student's own record on that topic). The prediction shown is made before the student answers. Each question's `decision` object (topic scores, model scores, level predictions, chosen level, reason) is returned by `/next`, shown in the UI and written to the log. The end-to-end check asserts it on every question. Difficulty in the demo follows the staircase, because the model-guided version failed Gate S. (reports/e2e_http_check.md, reports/DEMO_CONFIG.md)
 
 **5. How do you know the system works?**
-We know the parts behave as designed: contract checks pass end-to-end; the model orders difficulty correctly (0.0% violations); calibration improves on held-out data; and on synthetic students the model policy serves more suitably difficult questions. We do **not** know that it helps real students learn; that needs a pilot and a proper study.
+We know the parts behave as designed: contract checks pass end-to-end; scripted dry runs (strong, struggling, mixed, returning student) behave sensibly; the model orders difficulty correctly (0.0% violations) and moves in the right direction after answers; and calibration improves on held-out data. We do **not** know that it helps real students learn; that needs a pilot and a proper study.
 
 **6. Why target a 70% predicted success rate?**
 It is a design choice: high enough to keep students from failing most questions, low enough to keep questions informative. It was fixed before the simulation and not tuned afterwards. It is configurable (TARGET_P).
@@ -30,7 +30,7 @@ Also design choices. 70% is a common "can usually do it" threshold. 2 answers is
 It is shown as a probability with "not a verdict" wording. Guardrails limit the damage: two wrong answers in a row on a topic force a step down; Hard requires a correct Medium/Hard answer first; on any model failure the staircase takes over. Statuses also require observed evidence, not just predictions.
 
 **10. How accurate are the status labels?**
-Not very, as exact labels: 40-46% exact agreement with the synthetic ground truth, about 87-93% within one step (reports/simulation.md). That is why the UI calls them rule-based estimates, shows the answer count and offers suggestions rather than verdicts.
+Not very, as exact labels: about 46-53% exact agreement with the synthetic ground truth, about 93-94% within one step (reports/simulation*.md). That is why the UI calls them rule-based estimates, shows the answer count and offers suggestions rather than verdicts. The status also never goes above what the student's own answers support (D30).
 
 **11. What does "Mastered" mean here?**
 The model's predicted P at Hard is at least 70% **and** the student answered at least one Hard question correctly, with at least 2 answers on the topic. If the model estimate is high but the evidence is missing, the status is downgraded and an evidence note says why. It is never shown without that evidence.
@@ -41,8 +41,8 @@ We checked that the model orders difficulty correctly: 0 violations in 600 valid
 **13. The simulation's synthetic students are not real. Why trust it?**
 Only for what it can show: given students whose true success follows a known curve, does the decision logic serve suitable questions and assign sensible statuses? It cannot show learning gains or real-student accuracy, and the report says so.
 
-**14. Model-guided difficulty served Easy 64% of the time. Isn't that a problem?**
-Possibly. The predictor's estimates for these synthetic histories were mostly below 70% at Medium, so Easy was closest to the target. More questions landed in the target band (57.6% vs 32.6%), but whether real students would get mostly Easy questions is unknown. A pilot is needed.
+**14. Why did you drop model-guided difficulty from the demo?**
+The first version picked the level whose predicted success was closest to 70%. The model's estimates for short quiz histories are mostly below 70%, so it chose Easy 64% of the time. That looked good in simulation (57.6% in-band), but a real tester got correct answers and stayed on Easy, never reaching Hard. We revised the rules so the level follows the student's answers (never easier after a correct answer, step up after two correct). Re-run with the same pre-registered gate, the model policy's status accuracy (48.1%) was more than 3 points below the staircase's (51.5%), so Gate S failed and the demo uses the staircase. We report both runs. (reports/simulation_notes.md)
 
 **15. Why does the staircase almost never serve Easy (2%)?**
 Topic selection always picks the lowest predicted success at each topic's *current* level. Once a topic drops to Easy its predicted success rises, so it is rarely chosen again. This is a property of the original design, which we kept unchanged as required; we report it as a weakness. (reports/simulation_notes.md)
@@ -72,10 +72,10 @@ Ids are free text with no login. We recommend pseudonymous ids with the mapping 
 Tests and evaluation scripts run on temporary copies of the DB and log. Analytics exclude ids matching a test pattern. Simulated demo students are tagged `sim_`/`sample` and shown only behind a clearly labelled toggle. The pattern can still miss oddly named test accounts (the live DB contains some).
 
 **24. What evidence do you have from real teachers or students?**
-None yet. There is no teacher quote and no pilot result. The current real log has 26 usable answers, which the analysis script flags as "not meaningful yet".
+None yet. There is no teacher quote and no pilot result. The current log has 62 usable answers, but almost all from developer/tester sessions (ids such as 10, 12, 88109-ak), not a pilot sample; one tester's feedback did lead to concrete fixes (question 30 and docs/DECISIONS.md D27-D31).
 
 **25. Why were the demo settings chosen?**
-By four gates written before the results: M (difficulty ordering), S (model policy not worse than the staircase in simulation), C (calibration improves ECE by >= 10% without changing AUC), K (core5 passes end-to-end). All four passed with the numbers in reports/DEMO_CONFIG.md. If any had failed, the default would have been used.
+By four gates written before the results: M (difficulty ordering), S (model policy not worse than the staircase in simulation), C (calibration improves ECE by >= 10% without changing AUC), K (core5 passes end-to-end). M, C and K pass; S fails with the revised model rules, so difficulty uses the staircase. One extra rule (T: blended topic selection) was added after user testing and is labelled as post hoc. (reports/DEMO_CONFIG.md)
 
 **26. Did you tune anything after seeing results?**
 No policy parameter or threshold was changed after the simulation. One process correction: the first simulation run used 75 students because of a wrong timing estimate; it was re-run at the specified 150 and only that run is reported (docs/DECISIONS.md D21).
@@ -85,3 +85,9 @@ Run the pilot; get a teacher's feedback on the dashboard; use cumulative history
 
 **28. Which model checkpoint is served?**
 `best_full_gated.pt`, byte-identical to the seed-42 full gated checkpoint. No retraining was done in this work.
+
+**29. Is the percentage shown before each question correct? It sometimes drops after I answer correctly.**
+It is the model's estimate for *the next* question's topic and level. Two effects make it drop: (1) the next question is deliberately on the topic you currently find hardest, so it usually shows a lower number than the topic you just got right; (2) for a topic you have not answered yet, the model's estimate is unreliable (about 0.97 at Easy, then it settles to a skill-specific value after one answer). In like-for-like comparisons a correct answer gives a higher prediction than a wrong one in about 95-97% of validation cases. (reports/answer_response.md)
+
+**30. Does a returning student start from scratch?**
+No (fixed after user testing). Answers from earlier sessions feed every prediction from question 1, each topic resumes at its previous level, and finished sessions are marked completed so they appear in the teacher's matrix.
