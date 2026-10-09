@@ -21,11 +21,17 @@ The level reacts ONLY to the actual answer (never to the prediction) under the
 default POLICY=staircase. Optional policies (see policy_config.py):
 
 - POLICY=model: topic selection is unchanged; for the chosen topic the level is
-  picked among {current level, one step down, one step up} as the level whose
-  predicted P(correct) is closest to TARGET_P, with guardrails (two consecutive
-  wrong answers on the topic force one step down; Hard only after the topic's
-  last Medium/Hard answer was correct). Any predictor failure falls back to the
-  staircase.
+  picked as the allowed level whose predicted P(correct) is closest to TARGET_P.
+  Allowed levels follow the student's answers on that topic (rules revised after
+  user testing, docs/DECISIONS.md D27): the first question on a topic is Medium;
+  after a correct answer the level never gets easier ({same, one up}); after a
+  wrong answer it never gets harder ({one down, same}); two correct in a row
+  force one step up, two wrong in a row force one step down; Hard only after the
+  topic's last Medium/Hard answer was correct. Any predictor failure falls back
+  to the staircase.
+- Cross-session history (D28): answers from the student's previous sessions
+  (prior_history) are used for every prediction and to resume each topic's
+  level, so a returning student gets no blind warm-up.
 - POLICY=random: uniform random level (evaluation baseline only).
 - SESSION_MODE=core5: main questions only from CORE_TOPICS (max 4 per topic),
   other topics only via probes + graph predictions.
@@ -41,7 +47,9 @@ from datetime import datetime, timezone
 from typing import Any, Dict, List, Optional, Tuple
 
 from serving.question_templates import generate_question, LEVEL_TO_BUCKET
-from serving.policy_config import get_config, CORE5_MAX_PER_TOPIC, CORE5_TOTAL_QUESTIONS
+BUCKET_TO_LEVEL = {1: "easy", 2: "medium", 3: "hard"}
+from serving.policy_config import (get_config, CORE5_MAX_PER_TOPIC, CORE5_TOTAL_QUESTIONS,
+                                   EVIDENCE_PRIOR_WEIGHT)
 
 LEVEL_INDEX = {"easy": 0, "medium": 1, "hard": 2}
 LEVEL_NAMES = ["easy", "medium", "hard"]
@@ -75,7 +83,9 @@ class AdaptiveSession:
 
     def __init__(self, session_id: str, student_id: str, policy: Optional[str] = None,
                  session_mode: Optional[str] = None, target_p: Optional[float] = None,
-                 core_topics: Optional[List[int]] = None):
+                 core_topics: Optional[List[int]] = None,
+                 prior_history: Optional[List[Dict[str, Any]]] = None,
+                 topic_selection: Optional[str] = None):
         self.session_id = session_id
         self.student_id = student_id
         cfg = get_config()
@@ -92,7 +102,9 @@ class AdaptiveSession:
             self.max_per_topic = MAX_PER_TOPIC
             self.main_questions = MAIN_QUESTIONS
         self.last_topic_scores: Dict[int, float] = {}
+        self.last_topic_model_scores: Dict[int, float] = {}
         self.policy_fallbacks = 0
+        self.topic_selection = topic_selection or cfg.topic_selection
         self.levels: Dict[int, str] = {t: "medium" for t in TOPIC_IDS}
         self.topic_count: Dict[int, int] = {t: 0 for t in TOPIC_IDS}
         self.asked_topics: set = set()
@@ -100,6 +112,15 @@ class AdaptiveSession:
         self.pending: Optional[Dict[str, Any]] = None
         self.probe_queue: List[int] = []
         self.phase = "main"   # "main" -> "probe" -> "done"
+        # Answers from the student's earlier sessions (oldest first); used for
+        # predictions and to resume each topic's level. Empty = old behaviour.
+        self.prior_history: List[Dict[str, Any]] = []
+        for it in (prior_history or []):
+            norm = _normalise_item(it)
+            if norm is not None:
+                self.prior_history.append(norm)
+        for it in self.prior_history:
+            self._replay_level(int(it["topic"]), it)
 
     # ---- persistence ------------------------------------------------------
 
@@ -115,17 +136,23 @@ class AdaptiveSession:
             correct = int(it["correct"])
             s.topic_count[topic] = s.topic_count.get(topic, 0) + 1
             s.asked_topics.add(topic)
-            if s.policy != "staircase" and it.get("level") in LEVEL_INDEX:
-                s.levels[topic] = it["level"]  # non-staircase: step from the served level
-            cur = s.levels[topic]
-            idx = LEVEL_INDEX[cur]
-            if correct:
-                idx = min(idx + 1, 2)
-            else:
-                idx = max(idx - 1, 0)
-            s.levels[topic] = LEVEL_NAMES[idx]
+            s._replay_level(topic, it)
             s.history.append(it)
         return s
+
+    def _replay_level(self, topic: int, it: Dict[str, Any]) -> None:
+        """Apply one stored answer to the topic's level state (same rule as record_answer)."""
+        if topic not in self.levels:
+            return
+        if self.policy != "staircase" and _item_level(it) in LEVEL_INDEX:
+            self.levels[topic] = _item_level(it)  # non-staircase: step from the served level
+        idx = LEVEL_INDEX[self.levels[topic]]
+        idx = min(idx + 1, 2) if int(it["correct"]) else max(idx - 1, 0)
+        self.levels[topic] = LEVEL_NAMES[idx]
+
+    def context(self) -> List[Dict[str, Any]]:
+        """History the predictor sees: earlier sessions + this session."""
+        return self.prior_history + self.history if self.prior_history else self.history
 
     # ---- selection --------------------------------------------------------
 
@@ -146,10 +173,22 @@ class AdaptiveSession:
         candidates = [(t, LEVEL_TO_BUCKET[self.levels[t]]) for t in eligible]
         self.last_topic_scores = {}
 
-        if predictor is not None and len(self.history) >= 2 and candidates:
-            scores = predictor(self.history, candidates)
-            self.last_topic_scores = {c[0]: float(sc) for c, sc in zip(candidates, scores)}
-            idx = int(min(range(len(scores)), key=lambda i: scores[i]))
+        if predictor is not None and len(self.context()) >= 2 and candidates:
+            scores = predictor(self.context(), candidates)
+            self.last_topic_model_scores = {c[0]: float(sc) for c, sc in zip(candidates, scores)}
+            rank = list(scores)
+            if self.topic_selection == "evidence_blend":
+                # D31: combine the model prediction with the student's own record on
+                # each topic, so topics answered correctly are not re-drilled while a
+                # topic answered wrongly is revisited.
+                ctx = self.context()
+                rank = []
+                for (t, _), sc in zip(candidates, scores):
+                    th = [h for h in ctx if _item_topic(h) == t]
+                    n_c = sum(int(h["correct"]) for h in th)
+                    rank.append((EVIDENCE_PRIOR_WEIGHT * float(sc) + n_c) / (EVIDENCE_PRIOR_WEIGHT + len(th)))
+            self.last_topic_scores = {c[0]: float(r) for c, r in zip(candidates, rank)}
+            idx = int(min(range(len(rank)), key=lambda i: rank[i]))
             topic = candidates[idx][0]
             return topic, self.levels[topic], float(scores[idx])
 
@@ -160,32 +199,42 @@ class AdaptiveSession:
 
     def _score_levels(self, topic: int, predictor) -> Dict[str, float]:
         """P(correct) for the topic at easy/medium/hard (one predictor call)."""
-        if predictor is None or len(self.history) < 2:
+        if predictor is None or len(self.context()) < 2:
             return {}
         cands = [(topic, LEVEL_TO_BUCKET[lvl]) for lvl in LEVEL_NAMES]
-        scores = predictor(self.history, cands)
+        scores = predictor(self.context(), cands)
         return {lvl: float(sc) for lvl, sc in zip(LEVEL_NAMES, scores)}
 
     def _model_level(self, topic: int, scores: Dict[str, float]) -> Tuple[str, Optional[str]]:
-        """Pick the level whose predicted P is closest to target_p among the
-        current level and one step down/up, after guardrails. Returns
-        (level, guardrail_name_or_None)."""
-        base = LEVEL_INDEX[self.levels[topic]]
-        allowed = sorted({max(base - 1, 0), base, min(base + 1, 2)})
-        topic_hist = [h for h in self.history if int(h["topic"]) == topic]
+        """Pick the allowed level whose predicted P is closest to target_p.
+        Allowed levels follow the student's answers on this topic (D27).
+        Returns (level, guardrail_name_or_None)."""
+        topic_hist = [h for h in self.context() if _item_topic(h) == topic]
+        # G0: first question on a topic is Medium (no answers on it yet; the
+        # model's estimate for an unseen topic is unreliable, reports/answer_response.md).
+        if not topic_hist:
+            return "medium", "first_question_on_topic"
+        last = topic_hist[-1]
+        last_idx = LEVEL_INDEX.get(_item_level(last) or "medium", 1)
+        if int(last["correct"]):
+            allowed = sorted({last_idx, min(last_idx + 1, 2)})   # never easier after a correct answer
+        else:
+            allowed = sorted({max(last_idx - 1, 0), last_idx})   # never harder after a wrong answer
         guard = None
-        # G1: two consecutive wrong answers on this topic force one step down.
-        if len(topic_hist) >= 2 and int(topic_hist[-1]["correct"]) == 0 and int(topic_hist[-2]["correct"]) == 0:
-            last_idx = LEVEL_INDEX.get(topic_hist[-1].get("level"), base)
-            allowed = [max(last_idx - 1, 0)]
-            guard = "step_down_after_two_wrong"
+        if len(topic_hist) >= 2 and int(topic_hist[-2]["correct"]) == int(last["correct"]):
+            if int(last["correct"]):
+                allowed = [min(last_idx + 1, 2)]                  # G3: two correct in a row -> step up
+                guard = "step_up_after_two_correct"
+            else:
+                allowed = [max(last_idx - 1, 0)]                  # G1: two wrong in a row -> step down
+                guard = "step_down_after_two_wrong"
         # G2: Hard only if the topic's last Medium/Hard answer was correct.
-        mh = [h for h in topic_hist if h.get("level") in ("medium", "hard")]
+        mh = [h for h in topic_hist if _item_level(h) in ("medium", "hard")]
         hard_ok = bool(mh) and int(mh[-1]["correct"]) == 1
         if not hard_ok and 2 in allowed:
             allowed = [i for i in allowed if i != 2] or [1]
             guard = guard or "hard_locked"
-        best = min(allowed, key=lambda i: (abs(scores[LEVEL_NAMES[i]] - self.target_p), i != base, i))
+        best = min(allowed, key=lambda i: (abs(scores[LEVEL_NAMES[i]] - self.target_p), i != last_idx, i))
         return LEVEL_NAMES[best], guard
 
     def _decide_level(self, topic: int, predictor) -> Tuple[str, Dict[str, float], Optional[str], bool]:
@@ -224,7 +273,13 @@ class AdaptiveSession:
             parts.append(f"Probe on '{name}', a topic not asked yet"
                          + (f"; predicted {pct(p)} recorded before answering to check the related-topic prediction." if p is not None else "."))
         else:
-            if self.last_topic_scores:
+            if self.last_topic_scores and self.topic_selection == "evidence_blend":
+                th = [h for h in self.context() if _item_topic(h) == topic]
+                n_c = sum(int(h["correct"]) for h in th)
+                parts.append(f"Topic '{name}' had the lowest combined estimate ({pct(self.last_topic_scores[topic])}: model "
+                             f"{pct(self.last_topic_model_scores[topic])} combined with {n_c} of {len(th)} earlier answers on it "
+                             f"correct) among {len(self.last_topic_scores)} eligible topics.")
+            elif self.last_topic_scores:
                 parts.append(f"Topic '{name}' had the lowest predicted success ({pct(self.last_topic_scores[topic])}) "
                              f"among {len(self.last_topic_scores)} eligible topics.")
             cand_txt = ", ".join(f"{l} {pct(cand[l])}" for l in LEVEL_NAMES if l in cand)
@@ -233,8 +288,10 @@ class AdaptiveSession:
                              f"among allowed levels ({cand_txt}).")
                 if guard == "hard_locked":
                     parts.append("Hard unlocks after a correct Medium or Hard answer on this topic.")
+                elif guard == "first_question_on_topic":
+                    parts.append("First question on this topic starts at Medium.")
                 elif guard:
-                    parts.append("A guardrail rule limited this topic's level.")
+                    parts.append("A progression rule (based on your answers on this topic) set the level.")
             elif self.policy == "random":
                 parts.append(f"Level {level} chosen at random (evaluation baseline).")
             else:
@@ -244,6 +301,7 @@ class AdaptiveSession:
                              + (f"; predicted {cand_txt}." if cand_txt else "."))
         return {
             "policy": self.policy,
+            "topic_selection": self.topic_selection,
             "topic_scores": topic_scores,
             "level_candidates": {k: round(v, 4) for k, v in cand.items()},
             "chosen_level": level,
@@ -264,6 +322,17 @@ class AdaptiveSession:
     def _make_question(self, topic: int, level: str, is_probe: bool, predicted_p: Optional[float]) -> Dict[str, Any]:
         meta = TOPIC_BY_ID[topic]
         q = generate_question(meta["position"], level)
+        used = {h.get("question_text") for h in self.history}
+        if q["question_text"] in used:
+            # Avoid repeating a question within the session (D29). Restore the RNG
+            # afterwards so topic/level choices are unaffected by the retries.
+            state_after_first = random.getstate()
+            for _ in range(15):
+                q2 = generate_question(meta["position"], level)
+                if q2["question_text"] not in used:
+                    q = q2
+                    break
+            random.setstate(state_after_first)
         position = len(self.history) + 1
         pending = {
             "position": position,
@@ -286,7 +355,7 @@ class AdaptiveSession:
 
         if self.phase == "main":
             if len(self.history) < self.main_questions:
-                if len(self.history) < WARMUP_QUESTIONS:
+                if len(self.context()) < WARMUP_QUESTIONS:
                     # Warm-up: random topic not yet asked, medium level, no prediction.
                     unasked = [t for t in self.main_topics if t not in self.asked_topics]
                     topic = random.choice(unasked or self.main_topics)
@@ -320,8 +389,8 @@ class AdaptiveSession:
         if self.probe_queue:
             topic = self.probe_queue.pop(0)
             predicted_p = None
-            if predictor is not None and len(self.history) >= 2:
-                predicted_p = float(predictor(self.history, [(topic, LEVEL_TO_BUCKET["medium"])])[0])
+            if predictor is not None and len(self.context()) >= 2:
+                predicted_p = float(predictor(self.context(), [(topic, LEVEL_TO_BUCKET["medium"])])[0])
             q = self._make_question(topic, "medium", True, predicted_p)
             cand = {"medium": predicted_p} if predicted_p is not None else {}
             q["decision"] = self._build_decision(topic, "medium", cand, None, False, "probe")
@@ -373,6 +442,35 @@ class AdaptiveSession:
         return [t for t in TOPIC_IDS if t not in self.asked_topics]
 
 
+def _item_topic(it: Dict[str, Any]) -> Optional[int]:
+    try:
+        return int(it.get("topic", it.get("skill_id")))
+    except (TypeError, ValueError):
+        return None
+
+
+def _item_level(it: Dict[str, Any]) -> Optional[str]:
+    lvl = it.get("level")
+    if lvl in LEVEL_INDEX:
+        return lvl
+    try:
+        return BUCKET_TO_LEVEL.get(int(it.get("difficulty_bucket") or 0))
+    except (TypeError, ValueError):
+        return None
+
+
+def _normalise_item(it: Dict[str, Any]) -> Optional[Dict[str, Any]]:
+    """Stored interaction -> dict usable by the predictor and level rules."""
+    t = _item_topic(it)
+    if t is None or t not in TOPIC_BY_ID:
+        return None
+    out = dict(it)
+    out["topic"] = t
+    out["skill_id"] = t
+    out.setdefault("level", _item_level(it))
+    return out
+
+
 def _calibration_active() -> bool:
     try:
         from serving.calibration import is_active
@@ -406,6 +504,7 @@ class AdaptiveSessionManager:
 
     def start(self, student_id: Optional[str] = None, session_id: Optional[str] = None,
               **session_kwargs) -> Tuple[str, str]:
+        """session_kwargs may include prior_history (earlier sessions' answers)."""
         sid = session_id or str(uuid.uuid4())
         st_id = (student_id or str(uuid.uuid4())[:8]).strip() or "guest_student"
         self.sessions[sid] = AdaptiveSession(sid, st_id, **session_kwargs)

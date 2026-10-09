@@ -137,3 +137,21 @@ def test_seed_script_refuses_real_db_without_flag():
     script = Path(__file__).resolve().parent.parent / "scripts" / "seed_demo_data.py"
     r = subprocess.run([sys.executable, str(script)], env=env, capture_output=True, text=True)
     assert r.returncode == 2 and "Refusing" in r.stdout
+
+
+def test_session_completed_and_second_session_uses_history(client):
+    import serving.inference_service as svc
+    sid = client.post("/session/start", json={"student_id": "learner_two_sessions", "source": "live"}).json()["session_id"]
+    while True:
+        d = client.post(f"/session/{sid}/next", json={}).json()
+        if d["is_complete"]:
+            break
+        client.post(f"/session/{sid}/answer", json={"submitted_answer": "1", "response_time_ms": 2000.0})
+    assert svc.session_manager.db.get_session(sid)["completed_at"] is not None
+    summ = client.get("/student/learner_two_sessions/summary").json()
+    assert summ["completed_session_count"] == 1
+    m = client.get("/students/matrix?source=live").json()
+    assert any(s["student_id"] == "learner_two_sessions" for s in m["students"])
+    sid2 = client.post("/session/start", json={"student_id": "learner_two_sessions", "source": "live"}).json()["session_id"]
+    q1 = client.post(f"/session/{sid2}/next", json={}).json()
+    assert q1["position"] == 1 and q1["predicted_p"] is not None   # predicted from the first session

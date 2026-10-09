@@ -17,9 +17,9 @@ call. Statuses are rule-based estimates:
     mastered             p_hard >= T_PROF and >= 1 CORRECT answer at hard
     A status whose evidence requirement is not met is downgraded one step
     (repeatedly, until the requirement holds) and evidence_note explains why.
-    If the model status clearly contradicts the observed answers on the topic
-    (needs_support with >= 75% correct, or proficient/mastered with <= 25%
-    correct), it moves one step toward the evidence (evidence_note says so).
+    If the model status and the evidence-only status (fallback rules below) are
+    2+ steps apart, the cautious choice is shown (evidence higher: evidence-only
+    status one step down; evidence lower: evidence-only status); evidence_note says so.
     ready_for_next = status in {developing, proficient} and P(next level) >= T_READY
 
   fallback (profile_reliable = false): evidence-only rules, p fields null.
@@ -44,9 +44,8 @@ BUCKET_TO_LEVEL = {1: "easy", 2: "medium", 3: "hard"}
 FALLBACK_PROF_ACC = 0.665
 FALLBACK_SUPPORT_ACC = 0.34
 
-# Evidence-conflict cut-offs for the model-based status (D26).
-EVIDENCE_HIGH_ACC = 0.75
-EVIDENCE_LOW_ACC = 0.25
+STATUS_ORDER_LABEL = {"needs_support": "Needs support", "developing": "Developing",
+                      "proficient": "Proficient", "mastered": "Mastered"}
 
 STATUS_DISCLAIMER = "Status labels are rule-based estimates from the model and your answers."
 
@@ -134,19 +133,22 @@ def reliable_status(ev: Dict[str, Any], p: Dict[str, float], cfg: PolicyConfig):
     status = _model_status(p["easy"], p["medium"], p["hard"], cfg.t_prof)
     cbl = ev["correct_by_level"]
     notes = []
-    # Evidence conflict (added after the dry run, docs/DECISIONS.md D26): the model's
-    # estimate is strongly driven by the student's most recent answers on ANY topic,
-    # so it can contradict what the student did on THIS topic. Move one step toward
-    # the observed evidence and say so.
-    acc = ev["n_correct"] / ev["n_answers"]
-    if status == "needs_support" and acc >= EVIDENCE_HIGH_ACC:
-        status = "developing"
-        notes.append(f"Model estimate is low, but {ev['n_correct']} of {ev['n_answers']} answers on this topic "
-                     "were correct; shown as Developing.")
-    elif status in ("proficient", "mastered") and acc <= EVIDENCE_LOW_ACC:
-        status = STATUS_ORDER[STATUS_ORDER.index(status) - 1]
-        notes.append(f"Model estimate is high, but only {ev['n_correct']} of {ev['n_answers']} answers on this topic "
-                     f"were correct; shown one level lower.")
+    # Evidence conflict (D26, revised D30): the KT estimate is strongly driven by the
+    # student's most recent answers on ANY topic, so it can contradict what the
+    # student did on THIS topic. If the model-based status and the evidence-only
+    # status are 2+ steps apart, err on the cautious side: evidence higher -> the
+    # evidence-only status one step down; evidence lower -> the evidence-only status.
+    ev_status = fallback_status(ev, cfg)[0]
+    gap = STATUS_ORDER.index(ev_status) - STATUS_ORDER.index(status)
+    if abs(gap) >= 2:
+        status = STATUS_ORDER[STATUS_ORDER.index(ev_status) - (1 if gap > 0 else 0)]
+        label = STATUS_ORDER_LABEL[status]
+        if gap > 0:
+            notes.append(f"Model estimate is low, but {ev['n_correct']} of {ev['n_answers']} answers on this topic "
+                         f"were correct; shown as {label}.")
+        else:
+            notes.append(f"Model estimate is high, but only {ev['n_correct']} of {ev['n_answers']} answers on this "
+                         f"topic were correct; shown as {label}.")
     # Evidence gates: never certify a level the student was not tested near.
     if status == "mastered" and cbl["hard"]["correct"] < 1:
         status = "proficient"

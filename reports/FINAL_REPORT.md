@@ -2,6 +2,22 @@
 
 Branch `feature/adaptive-v2` (baseline commit on `master`). All numbers are copied from generated reports or test output.
 
+## Update after user testing (latest)
+
+A real tester (student id `12`, 4 sessions) reported four problems; all were confirmed in the data and fixed:
+
+| Reported problem | Cause found | Fix |
+|---|---|---|
+| Not shown in the Student x Skill Mastery Matrix | Adaptive sessions were never marked completed (pre-existing) | Sessions are marked completed when finished; 6 earlier finished sessions back-filled after a DB backup (D28) |
+| Session 2 again had "no prediction" for the first 2 questions | Predictions used only the current session | Earlier sessions' answers feed every prediction; topics resume at their previous level (D28) |
+| Correct answers still gave Easy and falling percentages; never Hard | Model policy picked the level closest to 70%; the model's estimates for this quiz are mostly below 70%, so it always chose Easy. The shown % is for the next (weakest) topic, and for unanswered topics the model is unreliable (reports/answer_response.md) | Level rules follow the answers (D27); the demo now uses the staircase because the revised model policy failed Gate S; topic choice blends the student's own record (D31); tooltip explains the %; no repeated questions (D29) |
+| "Needs attention" poorly organised | Flat list of student-topic pairs | Grouped by student (cards, top topics, one suggestion) and by topic (counts, group vs individual suggestion) |
+
+Cross-check of the prediction (reports/answer_response.md): a correct last answer gives a higher prediction than a wrong one in about 95-97% of validation cases; repeated correct practice raises it on ASSISTments data (0.67 -> 0.83). The weak spots are topics not yet answered (estimate about 0.97 before the first answer) and short quiz histories.
+
+Verification after the fixes: pytest 85 passed / 15 failed (failure set identical to baseline); e2e 287/306/306 checks PASS (default, model+core5, demo); dry runs (strong, struggling, mixed, returning student) pass on 10/10 seeds with demo.env; browser QA at 1280/375 px clean.
+
+
 ## Task status
 
 | Task | Status | Notes |
@@ -27,7 +43,7 @@ Branch `feature/adaptive-v2` (baseline commit on `master`). All numbers are copi
 
 | Suite | Baseline | After |
 |---|---|---|
-| pytest (`tests/`) | 51 collected: 36 passed, 15 failed | 93 collected: **78 passed**, 15 failed |
+| pytest (`tests/`) | 51 collected: 36 passed, 15 failed | 100 collected: **85 passed**, 15 failed |
 | Failing pytest set | 15 legacy-flow tests | **identical** 15 tests (diffed by name) |
 | `server/tests/test_server.js` | FAIL (expects 400, gets 404 from adaptive service) | FAIL, same assertion |
 | `server/tests/test_frontend_smoke.js` | FAIL (legacy /answer flow -> 400) | FAIL, same assertion |
@@ -43,30 +59,31 @@ The 15 pytest failures and 3 Node suites failed before any change because they d
 | Gate | Numbers | Result |
 |---|---|---|
 | M: violation_rate <= 10% | 0.0% | PASS -> profile_reliable = true |
-| S: model in-band >= staircase - 0.02 and status accuracy >= staircase - 0.03 | in-band 57.6% vs 32.6%; status acc 45.6% vs 40.3% | PASS -> POLICY=model |
+| S: model in-band >= staircase - 0.02 and status accuracy >= staircase - 0.03 | revised rules: in-band 40.1% vs 32.6%; status acc 48.1% vs 51.5% (needs >= 48.5%) | **FAIL** -> POLICY=staircase (v1 passed: 57.6% vs 32.6%, archived) |
 | C: ECE -10% relative, AUC unchanged | ECE 0.0249 -> 0.0117 (-53%); AUC 0.8946 = 0.8946 | PASS -> APPLY_CALIBRATION=true |
 | K: T8c DONE and core5 e2e passes | 306/306 checks | PASS -> SESSION_MODE=core5 |
+| T (post hoc, after user testing): blended topic selection not worse | staircase: status acc 51.5% -> 52.8%, in-band 32.6% -> 41.6% | PASS -> TOPIC_SELECTION=evidence_blend |
 
-`demo.env`: `POLICY=model`, `TARGET_P=0.70`, `APPLY_CALIBRATION=true`, `SESSION_MODE=core5`. Without demo.env (`start_demo.py --defaults`) the behaviour is the original one.
+`demo.env`: `POLICY=staircase`, `TARGET_P=0.70`, `APPLY_CALIBRATION=true`, `SESSION_MODE=core5`, `TOPIC_SELECTION=evidence_blend`. Without demo.env (`start_demo.py --defaults`) the behaviour is the original one (except the bug fixes D28/D29, which apply always). **Model-guided difficulty did not beat the staircase in simulation; the model still drives topic selection.**
 
 ## Headline results
 
 - **Model (unchanged):** validation AUC, mean of 3 seeds: dkt_only 0.8915, graph_no_gate 0.8900, full_gated 0.8950. The gate adds +0.0035; the graph alone did not help.
 - **Monotonicity:** 0.0% violations; mean gaps Easy-Medium +0.130 / +0.167, Medium-Hard +0.159 / +0.163 (next-skill / quiz-topic samples).
 - **Calibration:** T = 1.167; held-out Brier 0.1183 -> 0.1176, ECE 0.0249 -> 0.0117, AUC 0.8946 unchanged.
-- **Simulation (150 paired synthetic students per policy):**
+- **Simulation (150 paired synthetic students per policy, revised rules, full10, original topic rule):**
 
 | | random | staircase | model |
 |---|---|---|---|
-| In-band share (true P 0.55-0.85) | 38.5% | 32.6% | 57.6% |
-| Status accuracy (exact) | 45.0% | 40.3% | 45.6% |
-| Within one step | 90.5% | 87.3% | 93.0% |
+| In-band share (true P 0.55-0.85) | 38.5% | 32.6% | 40.1% |
+| Status accuracy (exact) | 46.0% | 51.5% | 48.1% |
+| Within one step | 93.0% | 93.2% | 93.9% |
 | Coverage | 46.5% | 40.0% | 43.0% |
-| Ready precision | 62.3% (69 flags) | 59.1% (66) | 56.9% (72) |
-| Level mix E/M/H | 33/35/32% | 2/59/39% | 64/34/2% |
+| Ready precision | 58.2% (55 flags) | 56.4% (55) | 44.9% (49) |
+| Level mix E/M/H | 33/35/32% | 2/59/39% | 4/78/18% |
 
-  Paired model - staircase: in-band +0.251 (95% CI +0.202 to +0.302); status accuracy +0.037 (CI -0.005 to +0.080).
-- **Real logs:** 26 usable answers after exclusions -> "not meaningful yet" (reports/pilot.md).
+  Paired model - staircase: in-band +0.075 (95% CI +0.058 to +0.091); status accuracy -0.033 (CI -0.080 to +0.019). Blended topic selection (reports/simulation_blend_full10.md) and the demo configuration (reports/simulation_demo_core5_blend.md) are reported in reports/simulation_notes.md; in core5 the ready-for-next flags were right only 32-36% of the time.
+- **Real logs:** 62 usable answers, but almost all from developer/tester sessions (ids such as 10, 12, 88109-ak), not a pilot sample (reports/pilot.md). Not evidence.
 
 ## Dry run (after the first report)
 
@@ -93,6 +110,8 @@ Changed (additive): `src/serving/adaptive_session.py`, `src/serving/inference_se
 Not touched: `data/raw/`, all `*.pt`, `windowed_data.pkl`, `skill_graph.pkl` (verified byte-identical), and the real `kt_sessions.db` / `session_logs.jsonl` (hashes unchanged since the start-of-work backup; no test or script wrote to them). No retraining.
 
 ## Commands
+
+(Rehearsal: `.venv/Scripts/python scripts/dry_run.py --seed 1`; cross-checks: `scripts/check_answer_response.py`; back-fill: `scripts/backfill_completed_sessions.py [--apply]`.)
 
 ```bash
 # start the demo (demo.env); --defaults for the original behaviour

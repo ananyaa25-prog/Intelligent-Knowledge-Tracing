@@ -296,6 +296,9 @@ def _history_to_tensors(history: List[Dict[str, Any]], max_len: int):
 
 def _predictor(history: List[Dict[str, Any]], candidates: List[tuple]) -> List[float]:
     """Score candidate (raw_skill_id, difficulty_bucket) pairs as the NEXT question."""
+    # Keep the MOST RECENT interactions if the history is longer than the model window.
+    if len(history) > artifacts.max_seq_len:
+        history = history[-artifacts.max_seq_len:]
     tensors = _history_to_tensors(history, artifacts.max_seq_len)
     skill_seq, correct_seq, mask, rt, ac, hu, diff_seq, curr_len = tensors
     reindexed_candidates = []
@@ -645,7 +648,9 @@ def predict_batch(request: BatchPredictRequest):
 def api_start_session(req: StartSessionRequest):
     st_id = req.student_id
     src = req.source
-    sid, st_id = adaptive_manager.start(student_id=st_id)
+    # Earlier sessions' answers feed every prediction of the new session (D28).
+    prior = session_manager.get_full_history(st_id.strip()) if st_id and st_id.strip() else []
+    sid, st_id = adaptive_manager.start(student_id=st_id, prior_history=prior)
     session_manager.db.create_session(session_id=sid, student_id=st_id, set_name="adaptive", source=src)
     summary = session_manager.get_student_summary(st_id)
 
@@ -666,7 +671,10 @@ def _get_adaptive_session(session_id: str) -> AdaptiveSession:
         if not sess_row:
             raise
         interactions = session_manager.db.get_session_interactions(session_id)
-        sess = AdaptiveSession.from_history(session_id, sess_row["student_id"], interactions)
+        prior = [h for h in session_manager.get_full_history(sess_row["student_id"])
+                 if h.get("session_id") != session_id]
+        sess = AdaptiveSession.from_history(session_id, sess_row["student_id"], interactions,
+                                            prior_history=prior)
         adaptive_manager.sessions[session_id] = sess
         return sess
 
@@ -681,12 +689,14 @@ def api_next_question(session_id: str):
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Session '{session_id}' not found")
 
     if q is None:
-        # Session is over: return final graph-based predictions for unasked topics.
+        # Session is over: mark it completed (so it counts as a finished session in
+        # summaries and the class matrix) and return graph-based predictions for unasked topics.
         sess = adaptive_manager.get(session_id)
+        session_manager.db.complete_session(session_id)
         unasked = sess.unasked_topics()
         predictions = {}
-        if len(sess.history) >= 2 and unasked:
-            scores = _predictor(sess.history, [(t, 2) for t in unasked])
+        if len(sess.context()) >= 2 and unasked:
+            scores = _predictor(sess.context(), [(t, 2) for t in unasked])
             for t, s in zip(unasked, scores):
                 predictions[str(t)] = s
         return {

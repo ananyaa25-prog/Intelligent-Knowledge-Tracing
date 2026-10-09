@@ -14,6 +14,9 @@ Environment variables (all optional):
   TARGET_P             float, target P(correct) for POLICY=model (default 0.70)
   APPLY_CALIBRATION    true|false, apply temperature scaling in the predictor (default false)
   SESSION_MODE         full10 | core5 (default full10)
+  TOPIC_SELECTION      model | evidence_blend (default model = lowest model prediction;
+                       evidence_blend = lowest (EVIDENCE_PRIOR_WEIGHT*P_model + correct) /
+                       (EVIDENCE_PRIOR_WEIGHT + answered) on that topic, docs/DECISIONS.md D31)
   CORE_TOPICS          comma-separated raw skill ids for core5 (default 50,48,204,203,350)
   T_PROF               float, P threshold for "can do this level" (default 0.70)
   T_READY              float, P threshold for "ready for the next level" (default 0.60)
@@ -43,12 +46,15 @@ CALIBRATION_PATH = PROCESSED_DIR / "calibration.json"
 
 VALID_POLICIES = ("staircase", "model", "random")
 VALID_SESSION_MODES = ("full10", "core5")
+VALID_TOPIC_SELECTIONS = ("model", "evidence_blend")
 
 # Defaults (documented above). Changing them changes the system's behaviour.
 DEFAULT_POLICY = "staircase"           # existing staircase rule
 DEFAULT_TARGET_P = 0.70                # model policy aims for ~70% predicted success
 DEFAULT_APPLY_CALIBRATION = False      # raw model probabilities, as before
 DEFAULT_SESSION_MODE = "full10"        # existing 10-topic session
+DEFAULT_TOPIC_SELECTION = "model"      # existing rule: lowest predicted P
+EVIDENCE_PRIOR_WEIGHT = 2.0            # evidence_blend: model prediction counts like 2 answers
 DEFAULT_CORE_TOPICS = [50, 48, 204, 203, 350]  # fractions, percents, linear systems
 DEFAULT_T_PROF = 0.70                  # "proficient at a level" threshold
 DEFAULT_T_READY = 0.60                 # "ready to try the next level" threshold
@@ -121,6 +127,7 @@ class PolicyConfig:
     target_p: float = DEFAULT_TARGET_P
     apply_calibration: bool = DEFAULT_APPLY_CALIBRATION
     session_mode: str = DEFAULT_SESSION_MODE
+    topic_selection: str = DEFAULT_TOPIC_SELECTION
     core_topics: List[int] = field(default_factory=lambda: list(DEFAULT_CORE_TOPICS))
     t_prof: float = DEFAULT_T_PROF
     t_ready: float = DEFAULT_T_READY
@@ -147,6 +154,7 @@ def get_config() -> PolicyConfig:
         target_p=_env_float("TARGET_P", DEFAULT_TARGET_P),
         apply_calibration=_env_bool("APPLY_CALIBRATION", DEFAULT_APPLY_CALIBRATION),
         session_mode=_env_str("SESSION_MODE", DEFAULT_SESSION_MODE, VALID_SESSION_MODES),
+        topic_selection=_env_str("TOPIC_SELECTION", DEFAULT_TOPIC_SELECTION, VALID_TOPIC_SELECTIONS),
         core_topics=_env_int_list("CORE_TOPICS", DEFAULT_CORE_TOPICS),
         t_prof=_env_float("T_PROF", DEFAULT_T_PROF),
         t_ready=_env_float("T_READY", DEFAULT_T_READY),

@@ -6,7 +6,7 @@
 3. Open two tabs: the quiz and `/dashboard.html`. Have `reports/screenshots/` and `docs/RESULTS_SUMMARY.md` open as a fallback.
 4. Use fresh student ids for each scenario (e.g. `demo_strong_1`; avoid ids containing "test", "e2e" or "smoke", which the analytics exclude).
 
-The demo configuration (demo.env) is: model-guided difficulty, calibration on, core5 mode (14 questions on 5 core topics + 2 probes on other topics = 16 questions). Answers are free text; you need to actually solve the questions to answer them correctly.
+The demo configuration (demo.env) is: staircase difficulty (model-guided difficulty failed Gate S), topic choice from the model prediction blended with the student's own record, calibration on, core5 mode (14 questions on 5 core topics + 2 probes on other topics = 16 questions). A returning student id continues from earlier sessions (no warm-up). Answers are free text; you need to actually solve the questions to answer them correctly.
 
 ## 0:00-1:00 Framing (landing page)
 - Point at the four cards: **Context -> Who benefits -> Problem -> Action**.
@@ -29,7 +29,8 @@ The demo configuration (demo.env) is: model-guided difficulty, calibration on, c
 
 ## 6:30-8:00 Evidence (RESULTS_SUMMARY.md)
 - Gate M: 0.0% difficulty-ordering violations -> the profile uses model estimates.
-- Gate S (simulation, synthetic students): model-guided 57.6% of questions in the target band vs staircase 32.6%; status accuracy not clearly different (45.6% vs 40.3%, CI includes 0).
+- Gate S (simulation, synthetic students): the revised model-guided difficulty did not beat the staircase (status accuracy 48.1% vs 51.5%), so difficulty uses the staircase. Say openly that the first version passed only because it served mostly Easy questions, and that a real test exposed this.
+- Topic choice (post hoc Rule T): blending the student's own record raised the staircase's in-band share from 32.6% to 41.6% in simulation.
 - Gate C: ECE 0.0249 -> 0.0117 with AUC unchanged.
 - Model: gate +0.0035 AUC over DKT; the graph alone did not help.
 - Close with what is missing: a real pilot and a teacher's input (docs/PILOT_GUIDE.md).

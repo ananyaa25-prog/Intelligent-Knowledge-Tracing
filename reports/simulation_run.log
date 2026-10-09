@@ -8,21 +8,21 @@ C:\Users\SANCHIT\Downloads\aiproj\aiproj\.venv\Lib\site-packages\torch\jit\_scri
 {
  "random": {
   "inband_share": 0.38461538461538464,
-  "status_accuracy": 0.4498567335243553,
+  "status_accuracy": 0.45988538681948427,
   "coverage": 0.4653333333333332,
-  "ready_precision": 0.6231884057971014
+  "ready_precision": 0.5818181818181818
  },
  "staircase": {
   "inband_share": 0.32564102564102565,
-  "status_accuracy": 0.4033333333333333,
+  "status_accuracy": 0.515,
   "coverage": 0.4,
-  "ready_precision": 0.5909090909090909
+  "ready_precision": 0.5636363636363636
  },
  "model": {
-  "inband_share": 0.5764102564102564,
-  "status_accuracy": 0.4558139534883721,
+  "inband_share": 0.4005128205128205,
+  "status_accuracy": 0.4806201550387597,
   "coverage": 0.4299999999999999,
-  "ready_precision": 0.5694444444444444
+  "ready_precision": 0.4489795918367347
  }
 }
-[simulate] Gate S = True; elapsed 69s
+[simulate] Gate S = False; elapsed 42s

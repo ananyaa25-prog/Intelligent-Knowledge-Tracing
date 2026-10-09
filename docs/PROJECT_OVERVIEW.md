@@ -13,7 +13,7 @@ A fixed quiz gives one overall score. It does not show which topic is the gap, o
 
 ## Action (what the system does)
 1. **Predict before answering.** Before each question the knowledge-tracing model estimates P(correct) for every candidate topic and level, using the student's answers so far. The prediction is shown to the student as a probability, with no verdict.
-2. **Use the prediction.** The topic with the lowest predicted success among eligible topics is asked next (caps: 3 per topic, no more than 2 in a row). In the demo configuration the **difficulty** is chosen as the level (current, one step easier, one step harder) whose predicted P is closest to 70%, with guardrails: two wrong answers in a row on a topic force a step down, and Hard only unlocks after a correct Medium/Hard answer. The default configuration keeps the original staircase (one step up after a correct answer, one down after a wrong one).
+2. **Use the prediction.** The next topic is the one with the lowest estimate among eligible topics (caps: 3 per topic in full10, 4 in core5, no more than 2 in a row). In the demo configuration that estimate blends the model's prediction with the student's own record on the topic (the model counts like 2 answers), so topics already answered correctly are not re-drilled. The **difficulty** follows the staircase in the demo (one step up after a correct answer, one down after a wrong one), because model-guided difficulty did not beat the staircase in simulation (Gate S). Answers from earlier sessions feed every prediction, and each topic resumes at its previous level.
 3. **Profile.** After the session, each topic gets a rule-based status from the model's predicted P at Easy / Medium / Hard (Proficient at a level = P >= 70%) **and** the evidence actually observed: at least 2 answers for any status; Proficient needs a Medium/Hard attempt; Mastered needs a correct Hard answer. Topics never asked are shown separately as "Predicted, not measured" (from the skill-relation graph) and checked by probe questions.
 4. **Teacher action.** The dashboard shows a students x topics status heatmap with evidence counts, and a "Needs attention" list with rule-based suggestions (e.g. "Revisit basics, assign Easy practice").
 
@@ -38,15 +38,17 @@ These are contributions at the **system and evaluation** level, not new algorith
 | Claim | Evidence | Status |
 |---|---|---|
 | The prediction is made before the student answers and is used to choose the next topic | Code path `AdaptiveSession._choose_topic`; e2e check asserts predicted_p on every non-probe question after the 2 warm-ups (reports/e2e_http_check.md) | supported |
-| In the demo configuration the prediction also chooses the difficulty | `_model_level`; decision objects in reports/e2e_http_check.md (example reasons) | supported |
+| The model chooses the difficulty in the demo | Gate S failed with the revised model policy (reports/DEMO_CONFIG.md); the demo uses the staircase for difficulty | not supported (staircase used) |
 | The full gated model is slightly better than DKT-only (val AUC 0.8950 vs 0.8915) | data/processed/retrain.log (3 seeds) | supported (small effect, +0.0035) |
 | The skill graph alone improves prediction | graph_no_gate 0.8900 < dkt_only 0.8915 | not supported |
 | The model orders difficulty correctly (Easy >= Medium >= Hard) | 0.0% violations in 600 + 6,000 cases (reports/monotonicity.md) | supported (ordering only; gap sizes not validated for quiz items) |
 | Temperature scaling improves calibration without changing ranking | ECE 0.0249 -> 0.0117, AUC unchanged (reports/calibration.md) | supported on ASSISTments validation data; untested on quiz answers |
-| Model-guided difficulty serves more questions at a suitable difficulty than the staircase | in-band 57.6% vs 32.6%, paired diff +0.251 (CI +0.202 to +0.302) (reports/simulation.md) | supported in simulation only (synthetic students) |
-| Model-guided difficulty gives more accurate statuses | 45.6% vs 40.3%, CI of difference includes 0 | inconclusive |
-| Status labels are accurate | exact accuracy about 40-46% in simulation; within one step about 87-93% | not supported as exact labels; read as rough estimates |
-| "Ready for harder questions" is reliable | 57-62% of flags truly ready in simulation | weak; a suggestion only |
+| Model-guided difficulty serves more questions at a suitable difficulty than the staircase | revised rules: in-band 40.1% vs 32.6%, paired +0.075 (CI +0.058 to +0.091); the earlier +0.251 came from serving Easy 64% of the time (reports/simulation_notes.md) | supported in simulation only, small |
+| Model-guided difficulty gives more accurate statuses | 48.1% vs 51.5% (staircase), paired -0.033, CI -0.080 to +0.019 | not supported |
+| Blending the student's own record into topic choice helps | staircase in-band 32.6% -> 41.6%, status accuracy 51.5% -> 52.8% (reports/simulation_blend_full10.md); added after user testing | supported in simulation only (post hoc) |
+| The prediction moves in the right direction after an answer | correct > wrong in about 95-97% of cases (reports/answer_response.md) | supported; estimates for never-answered topics are unreliable |
+| Status labels are accurate | exact accuracy about 46-53% in simulation; within one step about 93-94% | not supported as exact labels; read as rough estimates |
+| "Ready for harder questions" is reliable | 45-60% of flags truly ready in full10 simulations, 32-36% in core5 | not supported; a suggestion only |
 | Graph predictions for unasked topics are accurate for real students | probe events are logged, but there is no pilot data (reports/pilot.md) | inconclusive (no data) |
 | The system improves learning | no learning-outcome study | not supported (not tested) |
 | Teachers find the dashboard useful | no teacher study | not supported (not tested) |
