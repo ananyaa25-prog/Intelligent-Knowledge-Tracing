@@ -1,0 +1,82 @@
+[
+  {
+    "config": "staircase",
+    "env": {},
+    "questions": 15,
+    "levels": [
+      "medium",
+      "medium",
+      "medium",
+      "medium",
+      "medium",
+      "medium",
+      "medium",
+      "medium",
+      "medium",
+      "medium",
+      "easy",
+      "easy",
+      "easy",
+      "easy",
+      "easy"
+    ],
+    "example_reason": "Topic 'Polynomial Factors' had the lowest predicted success (13%) among 10 eligible topics. Level medium set by the staircase rule (one step per answer on this topic); predicted easy 29%, medium 13%, hard 5%.",
+    "profile_reliable": true,
+    "statuses": {
+      "Percents": "not_enough_evidence",
+      "Percent Discount": "not_enough_evidence",
+      "Rate": "not_enough_evidence",
+      "Polynomial Factors": "needs_support",
+      "Simplifying Expressions positive exponents": "not_enough_evidence",
+      "Solving Systems of Linear Equations": "needs_support",
+      "Solving Systems of Linear Equations by Graphing": "not_enough_evidence",
+      "Ordering Fractions": "not_enough_evidence",
+      "Equivalent Fractions": "needs_support",
+      "Pythagorean Theorem": "not_enough_evidence"
+    },
+    "passed": true,
+    "n_checks": 287,
+    "failed_checks": []
+  },
+  {
+    "config": "candidate",
+    "env": {
+      "POLICY": "model",
+      "APPLY_CALIBRATION": "true",
+      "SESSION_MODE": "core5"
+    },
+    "questions": 16,
+    "levels": [
+      "medium",
+      "medium",
+      "easy",
+      "easy",
+      "easy",
+      "easy",
+      "easy",
+      "easy",
+      "easy",
+      "easy",
+      "easy",
+      "easy",
+      "easy",
+      "easy",
+      "medium",
+      "medium"
+    ],
+    "example_reason": "Topic 'Equivalent Fractions' had the lowest predicted success (22%) among 5 eligible topics. Level easy: predicted 41%, closest to the 70% target among allowed levels (easy 41%, medium 22%, hard 11%). Hard unlocks after a correct Medium or Hard answer on this topic.",
+    "profile_reliable": true,
+    "statuses": {
+      "Percents": "needs_support",
+      "Percent Discount": "not_enough_evidence",
+      "Rate": "not_enough_evidence",
+      "Solving Systems of Linear Equations": "needs_support",
+      "Ordering Fractions": "not_enough_evidence",
+      "Equivalent Fractions": "needs_support",
+      "Pythagorean Theorem": "not_enough_evidence"
+    },
+    "passed": true,
+    "n_checks": 306,
+    "failed_checks": []
+  }
+]
