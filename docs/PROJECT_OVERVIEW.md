@@ -44,8 +44,8 @@ These are contributions at the **system and evaluation** level, not new algorith
 | The model orders difficulty correctly (Easy >= Medium >= Hard) | 0.0% violations in 600 + 6,000 cases (reports/monotonicity.md) | supported (ordering only; gap sizes not validated for quiz items) |
 | Temperature scaling improves calibration without changing ranking | ECE 0.0249 -> 0.0117, AUC unchanged (reports/calibration.md) | supported on ASSISTments validation data; untested on quiz answers |
 | Model-guided difficulty serves more questions at a suitable difficulty than the staircase | in-band 57.6% vs 32.6%, paired diff +0.251 (CI +0.202 to +0.302) (reports/simulation.md) | supported in simulation only (synthetic students) |
-| Model-guided difficulty gives more accurate statuses | 41.6% vs 37.8%, CI of difference includes 0 | inconclusive |
-| Status labels are accurate | exact accuracy about 38-42% in simulation; within one step about 83-85% | not supported as exact labels; read as rough estimates |
+| Model-guided difficulty gives more accurate statuses | 45.6% vs 40.3%, CI of difference includes 0 | inconclusive |
+| Status labels are accurate | exact accuracy about 40-46% in simulation; within one step about 87-93% | not supported as exact labels; read as rough estimates |
 | "Ready for harder questions" is reliable | 57-62% of flags truly ready in simulation | weak; a suggestion only |
 | Graph predictions for unasked topics are accurate for real students | probe events are logged, but there is no pilot data (reports/pilot.md) | inconclusive (no data) |
 | The system improves learning | no learning-outcome study | not supported (not tested) |
