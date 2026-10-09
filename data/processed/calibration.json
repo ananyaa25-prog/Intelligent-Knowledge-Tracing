@@ -1,0 +1,17 @@
+{
+  "temperature": 1.16696,
+  "fit_on": "validation half A",
+  "evaluated_on": "validation half B",
+  "n_fit": 17320,
+  "n_eval": 18204,
+  "brier_before": 0.11829474447730294,
+  "brier_after": 0.11758406703842753,
+  "ece_before": 0.024924603695546867,
+  "ece_after": 0.011657791910149934,
+  "ece_relative_improvement": 0.5322777424046761,
+  "auc_before": 0.894601824805094,
+  "auc_after": 0.894601824805094,
+  "gate_c_apply_calibration": true,
+  "seed": 11,
+  "generated_at": "2026-10-09T04:16:50.119448+00:00"
+}
