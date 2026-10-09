@@ -58,7 +58,8 @@
       STATUS_ORDER.filter(s => counts[s]).map(s => `${meta(s).label} ${counts[s]}`).join(', ');
     const att = data.needs_attention || [];
     $('needsAttentionList').innerHTML = att.length
-      ? att.slice(0, 20).map(a => `<li><strong>${esc(a.student_id)}</strong> - ${esc(a.skill_name)}: ${esc(meta(a.status).label)} (${a.n_answers} answers). Suggestion: ${esc(a.recommended_action)}</li>`).join('')
+      ? att.slice(0, 10).map(a => `<li><strong>${esc(a.student_id)}</strong> - ${esc(a.skill_name)}: ${esc(meta(a.status).label)} (${a.n_answers} answers). Suggestion: ${esc(a.recommended_action)}</li>`).join('')
+        + (att.length > 10 ? `<li style="border-left-color:#64748b">+ ${att.length - 10} more student-topic pairs flagged (most-evidence first; see the heatmap).</li>` : '')
       : '<li style="border-left-color:#16a34a">No student-topic pair is currently flagged as Needs support.</li>';
   }
 

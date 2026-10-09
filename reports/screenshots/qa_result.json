@@ -1,0 +1,159 @@
+{
+  "base": "http://127.0.0.1:53336",
+  "viewports": {
+    "375": {
+      "landing_overflow": {
+        "scrollWidth": 375,
+        "innerWidth": 375,
+        "ok": true
+      },
+      "context_cards": 4,
+      "last_counter": "Question 16 of 16",
+      "reason_seen": true,
+      "questions_answered": 16,
+      "bands_seen": [
+        "neutral",
+        "bad"
+      ],
+      "levels_seen": [
+        "medium",
+        "easy"
+      ],
+      "verdict_leak": false,
+      "quiz_overflow": {
+        "scrollWidth": 375,
+        "innerWidth": 375,
+        "ok": true
+      },
+      "results_sections": {
+        "stat_cards": 7,
+        "strong_box": true,
+        "weak_box": true,
+        "topic_cards": 7,
+        "difficulty_profile": 7,
+        "measured_rows": 10,
+        "hatched_rows": 3,
+        "prediction_chart": true,
+        "feedback": true,
+        "legacy_mastery_bars": 10,
+        "graph_canvas": true
+      },
+      "results_overflow": {
+        "scrollWidth": 375,
+        "innerWidth": 375,
+        "ok": true
+      },
+      "feedback_message": "Thank you - feedback recorded.",
+      "dashboard_overflow": {
+        "scrollWidth": 375,
+        "innerWidth": 375,
+        "ok": true
+      },
+      "dashboard": {
+        "overview_section": true,
+        "heatmap_rows": 8,
+        "attention_items": 11,
+        "empty_state": ""
+      },
+      "dashboard_sim": {
+        "label": true,
+        "heatmap_rows": 12,
+        "empty_state": ""
+      }
+    },
+    "1280": {
+      "landing_overflow": {
+        "scrollWidth": 1280,
+        "innerWidth": 1280,
+        "ok": true
+      },
+      "context_cards": 4,
+      "last_counter": "Question 16 of 16",
+      "reason_seen": true,
+      "questions_answered": 16,
+      "bands_seen": [
+        "neutral",
+        "bad"
+      ],
+      "levels_seen": [
+        "medium",
+        "easy"
+      ],
+      "verdict_leak": false,
+      "quiz_overflow": {
+        "scrollWidth": 1280,
+        "innerWidth": 1280,
+        "ok": true
+      },
+      "results_sections": {
+        "stat_cards": 7,
+        "strong_box": true,
+        "weak_box": true,
+        "topic_cards": 7,
+        "difficulty_profile": 7,
+        "measured_rows": 10,
+        "hatched_rows": 3,
+        "prediction_chart": true,
+        "feedback": true,
+        "legacy_mastery_bars": 10,
+        "graph_canvas": true
+      },
+      "results_overflow": {
+        "scrollWidth": 1280,
+        "innerWidth": 1280,
+        "ok": true
+      },
+      "feedback_message": "Thank you - feedback recorded.",
+      "dashboard_overflow": {
+        "scrollWidth": 1280,
+        "innerWidth": 1280,
+        "ok": true
+      },
+      "dashboard": {
+        "overview_section": true,
+        "heatmap_rows": 7,
+        "attention_items": 11,
+        "empty_state": ""
+      },
+      "dashboard_sim": {
+        "label": true,
+        "heatmap_rows": 12,
+        "empty_state": ""
+      }
+    }
+  },
+  "console_errors": [],
+  "screenshots": [
+    "landing_1280.png",
+    "quiz_band_neutral_1280.png",
+    "quiz_level_medium_1280.png",
+    "quiz_band_bad_1280.png",
+    "quiz_level_easy_1280.png",
+    "results_1280.png",
+    "quiz_band_good_1280_injected.png",
+    "quiz_band_mid_1280_injected.png",
+    "quiz_level_hard_1280_injected.png",
+    "dashboard_1280.png",
+    "dashboard_simulated_1280.png",
+    "landing_375.png",
+    "quiz_band_neutral_375.png",
+    "quiz_level_medium_375.png",
+    "quiz_band_bad_375.png",
+    "quiz_level_easy_375.png",
+    "results_375.png",
+    "quiz_band_good_375_injected.png",
+    "quiz_band_mid_375_injected.png",
+    "quiz_level_hard_375_injected.png",
+    "dashboard_375.png",
+    "dashboard_simulated_375.png"
+  ],
+  "injected_states": [
+    "band good at 1280px (predicted_p=0.82 substituted on a real question)",
+    "band mid at 1280px (predicted_p=0.55 substituted on a real question)",
+    "level hard pill at 1280px (level substituted on a real question)",
+    "band good at 375px (predicted_p=0.82 substituted on a real question)",
+    "band mid at 375px (predicted_p=0.55 substituted on a real question)",
+    "level hard pill at 375px (level substituted on a real question)"
+  ],
+  "notes": []
+}

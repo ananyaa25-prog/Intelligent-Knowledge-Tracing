@@ -631,3 +631,15 @@ html, body { overflow-x: hidden; }
 }
 
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+
+/* Dashboard at phone width: existing inline 4-column stats grid and header */
+@media (max-width: 640px) {
+  .container > div[style*="repeat(4, 1fr)"] { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+  .container .page-header { flex-wrap: wrap; gap: 10px; }
+  .container .card-title { flex-wrap: wrap; gap: 8px; }
+  .tab-group { flex-wrap: wrap; }
+}
+.legend-bar { flex-wrap: wrap; }
+.heatmap-container { overflow-x: auto; max-width: 100%; }
+.container .card { min-width: 0; max-width: 100%; }
+.overview-scroll { position: relative; } /* contain .sr-only labels inside the scroll box */
