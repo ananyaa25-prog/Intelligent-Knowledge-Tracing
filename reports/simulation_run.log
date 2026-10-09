@@ -1,0 +1,28 @@
+C:\Users\SANCHIT\Downloads\aiproj\aiproj\.venv\Lib\site-packages\torch\jit\_script.py:1491: FutureWarning: `torch.jit.script` is deprecated. Please switch to `torch.compile` or `torch.export`.
+  warnings.warn(
+[seed] 2026
+[InferenceService] Pre-loading model artifacts...
+[InferenceService] Computed RT stats: mean=9.978, std=1.550
+[InferenceService] Loading weights from C:\Users\SANCHIT\Downloads\aiproj\aiproj\data\processed\best_full_gated.pt...
+[InferenceService] Model successfully loaded (123 skills, max_seq_len=500)
+{
+ "random": {
+  "inband_share": 0.38461538461538464,
+  "status_accuracy": 0.40830945558739257,
+  "coverage": 0.4653333333333332,
+  "ready_precision": 0.6231884057971014
+ },
+ "staircase": {
+  "inband_share": 0.32564102564102565,
+  "status_accuracy": 0.37833333333333335,
+  "coverage": 0.4,
+  "ready_precision": 0.5909090909090909
+ },
+ "model": {
+  "inband_share": 0.5764102564102564,
+  "status_accuracy": 0.41550387596899224,
+  "coverage": 0.4299999999999999,
+  "ready_precision": 0.5694444444444444
+ }
+}
+[simulate] Gate S = True; elapsed 149s

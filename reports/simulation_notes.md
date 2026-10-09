@@ -1,0 +1,12 @@
+# Simulation: interpretation notes (written after reading reports/simulation.md)
+
+All numbers below are copied from `reports/simulation.md` (seed 2026, 150 paired synthetic students per policy). Nothing in the policies was changed after seeing these results.
+
+1. **Model-guided difficulty puts more questions in the target band.** In-band share (true P in [0.55, 0.85]) is 57.6% for the model policy vs 32.6% for the staircase and 37.7% for random; paired difference model - staircase +0.251 (95% CI +0.202 to +0.302).
+2. **Status accuracy is low for every policy and the policies are not clearly different.** Exact status accuracy is 37.8% (staircase), 41.6% (model), 40.8% (random); the paired difference model - staircase is +0.026 with a CI that includes 0 (-0.017 to +0.066). Within one status step it is ~83-85% for all. With 2-3 answers per topic and a predictor trained on ASSISTments (not on these synthetic students), an exact 4-way status is hard to get right; the labels should be read as rough estimates.
+3. **Level mix explains much of the in-band gain.** The model policy served Easy 64% / Medium 34% / Hard 2%; the staircase served Easy 2% / Medium 59% / Hard 39%. The predictor's P(correct) for these synthetic histories is mostly below the 0.70 target at Medium, so the closest level is often Easy. Whether that is right for real students is unknown; a real pilot is needed.
+4. **Interaction between topic selection and the staircase (observed, not changed).** Topic selection picks the topic with the LOWEST predicted P at its current level. Topics that the staircase has stepped down to Easy therefore look "easy" to the selector and are rarely chosen again, while topics sitting at Hard are chosen often. This is why the staircase served Easy only 2% of the time. It is a property of the existing design (topic selection was required to stay unchanged); it is reported here as a known weakness.
+5. **Ready-for-next flags are right ~57-62% of the time** (staircase 59.1% of 66 flags, model 56.9% of 72, random 62.3% of 69). Treat "Ready for harder questions" as a suggestion to try, not a certification.
+6. Metric 3 (answers before a status) is 2.00 by construction (MIN_ANSWERS = 2); coverage (40.0% staircase, 43.0% model, 46.5% random of the 10 topics) is the informative quantity.
+
+Run note: the first run used 75 students per policy based on a mistaken timing estimate; it was re-run at the brief's default of 150 (149 s). Both runs passed Gate S; only the 150-student run is reported.
