@@ -29,7 +29,7 @@ The demo configuration (demo.env) is: model-guided difficulty, calibration on, c
 
 ## 6:30-8:00 Evidence (RESULTS_SUMMARY.md)
 - Gate M: 0.0% difficulty-ordering violations -> the profile uses model estimates.
-- Gate S (simulation, synthetic students): model-guided 57.6% of questions in the target band vs staircase 32.6%; status accuracy not clearly different (41.6% vs 37.8%, CI includes 0).
+- Gate S (simulation, synthetic students): model-guided 57.6% of questions in the target band vs staircase 32.6%; status accuracy not clearly different (45.6% vs 40.3%, CI includes 0).
 - Gate C: ECE 0.0249 -> 0.0117 with AUC unchanged.
 - Model: gate +0.0035 AUC over DKT; the graph alone did not help.
 - Close with what is missing: a real pilot and a teacher's input (docs/PILOT_GUIDE.md).

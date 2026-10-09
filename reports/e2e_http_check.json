@@ -20,15 +20,15 @@
       "easy",
       "easy"
     ],
-    "example_reason": "Topic 'Pythagorean Theorem' had the lowest predicted success (2%) among 10 eligible topics. Level medium set by the staircase rule (one step per answer on this topic); predicted easy 4%, medium 2%, hard 1%.",
+    "example_reason": "Topic 'Polynomial Factors' had the lowest predicted success (9%) among 10 eligible topics. Level medium set by the staircase rule (one step per answer on this topic); predicted easy 22%, medium 9%, hard 3%.",
     "profile_reliable": true,
     "statuses": {
       "Percents": "not_enough_evidence",
       "Percent Discount": "not_enough_evidence",
       "Rate": "not_enough_evidence",
-      "Polynomial Factors": "needs_support",
+      "Polynomial Factors": "not_enough_evidence",
       "Simplifying Expressions positive exponents": "not_enough_evidence",
-      "Solving Systems of Linear Equations": "not_enough_evidence",
+      "Solving Systems of Linear Equations": "needs_support",
       "Solving Systems of Linear Equations by Graphing": "needs_support",
       "Ordering Fractions": "not_enough_evidence",
       "Equivalent Fractions": "needs_support",
@@ -69,11 +69,11 @@
     "statuses": {
       "Percents": "needs_support",
       "Percent Discount": "needs_support",
-      "Rate": "not_enough_evidence",
-      "Simplifying Expressions positive exponents": "not_enough_evidence",
       "Solving Systems of Linear Equations": "needs_support",
+      "Solving Systems of Linear Equations by Graphing": "not_enough_evidence",
       "Ordering Fractions": "not_enough_evidence",
-      "Equivalent Fractions": "needs_support"
+      "Equivalent Fractions": "needs_support",
+      "Pythagorean Theorem": "not_enough_evidence"
     },
     "passed": true,
     "n_checks": 306,
@@ -106,16 +106,16 @@
       "medium",
       "medium"
     ],
-    "example_reason": "Topic 'Percents' had the lowest predicted success (6%) among 5 eligible topics. Level easy: predicted 13%, closest to the 70% target among allowed levels (easy 13%, medium 6%, hard 3%). Hard unlocks after a correct Medium or Hard answer on this topic.",
+    "example_reason": "Topic 'Solving Systems of Linear Equations' had the lowest predicted success (17%) among 5 eligible topics. Level easy: predicted 33%, closest to the 70% target among allowed levels (easy 33%, medium 17%, hard 8%). Hard unlocks after a correct Medium or Hard answer on this topic.",
     "profile_reliable": true,
     "statuses": {
       "Percents": "needs_support",
       "Percent Discount": "needs_support",
-      "Rate": "not_enough_evidence",
-      "Simplifying Expressions positive exponents": "not_enough_evidence",
       "Solving Systems of Linear Equations": "needs_support",
+      "Solving Systems of Linear Equations by Graphing": "not_enough_evidence",
       "Ordering Fractions": "not_enough_evidence",
-      "Equivalent Fractions": "needs_support"
+      "Equivalent Fractions": "needs_support",
+      "Pythagorean Theorem": "not_enough_evidence"
     },
     "passed": true,
     "n_checks": 306,

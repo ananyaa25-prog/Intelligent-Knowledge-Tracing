@@ -16,12 +16,12 @@ Every number below is copied from a generated report (file in brackets). Synthet
 | | random | staircase | model-guided |
 |---|---|---|---|
 | Questions in the target band (true P 0.55-0.85) | 38.5% | 32.6% | **57.6%** |
-| Exact status accuracy | 40.8% | 37.8% | 41.6% |
-| Status within one step | 84.7% | 82.9% | 84.8% |
+| Exact status accuracy | 45.0% | 40.3% | 45.6% |
+| Status within one step | 90.5% | 87.3% | 93.0% |
 | Topics with a status (coverage) | 46.5% | 40.0% | 43.0% |
 | "Ready for harder" flags truly ready | 62.3% | 59.1% | 56.9% |
 
-Paired model - staircase: in-band **+0.251** (95% CI +0.202 to +0.302); status accuracy +0.026 (CI -0.017 to +0.066, i.e. no clear difference). -> model-guided difficulty used in the demo. [reports/simulation.md]
+Paired model - staircase: in-band **+0.251** (95% CI +0.202 to +0.302); status accuracy +0.037 (CI -0.005 to +0.080, i.e. no clear difference). -> model-guided difficulty used in the demo. [reports/simulation.md]
 
 ## End-to-end and UI checks
 - Real FastAPI + Node, scripted sessions: staircase 287/287 checks pass; model + calibration + core5 306/306. [reports/e2e_http_check.md]

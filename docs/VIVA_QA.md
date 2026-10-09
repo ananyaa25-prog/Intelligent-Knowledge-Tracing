@@ -30,7 +30,7 @@ Also design choices. 70% is a common "can usually do it" threshold. 2 answers is
 It is shown as a probability with "not a verdict" wording. Guardrails limit the damage: two wrong answers in a row on a topic force a step down; Hard requires a correct Medium/Hard answer first; on any model failure the staircase takes over. Statuses also require observed evidence, not just predictions.
 
 **10. How accurate are the status labels?**
-Not very, as exact labels: 38-42% exact agreement with the synthetic ground truth, about 83-85% within one step (reports/simulation.md). That is why the UI calls them rule-based estimates, shows the answer count and offers suggestions rather than verdicts.
+Not very, as exact labels: 40-46% exact agreement with the synthetic ground truth, about 87-93% within one step (reports/simulation.md). That is why the UI calls them rule-based estimates, shows the answer count and offers suggestions rather than verdicts.
 
 **11. What does "Mastered" mean here?**
 The model's predicted P at Hard is at least 70% **and** the student answered at least one Hard question correctly, with at least 2 answers on the topic. If the model estimate is high but the evidence is missing, the status is downgraded and an evidence note says why. It is never shown without that evidence.

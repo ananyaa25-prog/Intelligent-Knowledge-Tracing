@@ -185,3 +185,18 @@ def test_profile_endpoints_shape(client):
     r2 = client.get("/student/pytest_profile_student/profile")
     assert r2.status_code == 200 and r2.json()["student_id"] == "pytest_profile_student"
     assert client.get("/session/does-not-exist/profile").status_code == 404
+
+
+def test_evidence_conflict_moves_one_step_toward_answers():
+    # 4/4 correct but low model estimate -> Developing, not Needs support.
+    e = ev(it(204, "medium", 1), it(204, "medium", 1), it(204, "easy", 1), it(204, "medium", 1))
+    s, ready, note = reliable_status(e, P(0.43, 0.23, 0.11), CFG)
+    assert s == "developing" and "4 of 4" in note and ready is False
+    # 0/4 correct but high model estimate -> one level lower than the model says.
+    e = ev(it(204, "medium", 0), it(204, "hard", 0), it(204, "medium", 0), it(204, "medium", 0))
+    s, _, note = reliable_status(e, P(0.9, 0.8, 0.5), CFG)
+    assert s == "developing" and "0 of 4" in note
+    # No conflict -> unchanged.
+    e = ev(it(204, "easy", 0), it(204, "easy", 1))
+    s, _, note = reliable_status(e, P(0.5, 0.3, 0.2), CFG)
+    assert s == "needs_support" and note is None

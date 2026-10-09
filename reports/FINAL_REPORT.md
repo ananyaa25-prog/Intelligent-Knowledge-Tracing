@@ -27,7 +27,7 @@ Branch `feature/adaptive-v2` (baseline commit on `master`). All numbers are copi
 
 | Suite | Baseline | After |
 |---|---|---|
-| pytest (`tests/`) | 51 collected: 36 passed, 15 failed | 92 collected: **77 passed**, 15 failed |
+| pytest (`tests/`) | 51 collected: 36 passed, 15 failed | 93 collected: **78 passed**, 15 failed |
 | Failing pytest set | 15 legacy-flow tests | **identical** 15 tests (diffed by name) |
 | `server/tests/test_server.js` | FAIL (expects 400, gets 404 from adaptive service) | FAIL, same assertion |
 | `server/tests/test_frontend_smoke.js` | FAIL (legacy /answer flow -> 400) | FAIL, same assertion |
@@ -36,14 +36,14 @@ Branch `feature/adaptive-v2` (baseline commit on `master`). All numbers are copi
 | `scripts/e2e_http_check.py` (new) | - | staircase 287/287, candidate 306/306, demo 306/306 PASS |
 | Browser QA 1280px + 375px (new) | - | 0 console errors, no horizontal overflow, no verdict text, all new sections render with live API data |
 
-The 15 pytest failures and 3 Node suites failed before any change because they drive the old fixed 10-question `/answer` flow, which the adaptive service rejects. They were left unchanged (docs/DECISIONS.md D9). The 41 new pytest tests cover: defaults identical to the pre-upgrade engine (fixed seeds), staircase unchanged, model-policy choice, both guardrails and the fallback, random policy, every status rule including evidence downgrades and the evidence-only fallback, monotone projection, one batched predictor call, calibration preserving ranking, the core5 topic set and totals, every new endpoint's shape, overview separation and cache invalidation, feedback logging, log-analysis exclusions, and the seed script's real-DB guard.
+The 15 pytest failures and 3 Node suites failed before any change because they drive the old fixed 10-question `/answer` flow, which the adaptive service rejects. They were left unchanged (docs/DECISIONS.md D9). The 42 new pytest tests cover: defaults identical to the pre-upgrade engine (fixed seeds), staircase unchanged, model-policy choice, both guardrails and the fallback, random policy, every status rule including evidence downgrades, the evidence-conflict rule (D26) and the evidence-only fallback, monotone projection, one batched predictor call, calibration preserving ranking, the core5 topic set and totals, every new endpoint's shape, overview separation and cache invalidation, feedback logging, log-analysis exclusions, and the seed script's real-DB guard.
 
 ## Demo configuration and gates (reports/DEMO_CONFIG.md)
 
 | Gate | Numbers | Result |
 |---|---|---|
 | M: violation_rate <= 10% | 0.0% | PASS -> profile_reliable = true |
-| S: model in-band >= staircase - 0.02 and status accuracy >= staircase - 0.03 | in-band 57.6% vs 32.6%; status acc 41.6% vs 37.8% | PASS -> POLICY=model |
+| S: model in-band >= staircase - 0.02 and status accuracy >= staircase - 0.03 | in-band 57.6% vs 32.6%; status acc 45.6% vs 40.3% | PASS -> POLICY=model |
 | C: ECE -10% relative, AUC unchanged | ECE 0.0249 -> 0.0117 (-53%); AUC 0.8946 = 0.8946 | PASS -> APPLY_CALIBRATION=true |
 | K: T8c DONE and core5 e2e passes | 306/306 checks | PASS -> SESSION_MODE=core5 |
 
@@ -59,19 +59,23 @@ The 15 pytest failures and 3 Node suites failed before any change because they d
 | | random | staircase | model |
 |---|---|---|---|
 | In-band share (true P 0.55-0.85) | 38.5% | 32.6% | 57.6% |
-| Status accuracy (exact) | 40.8% | 37.8% | 41.6% |
-| Within one step | 84.7% | 82.9% | 84.8% |
+| Status accuracy (exact) | 45.0% | 40.3% | 45.6% |
+| Within one step | 90.5% | 87.3% | 93.0% |
 | Coverage | 46.5% | 40.0% | 43.0% |
 | Ready precision | 62.3% (69 flags) | 59.1% (66) | 56.9% (72) |
 | Level mix E/M/H | 33/35/32% | 2/59/39% | 64/34/2% |
 
-  Paired model - staircase: in-band +0.251 (95% CI +0.202 to +0.302); status accuracy +0.026 (CI -0.017 to +0.066).
+  Paired model - staircase: in-band +0.251 (95% CI +0.202 to +0.302); status accuracy +0.037 (CI -0.005 to +0.080).
 - **Real logs:** 26 usable answers after exclusions -> "not meaningful yet" (reports/pilot.md).
+
+## Dry run (after the first report)
+
+`scripts/dry_run.py` plays three scripted students (strong = always correct, struggling = always wrong, mixed = correct only on fraction/percent topics) through the real API with demo.env on a temp DB. Problem found and fixed: the mixed student was labelled "Needs support" on topics answered 4/4 correctly, because the model's estimate is dominated by recent answers on other topics. Fix: one-step evidence-conflict rule (docs/DECISIONS.md D26) plus a test. Simulation and gates were re-run; status numbers above are after the fix (before/after in reports/simulation_notes.md). After the fix, 5 repeated dry runs (3 demo config, 2 default config) passed all scenario checks: the strong student reaches Hard and Proficient/Mastered with green predictions, the struggling student stays on Easy and Needs support, and the mixed student gets both strong and weak topics.
 
 ## Known weaknesses and things that looked suspicious
 
 1. **0.0% monotonicity violations** looked suspiciously clean. The model adds a learned difficulty embedding to the target representation, so a stable ordering is expected once training has learned it. This shows ordering, not that the gap sizes fit the quiz's template questions.
-2. **Status labels are weak:** about 38-42% exact accuracy in simulation for every policy. In the seeded demo data, even simulated *strong* students are often labelled "Needs support", because the model's per-topic estimates stay low after only 2-4 answers. The UI frames labels as rule-based estimates with answer counts.
+2. **Status labels are weak:** about 40-46% exact accuracy in simulation for every policy. In the seeded demo data, simulated *strong* students are mostly rated Developing (few reach Proficient), because the model's per-topic estimates stay modest after only 2-4 answers. The UI frames labels as rule-based estimates with answer counts.
 3. **Model policy served Easy 64% of the time** in simulation, driving much of the in-band gain. Real-student behaviour is unknown.
 4. **Staircase/topic-selection interaction:** the staircase served Easy only 2%, because topic selection always picks the lowest predicted P at each topic's current level, so topics stepped down to Easy are rarely revisited. This is a pre-existing design property that was kept unchanged as required.
 5. The demo **combination** (model + calibration + core5) was checked end-to-end but not re-simulated as a combination.
