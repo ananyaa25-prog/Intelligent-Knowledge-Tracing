@@ -2,6 +2,7 @@
 __pycache__/
 *.pyc
 .venv/
+.venv_old/
 .pytest_cache/
 # Node
 server/node_modules/
@@ -9,6 +10,9 @@ server/node_modules/
 data/raw/
 data/processed/*.pkl
 data/processed/*.pt
+!data/processed/windowed_data.pkl
+!data/processed/skill_graph.pkl
+!data/processed/best_full_gated.pt
 data/processed/kt_sessions.db*
 data/processed/session_logs.jsonl
 data/backups/
