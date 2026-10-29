@@ -59,14 +59,14 @@ def load_graph():
 
 
 class _GatedNet(nn.Module):
-    def __init__(self, num_skills, rt_mean, rt_std, use_graph, use_gate):
+    def __init__(self, num_skills, rt_mean, rt_std, use_graph, use_gate, graph=None):
         super().__init__()
         from model import GatedKTModel
         self.model = GatedKTModel(num_skills=num_skills, rt_log_mean=rt_mean, rt_log_std=rt_std,
                                   use_graph=use_graph, use_gate=use_gate)
         self.use_graph = use_graph
         if use_graph:
-            ei, ew = load_graph()
+            ei, ew = graph if graph is not None else load_graph()
             self.register_buffer("edge_index", ei, persistent=False)
             self.register_buffer("edge_weight", ew, persistent=False)
 
@@ -89,8 +89,10 @@ class OursVariant(DeepKT):
         self.spec = VARIANTS[cond]
 
     def build_net(self):
+        # kwargs["graph"] = (edge_index, edge_weight) for another dataset (Stage 7);
+        # default: the ASSISTments skill graph data/processed/skill_graph.pkl
         return _GatedNet(self.num_skills, self.rt_stats[0], self.rt_stats[1],
-                         self.spec["use_graph"], self.spec["use_gate"])
+                         self.spec["use_graph"], self.spec["use_gate"], graph=self.kwargs.get("graph"))
 
     def transform(self, args):
         skill, correct, mask, rt, att, hint, diff = args

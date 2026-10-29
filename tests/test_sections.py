@@ -25,7 +25,9 @@ def test_section_config_complete():
         assert s["validation"] in (VALIDATED, TRANSFER)
     assert SECTIONS["secondary"]["validation"] == VALIDATED
     assert SECTIONS["undergraduate"]["validation"] == TRANSFER
-    assert SECTIONS["primary"]["validation"] == TRANSFER
+    assert SECTIONS["primary"]["validation"] == VALIDATED          # Eedi primary-age data (Stage 7, D37)
+    assert SECTIONS["primary"]["serving"] == "evidence_only"         # ...but the served model is ASSISTments-only
+    assert SECTIONS["secondary"]["serving"] == "model" and SECTIONS["undergraduate"]["serving"] == "evidence_only"
     assert all(not t["assist_skills"] for t in SECTIONS["undergraduate"]["topics"])
     assert section_info(None)["validated"] is True
 

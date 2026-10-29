@@ -1,0 +1,21 @@
+[fetch] Eedi / NeurIPS 2020 Education Challenge (tasks 1-2): downloading https://dqanonymousdata.blob.core.windows.net/neurips-public/data.zip
+    52 MB, 0.6 MB/s
+    105 MB, 0.7 MB/s
+    157 MB, 0.6 MB/s
+    210 MB, 0.8 MB/s
+    262 MB, 0.8 MB/s
+    315 MB, 0.9 MB/s
+    367 MB, 1.0 MB/s
+    419 MB, 1.1 MB/s
+    472 MB, 1.1 MB/s
+    524 MB, 1.1 MB/s
+    577 MB, 1.1 MB/s
+    629 MB, 1.2 MB/s
+[fetch] eedi: downloaded (657 MB) from the public archive
+[fetch] xes3g5m: missing: manual download needed
+[fetch] junyi: missing: manual download needed
+[fetch] kddcup2010: missing: manual download needed
+[fetch] statics2011: missing: manual download needed
+[fetch] assist2012: missing: manual download needed
+[fetch] assist2015: missing: manual download needed
+[fetch] docs/DATASETS_TODO.md written

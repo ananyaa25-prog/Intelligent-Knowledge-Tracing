@@ -147,6 +147,7 @@ class StartSessionResponse(BaseModel):
     section_label: Optional[str] = None
     validation: Optional[str] = None
     validated: Optional[bool] = None
+    model_predictions: Optional[bool] = None
 
 
 class StudentSummaryResponse(BaseModel):
@@ -333,6 +334,63 @@ def _predictor(history: List[Dict[str, Any]], candidates: List[tuple]) -> List[f
             # Optional temperature scaling (APPLY_CALIBRATION); identity when disabled.
             scores[i] = max(0.0, min(1.0, maybe_calibrate(float(preds[j].item()))))
     return scores
+
+
+# ---- v3: checkpoint ensemble for POLICY=uncertainty ---------------------------------
+ENSEMBLE_SEEDS = (42, 123, 2024)   # the existing v2 full_gated checkpoints (read-only)
+_ensemble_models: List[GatedKTModel] = []
+
+
+def _load_ensemble() -> List[GatedKTModel]:
+    if not _ensemble_models:
+        for seed in ENSEMBLE_SEEDS:
+            path = PROJECT_ROOT / "data" / "processed" / f"best_full_gated_seed{seed}.pt"
+            if not path.exists():
+                continue
+            m = GatedKTModel(num_skills=artifacts.num_skills, rt_log_mean=artifacts.rt_mean,
+                             rt_log_std=artifacts.rt_std, use_graph=True, use_gate=True)
+            m.load_state_dict(torch.load(path, map_location="cpu"))
+            m.eval()
+            _ensemble_models.append(m)
+    return _ensemble_models
+
+
+def _ensemble_predictor(history: List[Dict[str, Any]], candidates: List[tuple]) -> List[List[float]]:
+    """P(correct) of each candidate from every ensemble member (same inputs and optional
+    calibration as _predictor). Used only by POLICY=uncertainty."""
+    members = _load_ensemble()
+    if len(members) < 2:
+        return []
+    history = model_items(history)
+    if len(history) > artifacts.max_seq_len:
+        history = history[-artifacts.max_seq_len:]
+    skill_seq, correct_seq, mask, rt, ac, hu, diff_seq, curr_len = _history_to_tensors(history, artifacts.max_seq_len)
+    reidx = []
+    for raw_id, bucket in candidates:
+        rid = artifacts.skill_map.get(raw_id)
+        if rid is None:
+            try:
+                rid = artifacts.skill_map.get(int(raw_id))
+            except (ValueError, TypeError):
+                rid = None
+        reidx.append((rid, int(bucket)))
+    valid = [i for i, (rid, _) in enumerate(reidx) if rid is not None]
+    out = []
+    for m in members:
+        scores = [0.5] * len(candidates)
+        if valid and curr_len > 0:
+            with torch.no_grad():
+                preds = m.predict_candidates(
+                    skill_seq[:, :curr_len], correct_seq[:, :curr_len], mask[:, :curr_len],
+                    rt[:, :curr_len], ac[:, :curr_len], hu[:, :curr_len], diff_seq[:, :curr_len],
+                    [reidx[i] for i in valid], edge_index=artifacts.edge_index, edge_weight=artifacts.edge_weight)
+            for j, i in enumerate(valid):
+                scores[i] = max(0.0, min(1.0, maybe_calibrate(float(preds[j].item()))))
+        out.append(scores)
+    return out
+
+
+_predictor.ensemble = _ensemble_predictor   # discovered by AdaptiveSession for POLICY=uncertainty
 
 
 @asynccontextmanager
@@ -717,7 +775,7 @@ def api_next_question(session_id: str):
         session_manager.db.complete_session(session_id)
         unasked = sess.unasked_topics()
         predictions = {}
-        if len(sess.context()) >= 2 and unasked and sess.validated:
+        if len(sess.context()) >= 2 and unasked and sess.uses_model:
             scores = sess._model_predictor(_predictor)(sess.context(), [(t, 2) for t in unasked])
             for t, s in zip(unasked, scores):
                 predictions[str(t)] = s

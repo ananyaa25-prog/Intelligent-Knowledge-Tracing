@@ -7,14 +7,14 @@ Each section has a grade label, a topic list, difficulty parameters per level an
 per topic, a mapping to ASSISTments 2009 skill ids where a reasonable one exists.
 A session started without a section keeps the original 10-topic behaviour.
 
-Validation status (docs/DECISIONS.md D33-D35):
+Validation status (docs/DECISIONS.md D33-D37):
 - A section is "validated on real data" only if a real dataset for that level was
-  loaded and the model was evaluated on it. The only dataset loaded is ASSISTments
-  2009 (middle-school learners, roughly lower secondary), so only `secondary` is
-  validated. `primary` and `undergraduate` are "transfer mode: not validated on real
-  data" (primary topics map to ASSISTments skills of primary-level content, but the
-  learners in the data were middle-school students). Stage 7 may change this only if
-  a real dataset for that level is found in data/external/.
+  loaded and the model was evaluated on it: `secondary` (ASSISTments 2009 + Eedi
+  secondary-age learners) and `primary` (Eedi learners younger than 11, Stage 7).
+  `undergraduate` is "transfer mode: not validated on real data" (no dataset).
+- Separately, `serving` says whether the app uses the served ASSISTments model for the
+  section: only `secondary` ("model"). Primary is validated offline with a model trained
+  on Eedi, which is not the served model, so the app stays evidence-only there.
 - Topics without an ASSISTments mapping get no model prediction (the predictor sees
   only mapped topics); topic choice then falls back to the evidence blend with a
   neutral prior.
@@ -38,9 +38,12 @@ SECTIONS: Dict[str, Dict[str, Any]] = {
     "primary": {
         "label": "Primary",
         "grade_label": "Grades 1-5 (ages 6-11)",
-        "validation": TRANSFER,
-        "validation_note": "Topics map to ASSISTments skills with primary-level content, but the ASSISTments "
-                           "learners were middle-school students; no primary-age dataset was loaded.",
+        "validation": VALIDATED,
+        "serving": "evidence_only",
+        "validation_note": "Evaluated offline on real primary-age learners (Eedi / NeurIPS 2020 data, UK pupils "
+                           "younger than 11; reports/v3/external_benchmark.md). The served model is trained on "
+                           "ASSISTments only, so this section shows no model predictions: topic choice and results "
+                           "use the student's own answers.",
         "difficulty": {   # explicit generator parameters per level (see src/questions/generator.py)
             "easy": {"digits": 1, "steps": 1, "negatives": False, "fractions": False},
             "medium": {"digits": 2, "steps": 1, "negatives": False, "fractions": True},
@@ -58,7 +61,10 @@ SECTIONS: Dict[str, Dict[str, Any]] = {
         "label": "Secondary",
         "grade_label": "Grades 6-10 (ages 11-16)",
         "validation": VALIDATED,
-        "validation_note": "ASSISTments 2009 skill-builder (middle-school learners); per-band AUC in reports/v3/by_band.md.",
+        "serving": "model",
+        "validation_note": "ASSISTments 2009 skill-builder (middle-school learners; the served model) and Eedi "
+                           "secondary-age learners (offline benchmark); reports/v3/by_band.md, "
+                           "reports/v3/external_benchmark.md.",
         "difficulty": {
             "easy": {"digits": 1, "steps": 1, "negatives": False, "fractions": False},
             "medium": {"digits": 2, "steps": 2, "negatives": True, "fractions": False},
@@ -76,6 +82,7 @@ SECTIONS: Dict[str, Dict[str, Any]] = {
         "label": "Undergraduate",
         "grade_label": "First-year university",
         "validation": TRANSFER,
+        "serving": "evidence_only",
         "validation_note": "No undergraduate dataset was loaded and no ASSISTments skill is at this level; "
                            "predictions are not available, topic choice uses the student's own answers only.",
         "difficulty": {
@@ -93,6 +100,10 @@ SECTIONS: Dict[str, Dict[str, Any]] = {
 }
 
 VALID_SECTIONS = tuple(SECTIONS)
+# "validation" is the label shown to users (was a real dataset for this level loaded and
+# evaluated?). "serving" is what the app does: "model" = the served ASSISTments model
+# predicts (topics mapped to its skills); "evidence_only" = no model numbers, topic choice
+# and profile from the student's own answers (D35, D37).
 TOPIC_INDEX: Dict[int, Dict[str, Any]] = {}
 for _sec, _cfg in SECTIONS.items():
     for _pos, _t in enumerate(_cfg["topics"], start=1):
@@ -135,12 +146,12 @@ def section_info(section: Optional[str]) -> Dict[str, Any]:
     """Public description returned by the API (/sections, /session/start)."""
     if section is None:
         return {"section": None, "label": "Default (ASSISTments topics)", "grade_label": "Grades 6-10",
-                "validation": VALIDATED, "validated": True,
+                "validation": VALIDATED, "validated": True, "serving": "model",
                 "validation_note": "Original 10-topic session on ASSISTments 2009 skills."}
     c = SECTIONS[section]
     return {"section": section, "label": c["label"], "grade_label": c["grade_label"],
             "validation": c["validation"], "validated": c["validation"] == VALIDATED,
-            "validation_note": c["validation_note"],
+            "validation_note": c["validation_note"], "serving": c["serving"],
             "topics": [{"id": t["id"], "name": t["name"], "mapped": bool(t["assist_skills"]),
                         "assist_skills": list(t["assist_skills"])} for t in c["topics"]],
             "difficulty": c["difficulty"]}

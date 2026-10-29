@@ -1,0 +1,30 @@
+{
+  "eedi": {
+    "status": "downloaded (657 MB) from the public archive",
+    "folder": "data/external/eedi_neurips2020"
+  },
+  "xes3g5m": {
+    "status": "missing: manual download needed",
+    "folder": "data/external/xes3g5m"
+  },
+  "junyi": {
+    "status": "missing: manual download needed",
+    "folder": "data/external/junyi"
+  },
+  "kddcup2010": {
+    "status": "missing: manual download needed",
+    "folder": "data/external/kddcup2010"
+  },
+  "statics2011": {
+    "status": "missing: manual download needed",
+    "folder": "data/external/statics2011"
+  },
+  "assist2012": {
+    "status": "missing: manual download needed",
+    "folder": "data/external/assistments2012"
+  },
+  "assist2015": {
+    "status": "missing: manual download needed",
+    "folder": "data/external/assistments2015"
+  }
+}

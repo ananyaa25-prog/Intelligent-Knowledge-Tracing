@@ -43,6 +43,8 @@ candidates, chosen level, reason built only from those numbers).
 import json
 import random
 import uuid
+
+import numpy as np
 from datetime import datetime, timezone
 from typing import Any, Dict, List, Optional, Tuple
 
@@ -98,6 +100,9 @@ class AdaptiveSession:
         self.topic_by_id: Dict[int, Dict[str, Any]] = {t["raw_skill_id"]: t for t in self.topics}
         self.topic_ids: List[int] = [t["raw_skill_id"] for t in self.topics]
         self.validated = self.section is None or SECTIONS[self.section]["validation"] == VALIDATED
+        # whether the served ASSISTments model is used for this section (D37); the label above
+        # only reports whether a real dataset for the level was evaluated
+        self.uses_model = self.section is None or SECTIONS[self.section].get("serving") == "model"
         self.question_source = question_source or getattr(cfg, "question_source", "bank")
         self.policy = policy or cfg.policy
         self.session_mode = session_mode or cfg.session_mode
@@ -111,12 +116,16 @@ class AdaptiveSession:
             self.main_topics = list(self.topic_ids)
             self.max_per_topic = MAX_PER_TOPIC
             self.main_questions = MAIN_QUESTIONS
+        if self.section is not None:
+            # a section with few topics cannot fill the session within the per-topic cap
+            self.main_questions = min(self.main_questions, len(self.main_topics) * self.max_per_topic)
         self.last_topic_scores: Dict[int, float] = {}
         self.last_topic_model_scores: Dict[int, float] = {}
         self.policy_fallbacks = 0
+        self.low_confidence_count = 0
         self.topic_selection = topic_selection or cfg.topic_selection
-        if self.section and not self.validated:
-            # transfer mode: the model has no data for these topics, so rank topics by the
+        if self.section and not self.uses_model:
+            # transfer / evidence-only mode: the model has no data for these topics, so rank topics by the
             # student's own answers (evidence blend with a neutral prior), D35.
             self.topic_selection = "evidence_blend"
             self.policy = "staircase"   # levels follow the answers only (no model levels)
@@ -222,7 +231,8 @@ class AdaptiveSession:
         scores = predictor(self.context(), cands)
         return {lvl: float(sc) for lvl, sc in zip(LEVEL_NAMES, scores)}
 
-    def _model_level(self, topic: int, scores: Dict[str, float]) -> Tuple[str, Optional[str]]:
+    def _model_level(self, topic: int, scores: Dict[str, float],
+                     target: Optional[float] = None) -> Tuple[str, Optional[str]]:
         """Pick the allowed level whose predicted P is closest to target_p.
         Allowed levels follow the student's answers on this topic (D27).
         Returns (level, guardrail_name_or_None)."""
@@ -251,7 +261,8 @@ class AdaptiveSession:
         if not hard_ok and 2 in allowed:
             allowed = [i for i in allowed if i != 2] or [1]
             guard = guard or "hard_locked"
-        best = min(allowed, key=lambda i: (abs(scores[LEVEL_NAMES[i]] - self.target_p), i != last_idx, i))
+        tgt = self.target_p if target is None else float(target)
+        best = min(allowed, key=lambda i: (abs(scores[LEVEL_NAMES[i]] - tgt), i != last_idx, i))
         return LEVEL_NAMES[best], guard
 
     def _decide_level(self, topic: int, predictor) -> Tuple[str, Dict[str, float], Optional[str], bool]:
@@ -264,6 +275,8 @@ class AdaptiveSession:
             cand = {}
         if self.policy == "random":
             return random.choice(LEVEL_NAMES), cand, None, False
+        if self.policy in ("elo", "maxinfo", "uncertainty"):
+            return self._decide_level_v3(topic, predictor, level, cand)
         if self.policy == "model":
             if len(cand) != 3:
                 self.policy_fallbacks += 1
@@ -272,6 +285,45 @@ class AdaptiveSession:
             lvl, guard = self._model_level(topic, cand)
             return lvl, cand, guard, False
         return level, cand, None, False
+
+    def _decide_level_v3(self, topic: int, predictor, level: str,
+                         cand: Dict[str, float]) -> Tuple[str, Dict[str, float], Optional[str], bool]:
+        """v3 policies (src/serving/policies_v3.py). Same allowed-level guardrails as
+        POLICY=model; only the score source / target differs. Any failure -> staircase."""
+        from serving import policies_v3 as pv
+        self.last_policy_scores = {}
+        self.last_low_confidence = False
+        try:
+            if self.policy == "elo":
+                scores = pv.elo_scores(self.context(), topic, _item_topic)
+                self.last_policy_scores = scores
+                lvl, guard = self._model_level(topic, scores)
+                return lvl, cand, guard, False
+            if len(cand) != 3:
+                raise ValueError("no model level scores")
+            if self.policy == "maxinfo":
+                self.last_policy_scores = dict(cand)
+                lvl, guard = self._model_level(topic, cand, target=pv.MAXINFO_TARGET)
+                return lvl, cand, guard, False
+            # uncertainty-aware: ensemble mean, staircase level if the members disagree
+            ens = pv.ensemble_scores(getattr(predictor, "ensemble", None), self.context(),
+                                     [(topic, LEVEL_TO_BUCKET[l]) for l in LEVEL_NAMES])
+            if not ens:
+                raise ValueError("ensemble unavailable")
+            mean = {l: float(np.mean([m[i] for m in ens])) for i, l in enumerate(LEVEL_NAMES)}
+            spread = {l: float(max(m[i] for m in ens) - min(m[i] for m in ens)) for i, l in enumerate(LEVEL_NAMES)}
+            self.last_policy_scores = mean
+            self.last_spread = spread
+            lvl, guard = self._model_level(topic, mean)
+            if spread[lvl] > pv.UNCERTAINTY_MAX_SPREAD:
+                self.last_low_confidence = True
+                self.low_confidence_count += 1
+                return level, cand, "low_confidence_prediction", False
+            return lvl, cand, guard, False
+        except Exception as e:
+            self.policy_fallbacks += 1
+            print(f"[AdaptiveSession] {self.policy} policy fallback to staircase ({e})")
+            return level, cand, None, True
 
     def _build_decision(self, topic: int, level: str, cand: Dict[str, float],
                         guard: Optional[str], fell_back: bool, kind: str) -> Dict[str, Any]:
@@ -311,6 +363,23 @@ class AdaptiveSession:
                     parts.append("A progression rule (based on your answers on this topic) set the level.")
             elif self.policy == "random":
                 parts.append(f"Level {level} chosen at random (evaluation baseline).")
+            elif self.policy in ("elo", "maxinfo", "uncertainty") and not fell_back:
+                ps = getattr(self, "last_policy_scores", {}) or {}
+                ps_txt = ", ".join(f"{l} {pct(ps[l])}" for l in LEVEL_NAMES if l in ps)
+                if self.policy == "elo":
+                    parts.append(f"Level {level}: Elo estimate from your answers closest to {pct(self.target_p)} "
+                                 f"among allowed levels ({ps_txt}).")
+                elif self.policy == "maxinfo":
+                    parts.append(f"Level {level}: predicted success closest to 50% (most informative) among "
+                                 f"allowed levels ({ps_txt}).")
+                elif guard == "low_confidence_prediction":
+                    parts.append(f"Low-confidence prediction: the model ensemble disagrees, so level {level} "
+                                 "follows the staircase rule.")
+                else:
+                    parts.append(f"Level {level}: ensemble prediction closest to {pct(self.target_p)} among "
+                                 f"allowed levels ({ps_txt}).")
+                if guard and guard != "low_confidence_prediction":
+                    parts.append("A progression rule (based on your answers on this topic) limited the levels.")
             else:
                 if fell_back:
                     parts.append("Model level scoring unavailable; staircase rule used.")
@@ -325,6 +394,10 @@ class AdaptiveSession:
             "reason": " ".join(parts),
             "guardrail": guard,
             "fallback": bool(fell_back),
+            # v3 additive fields
+            **({"policy_scores": {k: round(v, 4) for k, v in (getattr(self, "last_policy_scores", {}) or {}).items()},
+                "low_confidence": bool(getattr(self, "last_low_confidence", False))}
+               if self.policy in ("elo", "maxinfo", "uncertainty") and kind == "main" else {}),
         }
 
     def total_questions(self) -> int:
@@ -407,7 +480,7 @@ class AdaptiveSession:
         ranking uses the student's own answers only (no model numbers are shown)."""
         if self.section is None or predictor is None:
             return predictor
-        if not self.validated:
+        if not self.uses_model:
             return lambda history, cands: [0.5] * len(cands)
 
         def wrapped(history, cands):
@@ -435,11 +508,12 @@ class AdaptiveSession:
         from serving.sections import section_info
         info = section_info(self.section)
         return {"section": self.section, "section_label": info["label"],
-                "validation": info["validation"], "validated": info["validated"]}
+                "validation": info["validation"], "validated": info["validated"],
+                "model_predictions": bool(self.uses_model)}
 
     def next_question(self, predictor=None) -> Optional[Dict[str, Any]]:
         q = self._next_question(self._model_predictor(predictor))
-        if q is not None and self.section is not None and not self.validated:
+        if q is not None and self.section is not None and not self.uses_model:
             q["predicted_p"] = None   # transfer mode: no model prediction is shown or logged
             if self.pending is not None:
                 self.pending["predicted_p"] = None

@@ -1,0 +1,22 @@
+[external] seeds = [0, 1, 2]; epochs = 4; max_students/section = 3000
+[external] eedi: processed file present
+[external] 74 tasks
+  10/74 done, 3.1 min
+  20/74 done, 6.8 min
+  30/74 done, 7.1 min
+  40/74 done, 7.6 min
+  50/74 done, 7.8 min
+  60/74 done, 8.0 min
+  70/74 done, 8.3 min
+  74/74 done, 8.5 min
+Pairs before filter: 11111, after filter: 4373
+Pairs before filter: 24401, after filter: 15177
+Pairs before filter: 24401, after filter: 15177
+Pairs before filter: 11111, after filter: 4373
+Pairs before filter: 11111, after filter: 4373
+Pairs before filter: 24401, after filter: 15177
+Pairs before filter: 11111, after filter: 4373
+Pairs before filter: 11111, after filter: 4373
+Pairs before filter: 24401, after filter: 15177
+Pairs before filter: 24401, after filter: 15177
+[external] done in 8.5 min -> reports/v3/external_benchmark.md
