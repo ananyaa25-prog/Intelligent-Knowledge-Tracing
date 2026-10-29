@@ -34,3 +34,4 @@ Resume rule: start from the first v3 stage not marked DONE/SKIPPED/PARTIAL. Test
 | Stage | Status | Summary | Tests |
 |---|---|---|---|
 | S1 recon + restore point | DONE | docs/ARCHITECTURE_NOTES_v3.md, branch feature/v3-benchmark, v3 folders, scripts/run_tests_v3.py, legacy failure list | 85/15; node 1/4; new 0 |
+| S2 classical baselines | DONE | src/baselines/{base,majority,logistic,pfa,elo,bkt}.py: majority, skill_mean, logreg_counts, pfa, elo, bkt (own EM), bkt_diff; shared fit/predict interface; 27 unit tests; docs/BASELINES.md | 112/15; node 1/4; new 0 |
