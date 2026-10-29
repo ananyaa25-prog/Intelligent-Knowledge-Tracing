@@ -77,18 +77,44 @@ def student_profile(svc, student_id: str, session_id: Optional[str] = None,
         cached = profile_cache.get(key, len(full))
         if cached is not None:
             return cached
-    prof = build_profile(
-        full_history=full,
-        topics=[{"raw_skill_id": t["raw_skill_id"], "skill_name": t["skill_name"]} for t in TOPICS],
-        predictor=_safe_predictor(svc),
-        session_history=sess_hist,
-        session_id=session_id,
-        student_id=student_id,
-    )
+    section = _session_section(svc, session_id, sess_hist) if session_id is not None else None
+    if section is None:
+        prof = build_profile(
+            full_history=full,
+            topics=[{"raw_skill_id": t["raw_skill_id"], "skill_name": t["skill_name"]} for t in TOPICS],
+            predictor=_safe_predictor(svc),
+            session_history=sess_hist,
+            session_id=session_id,
+            student_id=student_id,
+        )
+    else:
+        # v3 section session: the section's topics; transfer-mode sections are
+        # evidence-only (the model has no data for them), docs/DECISIONS.md D35.
+        from serving.adaptive_session import AdaptiveSession
+        probe = AdaptiveSession("profile", student_id, section=section)
+        prof = build_profile(
+            full_history=full,
+            topics=[{"raw_skill_id": t["raw_skill_id"], "skill_name": t["skill_name"]} for t in probe.topics],
+            predictor=probe._model_predictor(_safe_predictor(svc)) if probe.validated else None,
+            session_history=sess_hist,
+            session_id=session_id,
+            student_id=student_id,
+            reliable=None if probe.validated else False,
+        )
+        prof.update(probe.section_payload())
     prof["n_interactions"] = len(full)
     if use_cache:
         profile_cache.put(key, len(full), prof)
     return prof
+
+
+def _session_section(svc, session_id: str, sess_hist) -> Optional[str]:
+    """Section of a session: from the live session object, else from its topic ids."""
+    try:
+        return svc.adaptive_manager.get(session_id).section
+    except Exception:
+        from serving.adaptive_session import infer_section
+        return infer_section(sess_hist)
 
 
 def list_students(svc, source: str) -> List[Dict[str, Any]]:

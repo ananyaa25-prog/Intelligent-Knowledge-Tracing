@@ -43,6 +43,7 @@ from serving.calibration import maybe_calibrate
 from serving.adaptive_session import (
     AdaptiveSession, AdaptiveSessionManager, MAIN_QUESTIONS, TOPIC_BY_ID, TOPIC_IDS,
 )
+from serving.sections import normalise_section, model_items, all_sections_info
 
 # Base paths
 PROJECT_ROOT = SRC_DIR.parent
@@ -132,6 +133,7 @@ class StartSessionRequest(BaseModel):
     student_id: Optional[str] = Field(default=None, description="Student identifier")
     preferred_set: Optional[str] = Field(default=None, description="Optional set preference ('A', 'B', etc. or None for procedural)")
     source: str = Field(..., description="Student source tag ('live' or 'test')")
+    section: Optional[str] = Field(default=None, description="v3: primary | secondary | undergraduate (omit for the original topics)")
 
 
 class StartSessionResponse(BaseModel):
@@ -140,6 +142,11 @@ class StartSessionResponse(BaseModel):
     questions: List[Dict[str, Any]]
     prior_completed_sessions: int = 0
     total_prior_interactions: int = 0
+    # v3 additive fields (section of the session and its validation label)
+    section: Optional[str] = None
+    section_label: Optional[str] = None
+    validation: Optional[str] = None
+    validated: Optional[bool] = None
 
 
 class StudentSummaryResponse(BaseModel):
@@ -296,6 +303,7 @@ def _history_to_tensors(history: List[Dict[str, Any]], max_len: int):
 
 def _predictor(history: List[Dict[str, Any]], candidates: List[tuple]) -> List[float]:
     """Score candidate (raw_skill_id, difficulty_bucket) pairs as the NEXT question."""
+    history = model_items(history)  # v3: section topic ids -> mapped ASSISTments skill (others unchanged)
     # Keep the MOST RECENT interactions if the history is longer than the model window.
     if len(history) > artifacts.max_seq_len:
         history = history[-artifacts.max_seq_len:]
@@ -468,6 +476,7 @@ def generate_mastery_summary(
 
 def _process_history(history: List[InteractionRecord]) -> PredictResponse:
     """Internal helper to process a single student history."""
+    history = model_items(history)  # v3: section topic ids -> mapped ASSISTments skill (others unchanged)
     n_interactions = len(history)
 
     # Edge case: History < 2 interactions cannot produce next-step prediction
@@ -631,6 +640,12 @@ def get_skills():
     }
 
 
+@app.get("/sections")
+def get_sections():
+    """v3: learner-level sections with their topics and validation label."""
+    return {"sections": all_sections_info()}
+
+
 @app.post("/predict", response_model=PredictResponse)
 def predict(request: PredictRequest):
     return _process_history(request.student_history)
@@ -649,10 +664,16 @@ def api_start_session(req: StartSessionRequest):
     st_id = req.student_id
     src = req.source
     # Earlier sessions' answers feed every prediction of the new session (D28).
+    try:
+        section = normalise_section(req.section)
+    except ValueError as e:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
     prior = session_manager.get_full_history(st_id.strip()) if st_id and st_id.strip() else []
-    sid, st_id = adaptive_manager.start(student_id=st_id, prior_history=prior)
+    extra = {"section": section} if section else {}
+    sid, st_id = adaptive_manager.start(student_id=st_id, prior_history=prior, **extra)
     session_manager.db.create_session(session_id=sid, student_id=st_id, set_name="adaptive", source=src)
     summary = session_manager.get_student_summary(st_id)
+    sec = adaptive_manager.get(sid).section_payload()
 
     return StartSessionResponse(
         session_id=sid,
@@ -660,6 +681,7 @@ def api_start_session(req: StartSessionRequest):
         questions=[],  # adaptive sessions do not generate the quiz up front
         prior_completed_sessions=summary["completed_session_count"],
         total_prior_interactions=summary["total_interactions"],
+        **sec,
     )
 
 
@@ -695,8 +717,8 @@ def api_next_question(session_id: str):
         session_manager.db.complete_session(session_id)
         unasked = sess.unasked_topics()
         predictions = {}
-        if len(sess.context()) >= 2 and unasked:
-            scores = _predictor(sess.context(), [(t, 2) for t in unasked])
+        if len(sess.context()) >= 2 and unasked and sess.validated:
+            scores = sess._model_predictor(_predictor)(sess.context(), [(t, 2) for t in unasked])
             for t, s in zip(unasked, scores):
                 predictions[str(t)] = s
         return {
@@ -707,6 +729,7 @@ def api_next_question(session_id: str):
             "total_answered": len(sess.history),
             "total_questions": len(sess.history),
             "session_mode": sess.session_mode,
+            **sess.section_payload(),
         }
 
     return {
@@ -725,6 +748,11 @@ def api_next_question(session_id: str):
         "session_mode": adaptive_manager.get(session_id).session_mode,
         "policy": adaptive_manager.get(session_id).policy,
         "decision": q.get("decision"),
+        # v3 additive fields
+        **adaptive_manager.get(session_id).section_payload(),
+        "question_source": q.get("question_source", "bank"),
+        "answer_type": q.get("answer_type", "numeric"),
+        **({"choices": q["choices"]} if q.get("choices") else {}),
     }
 
 

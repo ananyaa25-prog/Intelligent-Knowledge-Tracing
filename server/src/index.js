@@ -466,6 +466,13 @@ app.post('/api/session/:sessionId/feedback', async (req, res) => {
   return res.status(result.status).json(result.data);
 });
 
+// v3: learner-level sections (primary / secondary / undergraduate) and their validation labels
+app.get('/api/sections', async (req, res) => {
+  const result = await forwardToPython('/sections', 'GET');
+  if (result.error) return res.status(result.status).json(result.error);
+  return res.status(result.status).json(result.data);
+});
+
 // Favicon handler to prevent browser 404 errors
 app.get('/favicon.ico', (req, res) => res.status(204).end());
 

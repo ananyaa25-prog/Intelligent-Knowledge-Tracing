@@ -50,6 +50,8 @@ from serving.question_templates import generate_question, LEVEL_TO_BUCKET
 BUCKET_TO_LEVEL = {1: "easy", 2: "medium", 3: "hard"}
 from serving.policy_config import (get_config, CORE5_MAX_PER_TOPIC, CORE5_TOTAL_QUESTIONS,
                                    EVIDENCE_PRIOR_WEIGHT)
+from serving.sections import (normalise_section, section_topics, assist_skill_for_topic,
+                              SECTIONS, VALIDATED)
 
 LEVEL_INDEX = {"easy": 0, "medium": 1, "hard": 2}
 LEVEL_NAMES = ["easy", "medium", "hard"]
@@ -85,28 +87,41 @@ class AdaptiveSession:
                  session_mode: Optional[str] = None, target_p: Optional[float] = None,
                  core_topics: Optional[List[int]] = None,
                  prior_history: Optional[List[Dict[str, Any]]] = None,
-                 topic_selection: Optional[str] = None):
+                 topic_selection: Optional[str] = None, section: Optional[str] = None,
+                 question_source: Optional[str] = None):
         self.session_id = session_id
         self.student_id = student_id
         cfg = get_config()
+        # v3 sections: None = the original 10 ASSISTments topics (unchanged behaviour).
+        self.section = normalise_section(section)
+        self.topics: List[Dict[str, Any]] = section_topics(self.section) if self.section else TOPICS
+        self.topic_by_id: Dict[int, Dict[str, Any]] = {t["raw_skill_id"]: t for t in self.topics}
+        self.topic_ids: List[int] = [t["raw_skill_id"] for t in self.topics]
+        self.validated = self.section is None or SECTIONS[self.section]["validation"] == VALIDATED
+        self.question_source = question_source or getattr(cfg, "question_source", "bank")
         self.policy = policy or cfg.policy
         self.session_mode = session_mode or cfg.session_mode
         self.target_p = float(target_p if target_p is not None else cfg.target_p)
         if self.session_mode == "core5":
-            core = [t for t in (core_topics or cfg.core_topics) if t in TOPIC_BY_ID]
-            self.main_topics: List[int] = core or list(TOPIC_IDS)
+            core = [t for t in (core_topics or cfg.core_topics) if t in self.topic_by_id]
+            self.main_topics: List[int] = core or list(self.topic_ids)
             self.max_per_topic = CORE5_MAX_PER_TOPIC
             self.main_questions = CORE5_TOTAL_QUESTIONS - PROBE_QUESTIONS
         else:
-            self.main_topics = list(TOPIC_IDS)
+            self.main_topics = list(self.topic_ids)
             self.max_per_topic = MAX_PER_TOPIC
             self.main_questions = MAIN_QUESTIONS
         self.last_topic_scores: Dict[int, float] = {}
         self.last_topic_model_scores: Dict[int, float] = {}
         self.policy_fallbacks = 0
         self.topic_selection = topic_selection or cfg.topic_selection
-        self.levels: Dict[int, str] = {t: "medium" for t in TOPIC_IDS}
-        self.topic_count: Dict[int, int] = {t: 0 for t in TOPIC_IDS}
+        if self.section and not self.validated:
+            # transfer mode: the model has no data for these topics, so rank topics by the
+            # student's own answers (evidence blend with a neutral prior), D35.
+            self.topic_selection = "evidence_blend"
+            self.policy = "staircase"   # levels follow the answers only (no model levels)
+        self.levels: Dict[int, str] = {t: "medium" for t in self.topic_ids}
+        self.topic_count: Dict[int, int] = {t: 0 for t in self.topic_ids}
         self.asked_topics: set = set()
         self.history: List[Dict[str, Any]] = []
         self.pending: Optional[Dict[str, Any]] = None
@@ -116,7 +131,7 @@ class AdaptiveSession:
         # predictions and to resume each topic's level. Empty = old behaviour.
         self.prior_history: List[Dict[str, Any]] = []
         for it in (prior_history or []):
-            norm = _normalise_item(it)
+            norm = _normalise_item(it, self.topic_by_id)
             if norm is not None:
                 self.prior_history.append(norm)
         for it in self.prior_history:
@@ -128,10 +143,12 @@ class AdaptiveSession:
     def from_history(cls, session_id: str, student_id: str, interactions: List[Dict[str, Any]],
                      **kwargs) -> "AdaptiveSession":
         """Rebuild state by replaying stored interactions (deterministic)."""
+        if kwargs.get("section") is None:
+            kwargs["section"] = infer_section(interactions)
         s = cls(session_id, student_id, **kwargs)
         for it in interactions:
             topic = int(it["topic"] if "topic" in it else it["skill_id"])
-            if topic not in TOPIC_BY_ID:
+            if topic not in s.topic_by_id:
                 continue
             correct = int(it["correct"])
             s.topic_count[topic] = s.topic_count.get(topic, 0) + 1
@@ -259,7 +276,7 @@ class AdaptiveSession:
     def _build_decision(self, topic: int, level: str, cand: Dict[str, float],
                         guard: Optional[str], fell_back: bool, kind: str) -> Dict[str, Any]:
         """Decision object; the reason text is built only from these numbers/rules."""
-        name = TOPIC_BY_ID[topic]["skill_name"]
+        name = self.topic_by_id[topic]["skill_name"]
 
         def pct(v):
             return f"{round(v * 100)}%"
@@ -313,26 +330,29 @@ class AdaptiveSession:
     def total_questions(self) -> int:
         """Number of questions the student is expected to see in this session."""
         if self.phase == "main":
-            unasked = [t for t in TOPIC_IDS if t not in self.asked_topics]
+            unasked = [t for t in self.topic_ids if t not in self.asked_topics]
             return self.main_questions + min(PROBE_QUESTIONS, len(unasked))
         return len(self.history) + (1 if self.pending else 0) + len(self.probe_queue)
 
     # ---- question generation ----------------------------------------------
 
     def _make_question(self, topic: int, level: str, is_probe: bool, predicted_p: Optional[float]) -> Dict[str, Any]:
-        meta = TOPIC_BY_ID[topic]
-        q = generate_question(meta["position"], level)
+        meta = self.topic_by_id[topic]
         used = {h.get("question_text") for h in self.history}
-        if q["question_text"] in used:
-            # Avoid repeating a question within the session (D29). Restore the RNG
-            # afterwards so topic/level choices are unaffected by the retries.
-            state_after_first = random.getstate()
-            for _ in range(15):
-                q2 = generate_question(meta["position"], level)
-                if q2["question_text"] not in used:
-                    q = q2
-                    break
-            random.setstate(state_after_first)
+        if self._use_generator(meta):
+            q = self._generated_question(meta, level, used)
+        else:
+            q = generate_question(meta["position"], level)
+            if q["question_text"] in used:
+                # Avoid repeating a question within the session (D29). Restore the RNG
+                # afterwards so topic/level choices are unaffected by the retries.
+                state_after_first = random.getstate()
+                for _ in range(15):
+                    q2 = generate_question(meta["position"], level)
+                    if q2["question_text"] not in used:
+                        q = q2
+                        break
+                random.setstate(state_after_first)
         position = len(self.history) + 1
         pending = {
             "position": position,
@@ -346,10 +366,89 @@ class AdaptiveSession:
             "predicted_p": predicted_p,
             "is_probe": is_probe,
         }
+        if q.get("source") == "generated":
+            # v3 generated item: answer type / choices are public; the checker spec stays server-side.
+            pending["question_source"] = "generated"
+            pending["answer_type"] = q.get("answer_type", "numeric")
+            if q.get("choices"):
+                pending["choices"] = list(q["choices"])
+            pending["_item"] = q
         self.pending = pending
         return pending
 
+    # ---- v3: sections and generated questions -------------------------------
+
+    def _use_generator(self, meta: Dict[str, Any]) -> bool:
+        """Section topics always use the parametric generator (they have no bank).
+        Default topics use it only if QUESTION_SOURCE=generated, or for about half of
+        the questions with QUESTION_SOURCE=mixed."""
+        if self.section is not None:
+            return True
+        if self.question_source == "generated":
+            return True
+        if self.question_source == "mixed":
+            return len(self.history) % 2 == 1
+        return False
+
+    def _generated_question(self, meta: Dict[str, Any], level: str, used: set) -> Dict[str, Any]:
+        from questions.generator import generate, topic_key_for_default
+        key = meta.get("key") or topic_key_for_default(meta["raw_skill_id"])
+        # Own RNG seeded from one draw of the global RNG, so a section session is
+        # reproducible under random.seed() and retries do not shift later choices.
+        rng = random.Random(random.random())
+        q = generate(key, level=level, rng=rng, exclude_texts=used)
+        q["source"] = "generated"
+        return q
+
+    def _model_predictor(self, predictor):
+        """Predictor the engine uses. Default section: unchanged. Validated section:
+        topic ids are translated to their ASSISTments skill (history items of
+        unmapped topics are dropped). Transfer mode: a neutral 0.5 predictor so topic
+        ranking uses the student's own answers only (no model numbers are shown)."""
+        if self.section is None or predictor is None:
+            return predictor
+        if not self.validated:
+            return lambda history, cands: [0.5] * len(cands)
+
+        def wrapped(history, cands):
+            hist = []
+            for h in history:
+                m = assist_skill_for_topic(_item_topic(h) or 0)
+                if m is not None:
+                    hist.append(dict(h, skill_id=m, topic=m))
+            out = [0.5] * len(cands)
+            idx = [i for i, (t, _) in enumerate(cands) if assist_skill_for_topic(t) is not None]
+            if hist and idx:
+                scores = predictor(hist, [(assist_skill_for_topic(cands[i][0]), cands[i][1]) for i in idx])
+                for j, i in enumerate(idx):
+                    out[i] = float(scores[j])
+            return out
+        return wrapped
+
+    def check(self, submitted: Any, pending: Dict[str, Any]) -> bool:
+        if pending.get("_item") is not None:
+            from questions.generator import check_answer
+            return check_answer(submitted, pending["_item"])
+        return _check_answer(submitted, pending["correct_answer"])
+
+    def section_payload(self) -> Dict[str, Any]:
+        from serving.sections import section_info
+        info = section_info(self.section)
+        return {"section": self.section, "section_label": info["label"],
+                "validation": info["validation"], "validated": info["validated"]}
+
     def next_question(self, predictor=None) -> Optional[Dict[str, Any]]:
+        q = self._next_question(self._model_predictor(predictor))
+        if q is not None and self.section is not None and not self.validated:
+            q["predicted_p"] = None   # transfer mode: no model prediction is shown or logged
+            if self.pending is not None:
+                self.pending["predicted_p"] = None
+            if q.get("decision"):
+                q["decision"]["reason"] = (q["decision"]["reason"] + " Transfer mode: no model prediction "
+                                           "for this section; topics are chosen from your own answers.").strip()
+        return q
+
+    def _next_question(self, predictor=None) -> Optional[Dict[str, Any]]:
         if self.phase == "done":
             return None
 
@@ -379,7 +478,7 @@ class AdaptiveSession:
 
             # Main phase complete -> transition to probe phase exactly once.
             self.phase = "probe"
-            unasked = [t for t in TOPIC_IDS if t not in self.asked_topics]
+            unasked = [t for t in self.topic_ids if t not in self.asked_topics]
             if not unasked:
                 self.phase = "done"
                 return None
@@ -405,7 +504,7 @@ class AdaptiveSession:
 
         pending = self.pending
         topic = pending["topic"]
-        is_correct = _check_answer(submitted_answer, pending["correct_answer"])
+        is_correct = self.check(submitted_answer, pending)
 
         # Staircase reacts to the actual answer only.
         idx = LEVEL_INDEX[self.levels[topic]]
@@ -439,7 +538,7 @@ class AdaptiveSession:
         return self.phase == "done" or (self.phase == "probe" and not self.probe_queue)
 
     def unasked_topics(self) -> List[int]:
-        return [t for t in TOPIC_IDS if t not in self.asked_topics]
+        return [t for t in self.topic_ids if t not in self.asked_topics]
 
 
 def _item_topic(it: Dict[str, Any]) -> Optional[int]:
@@ -459,10 +558,21 @@ def _item_level(it: Dict[str, Any]) -> Optional[str]:
         return None
 
 
-def _normalise_item(it: Dict[str, Any]) -> Optional[Dict[str, Any]]:
+def infer_section(interactions: List[Dict[str, Any]]) -> Optional[str]:
+    """Section of a stored session from its topic ids (section topics use 10xxx /
+    20xxx / 30xxx ids, ASSISTments topics are < 1000); None = default."""
+    from serving.sections import TOPIC_INDEX
+    for it in interactions or []:
+        t = _item_topic(it)
+        if t is not None and t in TOPIC_INDEX:
+            return TOPIC_INDEX[t]["section"]
+    return None
+
+
+def _normalise_item(it: Dict[str, Any], topic_by_id: Optional[Dict[int, Dict[str, Any]]] = None) -> Optional[Dict[str, Any]]:
     """Stored interaction -> dict usable by the predictor and level rules."""
     t = _item_topic(it)
-    if t is None or t not in TOPIC_BY_ID:
+    if t is None or t not in (topic_by_id if topic_by_id is not None else TOPIC_BY_ID):
         return None
     out = dict(it)
     out["topic"] = t
