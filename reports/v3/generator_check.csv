@@ -1,0 +1,70 @@
+topic,section,level,n,self_check_pass,distinct,complexity_mean,digits_in_text_mean,answer_types
+p_add_sub,primary,easy,300,1.0,111,2.0,2.0,numeric
+p_add_sub,primary,medium,300,1.0,300,4.24,6.72,numeric
+p_add_sub,primary,hard,300,1.0,300,6.2967,13.1867,numeric
+p_mul_div,primary,easy,300,1.0,64,2.0,2.0,numeric
+p_mul_div,primary,medium,300,1.0,272,4.2533,4.62,numeric
+p_mul_div,primary,hard,300,1.0,300,6.3967,6.7933,numeric
+p_fractions,primary,easy,300,1.0,53,2.0,4.0,fraction
+p_fractions,primary,medium,300,1.0,246,4.58,4.5133,fraction
+p_fractions,primary,hard,300,1.0,300,7.32,7.6767,fraction
+p_decimals,primary,easy,300,1.0,297,2.0,4.0,numeric
+p_decimals,primary,medium,300,1.0,300,4.2567,8.3967,numeric
+p_decimals,primary,hard,300,1.0,300,6.3133,5.2033,numeric
+p_geometry,primary,easy,300,1.0,64,2.0,2.0,numeric
+p_geometry,primary,medium,300,1.0,298,4.2567,4.5167,numeric
+p_geometry,primary,hard,300,1.0,300,6.33,12.8167,numeric
+s_algebra,secondary,easy,300,1.0,245,2.0,3.0,numeric
+s_algebra,secondary,medium,300,1.0,300,5.0267,5.26,numeric
+s_algebra,secondary,hard,300,1.0,296,7.3533,11.8167,mc
+s_equations,secondary,easy,300,1.0,81,2.0,2.6133,numeric
+s_equations,secondary,medium,300,1.0,300,5.3067,5.6533,"fraction,numeric"
+s_equations,secondary,hard,300,1.0,300,8.3167,8.7433,fraction
+s_ratios,secondary,easy,300,1.0,24,2.0,4.3633,numeric
+s_ratios,secondary,medium,300,1.0,224,4.2933,4.2633,numeric
+s_ratios,secondary,hard,300,1.0,299,6.3333,8.3333,numeric
+s_geometry,secondary,easy,300,1.0,16,2.0,3.5233,numeric
+s_geometry,secondary,medium,300,1.0,296,4.25,4.0,numeric
+s_geometry,secondary,hard,300,1.0,224,7.3933,5.1367,numeric
+s_statistics,secondary,easy,300,1.0,297,2.0,4.36,numeric
+s_statistics,secondary,medium,300,1.0,300,4.99,13.6767,numeric
+s_statistics,secondary,hard,300,1.0,300,7.3467,27.05,numeric
+u_calculus,undergraduate,easy,300,1.0,281,2.0,5.0,numeric
+u_calculus,undergraduate,medium,300,1.0,299,5.0167,6.0,numeric
+u_calculus,undergraduate,hard,300,1.0,300,7.2667,8.0,numeric
+u_linear_algebra,undergraduate,easy,300,1.0,292,2.0,4.0,numeric
+u_linear_algebra,undergraduate,medium,300,1.0,300,5.0567,8.0,numeric
+u_linear_algebra,undergraduate,hard,300,1.0,300,8.2967,10.0,fraction
+u_probability,undergraduate,easy,300,1.0,11,2.0,1.33,fraction
+u_probability,undergraduate,medium,300,1.0,63,4.2233,2.0833,fraction
+u_probability,undergraduate,hard,300,1.0,42,7.3367,4.0,fraction
+u_discrete,undergraduate,easy,300,1.0,10,2.0,2.0,numeric
+u_discrete,undergraduate,medium,300,1.0,24,4.2233,2.3067,numeric
+u_discrete,undergraduate,hard,300,1.0,298,6.3367,5.3433,numeric
+d_percents,default topics,easy,300,1.0,30,2.0,4.3433,numeric
+d_percents,default topics,medium,300,1.0,298,4.24,5.1567,numeric
+d_percents,default topics,hard,300,1.0,299,6.36,9.2233,numeric
+d_percent_discount,default topics,easy,300,1.0,195,2.0,4.0,numeric
+d_percent_discount,default topics,medium,300,1.0,299,4.2167,6.1,numeric
+d_percent_discount,default topics,hard,300,1.0,300,6.3833,8.64,numeric
+d_rate,default topics,easy,300,1.0,40,2.0,3.55,numeric
+d_rate,default topics,medium,300,1.0,108,4.26,3.2467,numeric
+d_rate,default topics,hard,300,1.0,283,7.3333,7.23,numeric
+d_poly_factors,default topics,easy,300,1.0,280,2.0,11.4433,mc
+d_poly_factors,default topics,medium,300,1.0,290,5.06,11.2267,mc
+d_poly_factors,default topics,hard,300,1.0,297,7.3633,16.9967,mc
+d_exponents,default topics,easy,300,1.0,16,2.0,2.0,numeric
+d_exponents,default topics,medium,300,1.0,18,4.2533,2.0,numeric
+d_exponents,default topics,hard,300,1.0,264,6.3667,4.0633,numeric
+d_systems,default topics,easy,300,1.0,81,2.0,2.6133,numeric
+d_systems,default topics,medium,300,1.0,300,5.0067,7.5867,numeric
+d_systems,default topics,hard,300,1.0,299,7.2733,7.4333,numeric
+d_order_fractions,default topics,easy,300,1.0,240,2.0,6.0,mc
+d_order_fractions,default topics,medium,300,1.0,300,4.22,9.08,mc
+d_order_fractions,default topics,hard,300,1.0,300,6.31,9.26,mc
+d_equiv_fractions,default topics,easy,300,1.0,114,2.0,4.16,numeric
+d_equiv_fractions,default topics,medium,300,1.0,196,4.2533,4.4967,numeric
+d_equiv_fractions,default topics,hard,300,1.0,238,6.3433,4.8333,numeric
+d_pythagoras,default topics,easy,300,1.0,16,2.0,3.5233,numeric
+d_pythagoras,default topics,medium,300,1.0,142,4.5267,4.61,numeric
+d_pythagoras,default topics,hard,300,1.0,224,7.3933,5.1367,numeric

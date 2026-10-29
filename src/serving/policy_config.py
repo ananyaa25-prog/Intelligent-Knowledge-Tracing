@@ -25,6 +25,10 @@ Environment variables (all optional):
                        model-based profile to be trusted (default 0.10)
   EXCLUDE_STUDENT_REGEX  regex of student ids excluded from live analytics
                        (default (smoke|e2e|pred_check|test|^sim_))
+  QUESTION_SOURCE      bank | generated | mixed (v3; default bank = the existing templates for
+                       the 10 original topics; generated = src/questions/generator.py;
+                       mixed = alternate bank / generated). Section sessions always use
+                       the generator (they have no bank).
   KT_DB_PATH           optional override of the SQLite DB path
   KT_LOG_PATH          optional override of the JSONL session-log path
 """
@@ -47,6 +51,7 @@ CALIBRATION_PATH = PROCESSED_DIR / "calibration.json"
 VALID_POLICIES = ("staircase", "model", "random")
 VALID_SESSION_MODES = ("full10", "core5")
 VALID_TOPIC_SELECTIONS = ("model", "evidence_blend")
+VALID_QUESTION_SOURCES = ("bank", "generated", "mixed")
 
 # Defaults (documented above). Changing them changes the system's behaviour.
 DEFAULT_POLICY = "staircase"           # existing staircase rule
@@ -54,6 +59,7 @@ DEFAULT_TARGET_P = 0.70                # model policy aims for ~70% predicted su
 DEFAULT_APPLY_CALIBRATION = False      # raw model probabilities, as before
 DEFAULT_SESSION_MODE = "full10"        # existing 10-topic session
 DEFAULT_TOPIC_SELECTION = "model"      # existing rule: lowest predicted P
+DEFAULT_QUESTION_SOURCE = "bank"       # existing template bank (v3 flag)
 EVIDENCE_PRIOR_WEIGHT = 2.0            # evidence_blend: model prediction counts like 2 answers
 DEFAULT_CORE_TOPICS = [50, 48, 204, 203, 350]  # fractions, percents, linear systems
 DEFAULT_T_PROF = 0.70                  # "proficient at a level" threshold
@@ -134,6 +140,7 @@ class PolicyConfig:
     min_answers: int = DEFAULT_MIN_ANSWERS
     monotone_warn: float = DEFAULT_MONOTONE_WARN
     exclude_student_regex: str = DEFAULT_EXCLUDE_STUDENT_REGEX
+    question_source: str = DEFAULT_QUESTION_SOURCE
     db_path: Optional[str] = None
     log_path: Optional[str] = None
 
@@ -161,6 +168,7 @@ def get_config() -> PolicyConfig:
         min_answers=_env_int("MIN_ANSWERS", DEFAULT_MIN_ANSWERS),
         monotone_warn=_env_float("MONOTONE_WARN", DEFAULT_MONOTONE_WARN),
         exclude_student_regex=os.environ.get("EXCLUDE_STUDENT_REGEX") or DEFAULT_EXCLUDE_STUDENT_REGEX,
+        question_source=_env_str("QUESTION_SOURCE", DEFAULT_QUESTION_SOURCE, VALID_QUESTION_SOURCES),
         db_path=os.environ.get("KT_DB_PATH") or None,
         log_path=os.environ.get("KT_LOG_PATH") or None,
     )
