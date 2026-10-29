@@ -1,0 +1,19 @@
+[deep] seeds = 0..9 (10); epochs = 5; max_students = None; workers = 6; models = ['dkt_classic', 'dkt_gru', 'dkt_lstm', 'dkvmn_lite', 'sakt_lite', 'full_gated', 'graph_no_gate', 'dkt_only', 'no_graph', 'no_metadata', 'no_difficulty']
+[deep] 153 tasks, 9 cached, 144 to run
+  10/144 done, 7.3 min
+  20/144 done, 13.7 min
+  30/144 done, 17.4 min
+  40/144 done, 23.8 min
+  50/144 done, 30.2 min
+  60/144 done, 34.5 min
+  70/144 done, 40.6 min
+  80/144 done, 42.5 min
+  90/144 done, 43.3 min
+  100/144 done, 43.8 min
+  110/144 done, 44.2 min
+  120/144 done, 44.3 min
+  130/144 done, 44.4 min
+  140/144 done, 44.5 min
+  144/144 done, 44.5 min
+[report] bootstrap 1000 resamples x 18 models in 83s
+[report] reports/v3/benchmark.md written

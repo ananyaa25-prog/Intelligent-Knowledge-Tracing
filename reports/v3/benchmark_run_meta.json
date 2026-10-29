@@ -1,0 +1,33 @@
+{
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+  ],
+  "epochs": 5,
+  "max_students": null,
+  "tag": "e5_m0",
+  "workers": 6,
+  "wall_minutes": 44.5,
+  "deep_models": [
+    "dkt_classic",
+    "dkt_gru",
+    "dkt_lstm",
+    "dkvmn_lite",
+    "sakt_lite",
+    "full_gated",
+    "graph_no_gate",
+    "dkt_only",
+    "no_graph",
+    "no_metadata",
+    "no_difficulty"
+  ],
+  "bootstrap": 1000
+}
