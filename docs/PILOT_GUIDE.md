@@ -49,3 +49,10 @@ How to read `reports/pilot.md`:
 
 - Data stays in `data/processed/kt_sessions.db` and `data/processed/session_logs.jsonl` on the machine running the demo.
 - Delete the pilot data when it is no longer needed for the project, according to your consent form.
+
+## v3 additions
+
+- **Sections:** run each pilot group in one learner level (Primary / Secondary / Undergraduate) and note it; section answers are stored with section topic ids (10xxx / 20xxx / 30xxx). Primary and undergraduate sessions show no model predictions (evidence-only).
+- **Teacher review of generated items (before the pilot):** print 5 items per topic and level with `QuestionStream` from `src/questions/generator.py` (see docs/QUESTION_GENERATOR.md) and ask a teacher to mark each as appropriate / wrong level / unclear. Report the counts; do not change levels silently.
+- **What would validate the generator:** correctness falling from easy to medium to hard within each topic on logged answers (scripts/analyze_logs.py groups answers by level).
+- **What would validate a non-ASSISTments section for the served model:** training or fine-tuning on real data from that level and re-running scripts/run_external_benchmark.py - not done yet.

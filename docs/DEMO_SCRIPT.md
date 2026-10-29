@@ -40,3 +40,12 @@ The demo configuration (demo.env) is: staircase difficulty (model-guided difficu
 - Model or page errors: switch to the screenshots in `reports/screenshots/` (quiz states at 1280px and 375px, results, dashboard, simulated dashboard). Files with `_injected` in the name show a real question with a substituted prediction value; say so if you use them.
 - Dashboard empty: use the "Simulated demo" toggle (after seeding) or `dashboard_simulated_1280.png`.
 - Want the original behaviour: `scripts/start_demo.py --defaults`.
+
+## v3 add-on (2 minutes): section switch
+
+1. On the login card open **Learner level**. Point out the labels: Primary and Secondary "validated on real data", Undergraduate "transfer mode, not validated" (why: reports/v3/external_benchmark.md, docs/DECISIONS.md D37).
+2. Start as `demo_secondary` with **Secondary**: the badge shows "Secondary · validated on real data"; predictions appear after the 2 warm-ups (the served model knows these skills). Answer 3-4 questions.
+3. Restart as `demo_primary` with **Primary**: same flow, but the card says "No model prediction in this section"; the decision text explains that topics follow the student's own answers. Questions are generated (e.g. "Calculate 51 + 93 - 45.").
+4. Optionally **Undergraduate**: calculus / matrices / probability items; fraction answers accepted as 1/2 or 0.5; multiple-choice items show A-D buttons; no correct/incorrect verdict during the quiz.
+5. Results page: the section banner repeats the label. Dashboard: the "Learner-level sections" card lists all three with their labels.
+6. Say plainly: on real Eedi data our model is comparable to DKT and Elo, not better; the demo's difficulty policy passed a non-inferiority gate in simulation only.

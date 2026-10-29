@@ -91,3 +91,50 @@ It is the model's estimate for *the next* question's topic and level. Two effect
 
 **30. Does a returning student start from scratch?**
 No (fixed after user testing). Answers from earlier sessions feed every prediction from question 1, each topic resumes at its previous level, and finished sessions are marked completed so they appear in the teacher's matrix.
+
+## v3: hard questions (numbers from reports/v3/)
+
+**31. Why many seeds instead of three?**
+With three seeds a difference of 0.003 AUC cannot be separated from initialisation noise. v3 uses 100 seeds for the classical models (each seed a new random student split, reports/v3/benchmark_classical.md) and 10 paired seeds for every deep model (reports/v3/benchmark.md). That shows the seed spread is small (full_gated std 0.0015) but the split spread is larger (Elo std 0.0133 over 100 re-splits), so a single split can mislead more than a single seed.
+
+**32. Why only 10 seeds for the deep models when the target was 50?**
+Time: 11 deep models x 10 seeds x 5 epochs already took 44.5 minutes on 6 CPU cores. We said so in the report and added a 1000-resample bootstrap over test students, reported separately from the seed uncertainty.
+
+**33. Why these baselines?**
+They span the standard families: no-history references (majority, skill mean), count-based logistic models (LR, PFA), rating models (Elo), HMMs (BKT, BKT with per-difficulty guess/slip), RNNs (DKT classic/GRU/LSTM), memory networks (DKVMN-lite) and attention (SAKT-lite), plus our own ablations. Most were given the same difficulty buckets so the comparison is not just "with vs without difficulty" (docs/BASELINES.md).
+
+**34. Is the gain significant?**
+Against the classical baselines, SAKT-lite, DKVMN-lite and DKT-GRU/LSTM: yes (Holm-corrected paired t-test, seed CI and bootstrap CI exclude 0). Against classic DKT: no, +0.0012 with Holm p 0.0910, verdict "comparable". Effect sizes against deep models are small (+0.006 to +0.008 AUC).
+
+**35. Why compare under a reduced budget? Isn't that unfair to your model?**
+Every model got the same 5-epoch budget, so the comparison is fair between them; it may understate all of them. The fully trained v2 checkpoints (0.8713 for full_gated) are listed as reference rows, but only for our model, so they are not used in any significance test.
+
+**36. Why did the graph alone not help?**
+In v2 (graph_no_gate below dkt_only) and in v3 (no_graph ablation comparable to the full model, +0.0009, not significant) the PPMI co-occurrence graph adds little. Likely reasons: the graph is built from assignment co-occurrence, which mostly reflects curriculum order; the target skill and difficulty embeddings already carry most of what the graph encodes; and ASSISTments skill-builder sequences are mostly single-skill blocks. We do not claim a graph benefit.
+
+**37. Then what does the gate do?**
+Removing the gate (averaging short-term, long-term and graph states instead) costs 0.0077 AUC, significant over 10 paired seeds. That is the only architectural component with a measurable benefit, and it is small.
+
+**38. How valid are the non-ASSISTments sections?**
+Secondary is served by the ASSISTments model and evaluated on ASSISTments plus Eedi secondary-age learners. Primary is labelled "validated" because models were evaluated on Eedi learners younger than 11, but the served model never saw those data, so the app shows no predictions there. Undergraduate has no data at all: transfer mode. On Eedi our model is comparable to DKT and Elo, not better (reports/v3/external_benchmark.md).
+
+**39. Does a model trained on one level work on another?**
+Not well: on Eedi, full_gated trained on primary-age learners drops from 0.7581 (in-level) to 0.7306 on secondary-age learners, and secondary -> primary drops from 0.7765 to 0.7419. Every model in the transfer table loses 0.02-0.05 AUC.
+
+**40. How do you know the generated questions are correct?**
+Every item's answer is computed with exact arithmetic, the checker accepts it, and the tests re-derive the answer independently from the question text for arithmetic, fraction, decimal, determinant, combination and equation items (tests/test_question_generator.py, 100 tests).
+
+**41. Are generated "hard" questions actually harder?**
+Only by construction: digits, steps, negatives and fractions increase with the level (complexity ordered for 23/23 topics). An independent surface proxy is ordered for 17/23 topics (reports/v3/generator_check.md). Whether students find them harder is untested; it needs logged answers and a teacher review.
+
+**42. The demo uses the uncertainty-aware policy. Does it beat the staircase?**
+It passed a pre-registered non-inferiority gate in simulation (in-band 45.9% vs 43.2%, significant; status accuracy 50.4% vs 48.3%, not significant). It falls back to the staircase on 59% of level decisions because the three checkpoints disagree by more than 0.15, so in practice it is mostly the staircase with a low-confidence flag.
+
+**43. Why does Elo look so good in the policy simulation?**
+Its level difficulties were learned from ASSISTments (-1.12 / 0 / +1.16) and happen to be close to the simulator's generating values (-1 / 0 / +1), which favours it. It was a comparison policy and could not be chosen for the demo under the pre-registered rule.
+
+**44. Did you tune anything after seeing results?**
+No policy, threshold or student parameter was changed after the simulation. Two bug fixes were made and are listed in reports/v3/DEMO_CONFIG.md Part 2 (a report-writing crash before any result was shown, and removing placeholder 50% numbers from evidence-only decision text). The pre-registration was committed before the run (git history).
+
+**45. What would most strengthen the project now?**
+A real pilot (docs/PILOT_GUIDE.md), real data for the levels the served model does not cover (and retraining on it), a teacher review of generated items, and a longer-budget benchmark with more seeds and the full published DKVMN/SAKT/AKT models.

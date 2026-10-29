@@ -39,3 +39,23 @@ Every number below is copied from a generated report (file in brackets). Synthet
 
 ## Real-user evidence
 - One real tester's sessions exposed the "stuck on Easy" and "no prediction in session 2" problems, which are now fixed. There is no systematic pilot yet: the log has 62 usable answers, but almost all from developer/tester sessions (ids such as 10, 12, 88109-ak), not a pilot sample; do not present these numbers as evidence. [reports/pilot.md, docs/PILOT_GUIDE.md]
+
+## v3 results (all numbers from reports/v3/)
+
+**Benchmark, ASSISTments official split, 10 seeds, 5 epochs for every deep model** [reports/v3/benchmark.md]
+- full_gated 0.8533 ± 0.0015 (95% CI 0.8523-0.8544). Classic DKT 0.8521, no-graph 0.8524, DKT-GRU 0.8474, DKVMN-lite 0.8453, Elo 0.8085, BKT+difficulty 0.7959, SAKT-lite 0.7779, PFA 0.7657.
+- Paired tests (Holm): improves over all classical baselines, SAKT-lite, DKVMN-lite, DKT-GRU/LSTM; **comparable** to classic DKT (+0.0012) and to its no-graph ablation (+0.0009).
+- Ablations: gate +0.0077, difficulty +0.0089, metadata +0.0011 (all significant); graph +0.0009 (not significant).
+- Fully trained v2 checkpoints (3 seeds, reference): 0.8713 / 0.8677 / 0.8657.
+
+**Classical baselines, 100 random re-splits** [reports/v3/benchmark_classical.md]: Elo 0.8094 ± 0.0133, LR-counts 0.7915, BKT+difficulty 0.7849, BKT 0.7701, PFA 0.7515, skill mean 0.6723.
+
+**By grade band (ASSISTments)** [reports/v3/by_band.md]: full_gated primary-level skills 0.8763, secondary 0.8364; no undergraduate skills exist in the data.
+
+**Real data for other levels (Eedi, 3 seeds)** [reports/v3/external_benchmark.md]: primary-age full_gated 0.7765, DKT-GRU 0.7764, Elo 0.7728; secondary-age Elo 0.7601, full_gated 0.7581. Cross-level transfer costs 0.02-0.05 AUC.
+
+**Difficulty policies, 100 paired synthetic students, demo setting** [reports/v3/policy_comparison.md]: in-band share staircase 43.2%, ZPD model 50.3%, Elo 51.5%, max-info 46.4%, uncertainty 45.9%, random 34.5%; status-accuracy differences not significant. Demo: POLICY=uncertainty, QUESTION_SOURCE=mixed by the pre-registered gates [reports/v3/DEMO_CONFIG.md]; the uncertainty policy uses the staircase on 59% of decisions.
+
+**Generator** [reports/v3/generator_check.md]: 23 topics; 100 tests pass; complexity ordered 23/23 (by construction), text proxy 17/23.
+
+**Checks**: e2e through the Node proxy PASS for 6 configurations [reports/v3/e2e_http_check.md]; browser QA 1280/375 PASS [reports/v3/ui_check.md].

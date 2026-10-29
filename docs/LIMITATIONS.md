@@ -13,3 +13,15 @@
 11. **Legacy tests.** 15 pytest tests and 3 Node smoke suites written for the old fixed 10-question flow failed before this work and still fail; they were not rewritten.
 12. **Recency-driven estimates.** The knowledge-tracing state is dominated by the most recent answers on any topic, so a run of wrong answers on one topic lowers the estimates for all topics. The profile corrects only clear contradictions with a topic's own answers (one step; docs/DECISIONS.md D26); smaller distortions remain.
 13. **Privacy.** Student ids are free text; there is no authentication. Use pseudonymous ids (docs/PILOT_GUIDE.md).
+
+## v3 limitations
+
+- **Reduced training budget in the benchmark.** All deep models were trained for 5 epochs (v2 used 15) so 10 seeds fit in about 45 minutes; absolute AUCs are lower than the fully trained v2 checkpoints (0.8533 vs 0.8713 for full_gated) and the ranking could change with longer training. Only 10 seeds (not 50) were feasible for the deep models; test-sample uncertainty is covered by a 1000-resample bootstrap instead.
+- **-lite baselines.** DKVMN-lite and SAKT-lite are simplified, untuned re-implementations; a gap to them is not a gap to the published models. AKT was not run.
+- **One main dataset.** The main comparison uses ASSISTments 2009 and one official split; per-band results reuse the same test students.
+- **External data.** Only Eedi (NeurIPS 2020) could be downloaded; it has no response times, attempts or hints (neutral values), sections come from an age rule (age at first answer, month-level birth dates), and only 3000 students per section, 3 seeds and 4 epochs were used. XES3G5M, Junyi, KDD Cup 2010, Statics2011 and ASSISTments 2012/2015 need logins or licence acceptance (docs/DATASETS_TODO.md).
+- **Validated is not the same as served.** Primary is labelled "validated on real data" because a model was evaluated on Eedi primary-age learners, but the served model is trained on ASSISTments only, so primary sessions show no model predictions. Undergraduate is transfer mode with no data at all.
+- **Grade bands of ASSISTments skills** come from a keyword rule on skill names (D34), a judgement call.
+- **Generator.** Difficulty levels are parameter-based; no teacher has reviewed the items and no student has answered them, so it is unknown whether "hard" items are harder for students or curriculum-appropriate.
+- **Policy simulation.** Synthetic students only; status-accuracy differences were not significant; the uncertainty-aware demo policy falls back to the staircase on 59% of decisions; the Elo level difficulties learned from ASSISTments happen to be close to the simulator's generating values, which favours Elo in simulation.
+- **No pilot.** There is still no real-student or teacher evidence about learning, usability or usefulness.

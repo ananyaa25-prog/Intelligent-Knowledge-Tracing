@@ -4,6 +4,19 @@ GatedKT is a dynamic maths assessment built around a knowledge-tracing model. Be
 
 This is an **integrated, evaluated system built from standard parts** (knowledge tracing, a skill-relation graph, a learned gate, adaptive difficulty). It is not a new model architecture. See [docs/PROJECT_OVERVIEW.md](docs/PROJECT_OVERVIEW.md) for what is and is not new, and [docs/LIMITATIONS.md](docs/LIMITATIONS.md).
 
+## What v3 adds (faculty feedback)
+
+| Feedback | What v3 does | Evidence |
+|---|---|---|
+| Many seeds, report variance | 100 seeds for 7 classical baselines (random re-splits); 10 seeds for 11 deep models / ablations at a reduced, equal budget, plus a 1000-resample bootstrap over test students; mean, std, variance, 95% CI | [reports/v3/benchmark_classical.md](reports/v3/benchmark_classical.md), [reports/v3/benchmark.md](reports/v3/benchmark.md) |
+| More baselines | majority, skill mean, logistic regression on counts, PFA, Elo, BKT (own EM), BKT+difficulty, DKT (classic / GRU / LSTM), DKVMN-lite, SAKT-lite, plus our ablations | [docs/BASELINES.md](docs/BASELINES.md) |
+| Learner levels | sections primary / secondary / undergraduate with grade labels, topics, difficulty parameters and a validation label | `src/serving/sections.py`, [reports/v3/by_band.md](reports/v3/by_band.md) |
+| Compare with existing solutions | paired significance tests against every baseline; related-work table | [reports/v3/benchmark.md](reports/v3/benchmark.md), [docs/RELATED_WORK_TABLE.md](docs/RELATED_WORK_TABLE.md) |
+| Random parametric questions | seeded offline generator driven by difficulty parameters, numeric / fraction / multiple-choice answers | [docs/QUESTION_GENERATOR.md](docs/QUESTION_GENERATOR.md), [reports/v3/generator_check.md](reports/v3/generator_check.md) |
+| Stronger, no false claims | real external data (Eedi) for primary/secondary, pre-registered policy gates, honesty audit | [reports/v3/external_benchmark.md](reports/v3/external_benchmark.md), [reports/v3/DEMO_CONFIG.md](reports/v3/DEMO_CONFIG.md), [reports/v3/FINAL_REPORT.md](reports/v3/FINAL_REPORT.md) |
+
+Headline (all numbers from reports/v3): with the same reduced training budget, the full gated model is significantly better than every classical baseline, SAKT-lite, DKVMN-lite and DKT-GRU/LSTM, but only comparable to classic DKT and to its own no-graph ablation; on the real Eedi data it is comparable to DKT and Elo. See [docs/RESULTS_SUMMARY.md](docs/RESULTS_SUMMARY.md).
+
 ## Architecture
 
 ```mermaid
@@ -42,13 +55,32 @@ cd server && npm ci && cd ..
 
 Then open `http://127.0.0.1:3000/` (quiz) and `http://127.0.0.1:3000/dashboard.html` (teacher view).
 
-`demo.env` was produced by `scripts/apply_gates.py` from the decision gates ([reports/DEMO_CONFIG.md](reports/DEMO_CONFIG.md)): `POLICY=staircase` (Gate S failed for the revised model policy), `APPLY_CALIBRATION=true`, `SESSION_MODE=core5`, `TOPIC_SELECTION=evidence_blend` (post hoc rule after user testing), `TARGET_P=0.70`. All settings are environment variables documented in `src/serving/policy_config.py`.
+`demo.env` is now produced by `scripts/apply_gates_v3.py` from the pre-registered v3 gates ([reports/v3/DEMO_CONFIG.md](reports/v3/DEMO_CONFIG.md)): `POLICY=uncertainty` (passed Gate P; in simulation it falls back to the staircase on most decisions and flags them as low-confidence), `QUESTION_SOURCE=mixed` (passed Gate Q), and from v2 ([reports/DEMO_CONFIG.md](reports/DEMO_CONFIG.md)) `APPLY_CALIBRATION=true`, `SESSION_MODE=core5`, `TOPIC_SELECTION=evidence_blend`, `TARGET_P=0.70`. All settings are environment variables documented in `src/serving/policy_config.py`; their defaults are the original behaviour.
+
+Learner level: the login card has a "Learner level" picker (default = the original 10 topics). Primary and secondary are labelled "validated on real data"; undergraduate is "transfer mode, not validated". Only secondary uses the served model's predictions; primary and undergraduate sessions are evidence-only (see docs/DECISIONS.md D35, D37).
 
 Optional simulated demo students for the dashboard's "Simulated demo" view (clearly labelled, ids `sim_*`):
 
 ```bash
 .venv/Scripts/python scripts/seed_demo_data.py --yes-real-db           # add 12 simulated students
 .venv/Scripts/python scripts/seed_demo_data.py --remove --yes-real-db  # remove them again
+```
+
+## v3 experiments
+
+```bash
+.venv/Scripts/python scripts/benchmark_seeds.py classical --seeds 100 --workers 5     # Stage 4, ~8 min
+.venv/Scripts/python scripts/benchmark_seeds.py deep --seeds 10 --epochs 5 --workers 6 # Stage 5, ~45 min (cached; resumable)
+.venv/Scripts/python scripts/benchmark_seeds.py report                                 # rebuild benchmark.md from cached predictions
+.venv/Scripts/python scripts/build_by_band.py                                          # per-grade-band AUC
+.venv/Scripts/python scripts/fetch_datasets.py                                         # public downloads, else docs/DATASETS_TODO.md
+.venv/Scripts/python scripts/run_external_benchmark.py --seeds 3 --epochs 4            # Eedi per section + transfer, ~9 min
+.venv/Scripts/python scripts/check_generator.py                                        # question generator report
+.venv/Scripts/python scripts/simulate_v3.py --students 100 --seed 2026 --exploratory   # policy comparison, ~2 min
+.venv/Scripts/python scripts/apply_gates_v3.py                                         # pre-registered gates -> demo.env
+.venv/Scripts/python scripts/run_tests_v3.py                                           # all pytest + Node suites, new-failure check
+.venv/Scripts/python scripts/e2e_http_check.py --only demo,mixed,section_primary,section_secondary --out-dir reports/v3
+.venv/Scripts/python scripts/visual_qa_v3.py --env-file demo.env --sections primary,secondary
 ```
 
 ## Tests
@@ -66,7 +98,12 @@ The legacy Node smoke tests (`server/tests/test_server.js`, `test_frontend_smoke
 
 | Report | What it shows |
 |---|---|
-| [reports/FINAL_REPORT.md](reports/FINAL_REPORT.md) | Task status, tests, gates, headline results, weaknesses |
+| [reports/v3/FINAL_REPORT.md](reports/v3/FINAL_REPORT.md) | **v3**: stage status, tests, benchmark and policy tables, gates, weaknesses, commands |
+| [reports/v3/benchmark.md](reports/v3/benchmark.md) / [benchmark_classical.md](reports/v3/benchmark_classical.md) | **v3**: multi-seed benchmark, bootstrap, paired significance tests, ablations |
+| [reports/v3/external_benchmark.md](reports/v3/external_benchmark.md) / [datasets.md](reports/v3/datasets.md) | **v3**: Eedi data per learner level, cross-level transfer |
+| [reports/v3/policy_comparison.md](reports/v3/policy_comparison.md) | **v3**: six difficulty policies on paired synthetic students |
+| [reports/v3/by_band.md](reports/v3/by_band.md), [generator_check.md](reports/v3/generator_check.md), [ui_check.md](reports/v3/ui_check.md), [e2e_http_check.md](reports/v3/e2e_http_check.md) | **v3**: per-band AUC, generator check, browser and HTTP checks |
+| [reports/FINAL_REPORT.md](reports/FINAL_REPORT.md) | v2: task status, tests, gates, headline results, weaknesses |
 | [docs/RESULTS_SUMMARY.md](docs/RESULTS_SUMMARY.md) | One-page headline numbers |
 | [reports/monotonicity.md](reports/monotonicity.md) | Does the model order Easy >= Medium >= Hard? |
 | [reports/calibration.md](reports/calibration.md) | Temperature scaling: Brier / ECE / AUC before and after |
@@ -78,6 +115,6 @@ The legacy Node smoke tests (`server/tests/test_server.js`, `test_frontend_smoke
 | [reports/screenshots/](reports/screenshots/) | Browser QA screenshots at 1280px and 375px |
 | [ADAPTIVE_KT_REPORT.md](ADAPTIVE_KT_REPORT.md) | Earlier model work: retraining and AUC ablation |
 
-Documentation: [PROJECT_OVERVIEW](docs/PROJECT_OVERVIEW.md) · [DEMO_SCRIPT](docs/DEMO_SCRIPT.md) · [VIVA_QA](docs/VIVA_QA.md) · [LIMITATIONS](docs/LIMITATIONS.md) · [PILOT_GUIDE](docs/PILOT_GUIDE.md) · [DECISIONS](docs/DECISIONS.md) · [ARCHITECTURE_NOTES](docs/ARCHITECTURE_NOTES.md) · [BUILD_LOG](docs/BUILD_LOG.md)
+Documentation: [BASELINES](docs/BASELINES.md) · [QUESTION_GENERATOR](docs/QUESTION_GENERATOR.md) · [RELATED_WORK_TABLE](docs/RELATED_WORK_TABLE.md) · [DATASETS_TODO](docs/DATASETS_TODO.md) · [ARCHITECTURE_NOTES_v3](docs/ARCHITECTURE_NOTES_v3.md) · [PROJECT_OVERVIEW](docs/PROJECT_OVERVIEW.md) · [DEMO_SCRIPT](docs/DEMO_SCRIPT.md) · [VIVA_QA](docs/VIVA_QA.md) · [LIMITATIONS](docs/LIMITATIONS.md) · [PILOT_GUIDE](docs/PILOT_GUIDE.md) · [DECISIONS](docs/DECISIONS.md) · [ARCHITECTURE_NOTES](docs/ARCHITECTURE_NOTES.md) · [BUILD_LOG](docs/BUILD_LOG.md)
 
 Rehearsal: `.venv/Scripts/python scripts/dry_run.py --seed 1` plays a strong, a struggling, a mixed and a returning student through the real API on a temporary database.
