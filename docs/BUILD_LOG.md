@@ -35,3 +35,4 @@ Resume rule: start from the first v3 stage not marked DONE/SKIPPED/PARTIAL. Test
 |---|---|---|---|
 | S1 recon + restore point | DONE | docs/ARCHITECTURE_NOTES_v3.md, branch feature/v3-benchmark, v3 folders, scripts/run_tests_v3.py, legacy failure list | 85/15; node 1/4; new 0 |
 | S2 classical baselines | DONE | src/baselines/{base,majority,logistic,pfa,elo,bkt}.py: majority, skill_mean, logreg_counts, pfa, elo, bkt (own EM), bkt_diff; shared fit/predict interface; 27 unit tests; docs/BASELINES.md | 112/15; node 1/4; new 0 |
+| S3 deep baselines | DONE | dkt_classic, dkt_gru, dkt_lstm, dkvmn_lite, sakt_lite + OursVariant wrappers (full_gated, graph_no_gate, dkt_only, no_graph, no_metadata, no_difficulty) with read-only from_checkpoint; length-bucketed batching; 18 tests; seed-42 ckpt test AUC 0.8715 via wrapper | 130/15; node 1/4; new 0 |
