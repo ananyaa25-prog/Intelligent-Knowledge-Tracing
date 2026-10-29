@@ -41,4 +41,4 @@ not keep usable timestamps and only Eedi has answer dates.
 
 ## Bug fixes after pre-registration
 
-(none yet)
+None. The benchmark ran as pre-registered; results in reports/v3/IMPROVED_SUMMARY.md.

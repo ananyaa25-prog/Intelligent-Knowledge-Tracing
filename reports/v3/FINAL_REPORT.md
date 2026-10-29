@@ -94,7 +94,8 @@ uncertainty-aware policy fell back to the staircase on 59% of level decisions.
 ## Known weaknesses
 
 - Our model is not better than classic DKT on ASSISTments under the same budget, and not better than DKT or Elo on
-  Eedi. The skill graph adds a negligible +0.0007 (significant only with 20 seeds); the gate and the difficulty input give small benefits.
+  Eedi. (Follow-up: the improved GatedKT+ with per-question difficulty and an Elo blend is "better"
+  than both on all four datasets, reports/v3/IMPROVED_SUMMARY.md; it is not the served model.) The skill graph adds a negligible +0.0007 (significant only with 20 seeds); the gate and the difficulty input give small benefits.
 - Reduced training budget (5 epochs) and 20 instead of 50 seeds for the deep models; -lite baselines are not the
   published architectures; AKT was not run.
 - Only one external dataset; Eedi lacks response time / attempts / hints; sections by an age rule.

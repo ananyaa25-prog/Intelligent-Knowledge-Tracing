@@ -138,3 +138,13 @@ No policy, threshold or student parameter was changed after the simulation. Two 
 
 **45. What would most strengthen the project now?**
 A real pilot (docs/PILOT_GUIDE.md), real data for the levels the served model does not cover (and retraining on it), a teacher review of generated items, and a longer-budget benchmark with more seeds and the full published DKVMN/SAKT/AKT models.
+
+**46. Is your improved model better than existing models?**
+On the four datasets we tested, yes by our pre-registered rule: GatedKT+ with the Elo blend is "better" than classic
+DKT and Elo on ASSISTments (0.8702 vs 0.8613 / 0.8084), Eedi primary, Eedi secondary and Statics2011
+(reports/v3/IMPROVED_SUMMARY.md). The gains are 0.01-0.05 AUC, it was not compared with published AKT/SAKT code,
+and it is not yet the model the app serves.
+
+**47. Where does the improvement come from?**
+Mostly from per-question difficulty learned from training data (gkt_plus vs full_gated +0.0060 to +0.0169); the Elo
+blend adds little AUC but improves calibration. The skill graph was removed because it added only +0.0007.

@@ -61,3 +61,10 @@ Every number below is copied from a generated report (file in brackets). Synthet
 **Generator** [reports/v3/generator_check.md]: 23 topics; 100 tests pass; complexity ordered 23/23 (by construction), text proxy 17/23.
 
 **Checks**: e2e through the Node proxy PASS for 6 configurations [reports/v3/e2e_http_check.md]; browser QA 1280/375 PASS [reports/v3/ui_check.md].
+
+**Improved model GatedKT+ (pre-registered, reports/v3/IMPROVED_PREREG.md; summary reports/v3/IMPROVED_SUMMARY.md)**:
+per-question difficulty, no skill graph, dropout/weight decay, Elo blend fitted on validation; up to 15 epochs with
+early stopping for every deep model. gkt_plus_elo test AUC: ASSISTments 0.8702 (DKT classic 0.8613, Elo 0.8084);
+Eedi primary 0.7901 (DKT-GRU 0.7788, Elo 0.7728); Eedi secondary 0.7725 (DKT-GRU 0.7620, Elo 0.7602); Statics2011
+0.8111 (Elo 0.7975), pretrained on ASSISTments 0.8154. "Better" than both DKT classic and Elo on all four datasets
+by the pre-registered rule. The served app model is unchanged.

@@ -46,7 +46,8 @@ def set_torch_seed(seed: int):
 
 def to_tensors(split: Dict[str, Any], max_len: Optional[int] = None) -> Dict[str, torch.Tensor]:
     out = {}
-    for k in TENSOR_KEYS:
+    keys = TENSOR_KEYS + (("problem_seq",) if "problem_seq" in split else ())
+    for k in keys:
         v = split[k]
         t = v if isinstance(v, torch.Tensor) else torch.as_tensor(np.asarray(v))
         if max_len is not None:
@@ -92,12 +93,19 @@ class DeepKT(BaseKT):
     lr = 1e-3
     grad_clip = 5.0
     max_train_len: Optional[int] = None   # optional truncation of TRAIN sequences (speed)
+    # opt-in extras (defaults = the behaviour used for every Stage 3-5 model)
+    weight_decay = 0.0                     # L2 via Adam
+    patience: Optional[int] = None         # early stopping on validation AUC
+    uses_problem = False                   # net(..., problem=<question index>) for item-level models
 
     def __init__(self, num_skills: int = 123, seed: int = 0, epochs: Optional[int] = None,
                  rt_stats=(8.5, 1.2), verbose: bool = False, **kwargs):
         super().__init__(num_skills=num_skills, seed=seed)
         if epochs is not None:
             self.epochs = int(epochs)
+        if kwargs.get("patience") is not None:          # same early-stopping budget for every model
+            self.patience = int(kwargs.pop("patience"))
+        kwargs.pop("patience", None)
         self.rt_stats = rt_stats
         self.verbose = verbose
         self.kwargs = kwargs
@@ -112,21 +120,40 @@ class DeepKT(BaseKT):
         """Hook to neutralise inputs (used by ablations). Default: identity."""
         return args
 
+    def map_problems(self, problem: torch.Tensor) -> torch.Tensor:
+        """Raw question ids -> 1..P for questions seen in the TRAIN split, 0 otherwise."""
+        lut = getattr(self, "_problem_index", None)
+        if lut is None:
+            return torch.zeros_like(problem, dtype=torch.long)
+        idx = torch.as_tensor(np.searchsorted(lut, problem.numpy()), dtype=torch.long).clamp(max=len(lut) - 1)
+        hit = torch.as_tensor(lut)[idx] == problem
+        return torch.where(hit, idx + 1, torch.zeros_like(idx))
+
+    def _forward(self, b: Dict[str, torch.Tensor]):
+        args = self.transform(_batch_args(b))
+        if self.uses_problem:
+            L = args[0].shape[1]
+            prob = b["problem_seq"][:, :L] if "problem_seq" in b else torch.zeros_like(args[0])
+            return args, self.net(*args, problem=self.map_problems(prob.long()))
+        return args, self.net(*args)
+
     # -- training
     def fit(self, train: Dict[str, Any], val: Optional[Dict[str, Any]] = None) -> "DeepKT":
         set_torch_seed(self.seed)
-        self.net = self.build_net()
         tr = to_tensors(train, self.max_train_len)
+        if self.uses_problem and "problem_seq" in tr:
+            real = tr["problem_seq"][tr["mask"].bool()].long().numpy()
+            self._problem_index = np.unique(real)          # train questions only (no leakage)
+        self.net = self.build_net()
         va = to_tensors(val) if val is not None else None
-        opt = torch.optim.Adam(self.net.parameters(), lr=self.lr)
+        opt = torch.optim.Adam(self.net.parameters(), lr=self.lr, weight_decay=self.weight_decay)
         gen = torch.Generator().manual_seed(self.seed)
         lens = tr["mask"].sum(dim=1)
-        best_auc, best_state = -1.0, None
+        best_auc, best_state, since_best = -1.0, None, 0
         for ep in range(1, self.epochs + 1):
             self.net.train()
             for idx in length_bucketed_batches(lens, self.batch_size, gen):
-                args = self.transform(_batch_args({k: v[idx] for k, v in tr.items()}))
-                pred = self.net(*args)
+                args, pred = self._forward({k: v[idx] for k, v in tr.items()})
                 loss = masked_bce(pred, args[1][:, 1:], args[2][:, 1:])
                 opt.zero_grad()
                 loss.backward()
@@ -139,8 +166,12 @@ class DeepKT(BaseKT):
                 if self.verbose:
                     print(f"[{self.name} seed {self.seed}] epoch {ep} val_auc={v_auc:.4f}")
                 if v_auc > best_auc:
-                    best_auc = v_auc
+                    best_auc, since_best = v_auc, 0
                     best_state = {k: v.detach().clone() for k, v in self.net.state_dict().items()}
+                else:
+                    since_best += 1
+                    if self.patience is not None and since_best >= self.patience:
+                        break
         if best_state is not None:
             self.net.load_state_dict(best_state)
         self.best_val_auc = best_auc if va is not None else None
@@ -154,8 +185,7 @@ class DeepKT(BaseKT):
         preds, ys = [], []
         n = data["mask"].shape[0]
         for s in range(0, n, batch_size):
-            args = self.transform(_batch_args({k: v[s:s + batch_size] for k, v in data.items()}))
-            p = self.net(*args)
+            args, p = self._forward({k: v[s:s + batch_size] for k, v in data.items()})
             m = args[2][:, 1:].bool()
             preds.append(p[m].double().numpy())
             ys.append(args[1][:, 1:][m].numpy())

@@ -1,0 +1,2 @@
+[tune] seed 0, 4 settings, validation split only
+[tune] selected dropout=0.3 weight_decay=1e-05 val AUC 0.8934

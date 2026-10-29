@@ -1,0 +1,76 @@
+[improved] dataset statics; seeds 0..9; epochs 15, patience 3; tuned {'dropout': 0.3, 'weight_decay': 1e-05}; 61 tasks to run
+  5/61 done, 3.5 min
+  10/61 done, 7.1 min
+  15/61 done, 10.4 min
+  20/61 done, 13.5 min
+  25/61 done, 16.6 min
+  30/61 done, 16.9 min
+  35/61 done, 17.0 min
+  40/61 done, 17.3 min
+  45/61 done, 17.5 min
+  50/61 done, 17.7 min
+  55/61 done, 17.9 min
+  60/61 done, 18.2 min
+  61/61 done, 18.3 min
+Pairs before filter: 1927, after filter: 972
+Pairs before filter: 1927, after filter: 972
+Pairs before filter: 1927, after filter: 972
+Pairs before filter: 1927, after filter: 972
+Pairs before filter: 1927, after filter: 972
+Pairs before filter: 1927, after filter: 972
+Pairs before filter: 1927, after filter: 972
+Pairs before filter: 1927, after filter: 972
+Pairs before filter: 1927, after filter: 972
+Pairs before filter: 1927, after filter: 972
+Pairs before filter: 1927, after filter: 972
+Pairs before filter: 1927, after filter: 972
+Pairs before filter: 1927, after filter: 972
+Pairs before filter: 1927, after filter: 972
+Pairs before filter: 1927, after filter: 972
+Pairs before filter: 1927, after filter: 972
+Pairs before filter: 1927, after filter: 972
+Pairs before filter: 1927, after filter: 972
+Pairs before filter: 1927, after filter: 972
+Pairs before filter: 1927, after filter: 972
+Pairs before filter: 1927, after filter: 972
+Pairs before filter: 1927, after filter: 972
+Pairs before filter: 1927, after filter: 972
+Pairs before filter: 1927, after filter: 972
+Pairs before filter: 1927, after filter: 972
+Pairs before filter: 1927, after filter: 972
+Pairs before filter: 1927, after filter: 972
+Pairs before filter: 1927, after filter: 972
+Pairs before filter: 1927, after filter: 972
+Pairs before filter: 1927, after filter: 972
+Pairs before filter: 1927, after filter: 972
+Pairs before filter: 1927, after filter: 972
+Pairs before filter: 1927, after filter: 972
+Pairs before filter: 1927, after filter: 972
+Pairs before filter: 1927, after filter: 972
+Pairs before filter: 1927, after filter: 972
+Pairs before filter: 1927, after filter: 972
+Pairs before filter: 1927, after filter: 972
+Pairs before filter: 1927, after filter: 972
+Pairs before filter: 1927, after filter: 972
+Pairs before filter: 1927, after filter: 972
+Pairs before filter: 1927, after filter: 972
+Pairs before filter: 1927, after filter: 972
+Pairs before filter: 1927, after filter: 972
+Pairs before filter: 1927, after filter: 972
+Pairs before filter: 1927, after filter: 972
+Pairs before filter: 1927, after filter: 972
+Pairs before filter: 1927, after filter: 972
+Pairs before filter: 1927, after filter: 972
+Pairs before filter: 1927, after filter: 972
+Pairs before filter: 1927, after filter: 972
+Pairs before filter: 1927, after filter: 972
+Pairs before filter: 1927, after filter: 972
+Pairs before filter: 1927, after filter: 972
+Pairs before filter: 1927, after filter: 972
+Pairs before filter: 1927, after filter: 972
+Pairs before filter: 1927, after filter: 972
+Pairs before filter: 1927, after filter: 972
+Pairs before filter: 1927, after filter: 972
+Pairs before filter: 1927, after filter: 972
+Pairs before filter: 1927, after filter: 972
+[improved] reports/v3/improved_statics.md written

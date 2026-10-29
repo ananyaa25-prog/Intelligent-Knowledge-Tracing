@@ -1,0 +1,44 @@
+{
+  "results": [
+    {
+      "dropout": 0.1,
+      "weight_decay": 0.0,
+      "epochs": 12,
+      "best_val_auc": 0.8914994295218986,
+      "epochs_run": 10,
+      "minutes": 4.6
+    },
+    {
+      "dropout": 0.1,
+      "weight_decay": 1e-05,
+      "epochs": 12,
+      "best_val_auc": 0.8926867781897027,
+      "epochs_run": 12,
+      "minutes": 5.3
+    },
+    {
+      "dropout": 0.3,
+      "weight_decay": 0.0,
+      "epochs": 12,
+      "best_val_auc": 0.8918699553361942,
+      "epochs_run": 12,
+      "minutes": 5.3
+    },
+    {
+      "dropout": 0.3,
+      "weight_decay": 1e-05,
+      "epochs": 12,
+      "best_val_auc": 0.8933676227002719,
+      "epochs_run": 12,
+      "minutes": 5.3
+    }
+  ],
+  "best": {
+    "dropout": 0.3,
+    "weight_decay": 1e-05,
+    "epochs": 12,
+    "best_val_auc": 0.8933676227002719,
+    "epochs_run": 12,
+    "minutes": 5.3
+  }
+}

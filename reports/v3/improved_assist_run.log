@@ -1,0 +1,23 @@
+[improved] dataset assist; seeds 0..19; epochs 15, patience 3; tuned {'dropout': 0.3, 'weight_decay': 1e-05}; 101 tasks to run
+  5/101 done, 9.3 min
+  10/101 done, 18.4 min
+  15/101 done, 26.2 min
+  20/101 done, 34.8 min
+  25/101 done, 46.3 min
+  30/101 done, 49.5 min
+  35/101 done, 59.2 min
+  40/101 done, 61.6 min
+  45/101 done, 63.9 min
+  50/101 done, 66.4 min
+  55/101 done, 72.2 min
+  60/101 done, 73.1 min
+  65/101 done, 73.7 min
+  70/101 done, 74.1 min
+  75/101 done, 74.8 min
+  80/101 done, 75.5 min
+  85/101 done, 76.0 min
+  90/101 done, 76.5 min
+  95/101 done, 77.3 min
+  100/101 done, 77.9 min
+  101/101 done, 77.9 min
+[improved] reports/v3/improved_assist.md written
