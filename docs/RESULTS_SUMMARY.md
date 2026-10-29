@@ -42,7 +42,7 @@ Every number below is copied from a generated report (file in brackets). Synthet
 
 ## v3 results (all numbers from reports/v3/)
 
-**Benchmark, ASSISTments official split, 20 seeds, 5 epochs for every deep model** [reports/v3/benchmark.md]
+**Benchmark, ASSISTments official split, 20 seeds, 5 epochs for every deep model** [reports/v3/stage5/benchmark.md]
 - full_gated 0.8533 ± 0.0018 (95% CI 0.8524-0.8541). Classic DKT 0.8521, no-graph 0.8526, DKT-GRU 0.8478, DKVMN-lite 0.8456, Elo 0.8084, BKT+difficulty 0.7959, SAKT-lite 0.7773, PFA 0.7657.
 - Paired tests (Holm): improves over all classical baselines, SAKT-lite, DKVMN-lite, DKT-GRU/LSTM; **comparable** to classic DKT (+0.0012; the student-bootstrap CI includes 0).
 - Ablations: gate +0.0075, difficulty +0.0089 (meaningful); metadata +0.0010 and graph +0.0007 (significant with 20 seeds but negligible; the graph was not significant with 10 seeds).

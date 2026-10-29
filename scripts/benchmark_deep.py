@@ -151,8 +151,8 @@ def run_deep(args):
     meta = {"seeds": seeds, "epochs": args.epochs, "max_students": args.max_students, "tag": tag,
             "workers": args.workers, "wall_minutes": round((time.time() - t0) / 60, 1),
             "deep_models": deep, "bootstrap": args.bootstrap}
-    OUT.mkdir(parents=True, exist_ok=True)
-    (OUT / "benchmark_run_meta.json").write_text(json.dumps(meta, indent=2), encoding="utf-8")
+    (OUT / "stage5").mkdir(parents=True, exist_ok=True)
+    (OUT / "stage5" / "benchmark_run_meta.json").write_text(json.dumps(meta, indent=2), encoding="utf-8")
     build_report(args)
 
 
@@ -214,7 +214,7 @@ def _holm(pvals):
 
 def build_report(args):
     from scipy import stats
-    meta = json.loads((OUT / "benchmark_run_meta.json").read_text(encoding="utf-8"))
+    meta = json.loads((OUT / "stage5" / "benchmark_run_meta.json").read_text(encoding="utf-8"))
     seeds = meta["seeds"]
     preds = _load_preds(meta)
     if REF not in preds:
@@ -226,7 +226,7 @@ def build_report(args):
             m.update({"model": model, "seed": s, "seconds": r["seconds"], "best_val_auc": r["best_val_auc"]})
             rows.append(m)
     rows.sort(key=lambda r: (r["model"], r["seed"]))
-    _csv(OUT / "benchmark_seeds.csv", rows, ["model", "seed", "auc", "acc", "brier", "ece", "n", "best_val_auc", "seconds"])
+    _csv(OUT / "stage5" / "benchmark_seeds.csv", rows, ["model", "seed", "auc", "acc", "brier", "ece", "n", "best_val_auc", "seconds"])
 
     def family(m):
         return "ours" if m in OURS else ("external deep" if m in EXTERNAL else
@@ -297,12 +297,12 @@ def build_report(args):
         c["verdict"] = (f"improves over {c['model']}" if sig and pos else
                         (f"worse than {c['model']}" if sig and neg else "comparable"))
     comps.sort(key=lambda c: -c["diff_mean"])
-    _csv(OUT / "benchmark.csv", list(summary.values()), list(next(iter(summary.values())).keys()) +
+    _csv(OUT / "stage5" / "benchmark.csv", list(summary.values()), list(next(iter(summary.values())).keys()) +
          [k for k in ("boot_ci_low", "boot_ci_high") if k not in next(iter(summary.values()))])
-    _csv(OUT / "benchmark_significance.csv", comps, list(comps[0].keys()))
+    _csv(OUT / "stage5" / "benchmark_significance.csv", comps, list(comps[0].keys()))
     _plots(rows, summary, seeds)
     _write_md(meta, summary, comps, B, n_students)
-    print("[report] reports/v3/benchmark.md written", flush=True)
+    print("[report] reports/v3/stage5/benchmark.md written", flush=True)
 
 
 def _csv(path, rows, fields):
@@ -342,7 +342,7 @@ def _plots(rows, summary, seeds):
     ax.legend(handles=[Patch(facecolor=FAM_COLOR[f], label=f) for f in fams], loc="lower right", frameon=False)
     ax.set_title("Per-seed test AUC by model (majority baseline, AUC 0.5, omitted)", loc="left", fontsize=10)
     fig.tight_layout()
-    fig.savefig(OUT / "benchmark_boxplot.png", dpi=150)
+    fig.savefig(OUT / "stage5" / "benchmark_boxplot.png", dpi=150)
     plt.close(fig)
 
     # seed vs AUC: our variants and the external deep models (lines), one panel each family
@@ -361,7 +361,7 @@ def _plots(rows, summary, seeds):
     axes[0].set_ylabel("Test AUC")
     fig.suptitle("Seed-to-seed variation of test AUC (same split, same budget)", x=0.01, ha="left", fontsize=10)
     fig.tight_layout()
-    fig.savefig(OUT / "benchmark_seed_auc.png", dpi=150)
+    fig.savefig(OUT / "stage5" / "benchmark_seed_auc.png", dpi=150)
     plt.close(fig)
 
 
@@ -440,4 +440,4 @@ def _write_md(meta, summary, comps, B, n_students):
           "fully trained v2 checkpoints (3 seeds only).",
           "- Files: benchmark.csv (summary), benchmark_seeds.csv (per model x seed), benchmark_significance.csv, "
           "benchmark_run_meta.json; cached predictions in data/processed_v3/benchmark_preds/.", ""]
-    (OUT / "benchmark.md").write_text("\n".join(L), encoding="utf-8")
+    (OUT / "stage5" / "benchmark.md").write_text("\n".join(L), encoding="utf-8")

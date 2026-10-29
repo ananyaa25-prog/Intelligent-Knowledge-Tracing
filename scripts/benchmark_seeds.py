@@ -13,7 +13,7 @@ Part "classical" (Stage 4): the classical baselines with many seeds (default 100
   Outputs: reports/v3/benchmark_classical.md, benchmark_classical.csv (summary) and
   benchmark_classical_seeds.csv (one row per model x seed x protocol).
 
-Part "deep" (Stage 5): see run_deep(); outputs reports/v3/benchmark.md etc.
+Part "deep" (Stage 5): see run_deep(); outputs reports/v3/stage5/benchmark.md etc.
 
 Usage:
   python scripts/benchmark_seeds.py classical --seeds 100 --workers 5
@@ -191,7 +191,7 @@ def write_classical_md(summary, seeds, args, elapsed, models):
     L += ["## Reading the numbers", "",
           "- `majority` predicts a constant, so its AUC is exactly 0.5; it is listed for ACC/Brier/ECE.",
           "- These are classical baselines only; the deep models and our GatedKT variants are compared in "
-          "reports/v3/benchmark.md (Stage 5) on the official split.",
+          "reports/v3/stage5/benchmark.md (Stage 5) on the official split.",
           "- Model definitions: docs/BASELINES.md. Per-seed values: benchmark_classical_seeds.csv.", ""]
     (OUT / "benchmark_classical.md").write_text("\n".join(L), encoding="utf-8")
 

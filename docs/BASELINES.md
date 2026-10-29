@@ -85,3 +85,23 @@ Additional references (verify before citing page numbers):
 - Piech, C., et al. (2015). Deep knowledge tracing. *NeurIPS 2015*.
 - Zhang, J., Shi, X., King, I., & Yeung, D.-Y. (2017). Dynamic key-value memory networks for knowledge tracing. *WWW 2017*.
 - Pandey, S., & Karypis, G. (2019). A self-attentive model for knowledge tracing. *EDM 2019*.
+
+## Four-baseline comparison (reports/v3/benchmark.md, scripts/benchmark_baselines_v3.py)
+
+All six models use the interface `fit(train)` / `predict(history, next_skill, next_difficulty) -> P in [0, 1]`
+on the official ASSISTments split by student. The earlier Stage 5 report (20 seeds, 5 epochs, 11 deep models)
+moved to reports/v3/stage5/benchmark.md.
+
+- **PFA** (`pfa.py`): logistic regression on per-skill prior successes and failures plus a difficulty-bucket term
+  (Pavlik, Cen & Koedinger, 2009). No random component, so its 50 seeds give identical numbers.
+- **BKT** (`bkt.py`): two-state hidden Markov model per skill (initial knowledge, learning, guess, slip) fitted with
+  our own EM (Corbett & Anderson, 1995); the seed sets the EM starting point; 50 seeds.
+- **DKT (GRU)** (`dkt.py`, `dkt_gru`): a GRU over embeddings of skill, correct and difficulty bucket, with a head on
+  the hidden state and the next skill + bucket; the recurrent core of our DKT-only path (Piech et al., 2015, with a
+  GRU instead of an LSTM); 10 seeds, 10 epochs, best-validation weights.
+- **SAKT-lite** (`sakt.py`): one self-attention layer in which the next question attends to past interactions
+  (after Pandey & Karypis, 2019; verify before citing); simplified, hence "-lite"; 10 seeds, 10 epochs.
+- **graph, no gate** (`ours.py`, existing checkpoints seeds 42/123/2024): our encoders plus the skill graph, short-
+  and long-term states averaged instead of gated; wrapped read-only, not retrained.
+- **full gated** (`ours.py`, existing checkpoints seeds 42/123/2024): our full model (short- and long-term GRUs,
+  metadata, GAT skill graph, learned gate); wrapped read-only, not retrained.

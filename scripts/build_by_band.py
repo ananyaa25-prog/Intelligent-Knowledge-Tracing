@@ -64,7 +64,7 @@ def main():
                                   for s in test if len(s["skill_seq"]) > 1])
     skills_per_band = {b: sorted(int(inv[i]) for i in inv if band_of_skill[i] == b) for b in BANDS}
 
-    meta = json.loads((OUT / "benchmark_run_meta.json").read_text(encoding="utf-8"))
+    meta = json.loads((OUT / "stage5" / "benchmark_run_meta.json").read_text(encoding="utf-8"))
     preds = _load_preds(meta)
     rows = []
     for model, by_seed in preds.items():

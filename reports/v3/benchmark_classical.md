@@ -41,5 +41,5 @@ None: every model produced a finite AUC for every seed.
 ## Reading the numbers
 
 - `majority` predicts a constant, so its AUC is exactly 0.5; it is listed for ACC/Brier/ECE.
-- These are classical baselines only; the deep models and our GatedKT variants are compared in reports/v3/benchmark.md (Stage 5) on the official split.
+- These are classical baselines only; the deep models and our GatedKT variants are compared in reports/v3/stage5/benchmark.md (Stage 5) on the official split.
 - Model definitions: docs/BASELINES.md. Per-seed values: benchmark_classical_seeds.csv.

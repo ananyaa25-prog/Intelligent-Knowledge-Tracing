@@ -31,7 +31,7 @@ The 15 pytest failures and 3 Node suites are the same legacy fixed-quiz tests th
 (tests/legacy_failures_v3.txt); `scripts/run_tests_v3.py` reports 0 new failures. 174 new tests: classical
 baselines 28, deep baselines 18, sections 15, adapters 4, generator 100, v3 policies 9.
 
-## Benchmark (ASSISTments 2009, official split) [benchmark.md, benchmark_classical.md]
+## Benchmark (ASSISTments 2009, official split) [stage5/benchmark.md, benchmark_classical.md]
 
 20 seeds, same 5-epoch budget for every deep model; uncertainty from seeds (t-CI) and, separately, from a
 1000-resample bootstrap over the 313 test students.

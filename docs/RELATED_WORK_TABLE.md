@@ -2,7 +2,7 @@
 
 "Run here" means the approach (or a simplified re-implementation, marked -lite) was trained and
 evaluated in this project on the same split; numbers for those rows are in
-reports/v3/benchmark.md and reports/v3/benchmark_classical.md. All other rows are
+reports/v3/stage5/benchmark.md and reports/v3/benchmark_classical.md. All other rows are
 **from published descriptions, not re-run**, and none of their published numbers are compared with
 ours (different data, preprocessing and splits make such numbers non-comparable).
 
@@ -23,7 +23,7 @@ ours (different data, preprocessing and splits make such numbers non-comparable)
 ## What the comparison does and does not show
 
 - On ASSISTments 2009 (official split) every row marked "run here" is compared with ours under one
-  protocol and paired significance tests (reports/v3/benchmark.md). Simplified "-lite" models are not
+  protocol and paired significance tests (reports/v3/stage5/benchmark.md). Simplified "-lite" models are not
   the published architectures with their tuned hyper-parameters, so a gap to them is not a gap to the
   original papers.
 - ALEKS and Khan Academy are full products with content, teachers and years of data; this project is

@@ -95,7 +95,7 @@ No (fixed after user testing). Answers from earlier sessions feed every predicti
 ## v3: hard questions (numbers from reports/v3/)
 
 **31. Why many seeds instead of three?**
-With three seeds a difference of 0.003 AUC cannot be separated from initialisation noise. v3 uses 100 seeds for the classical models (each seed a new random student split, reports/v3/benchmark_classical.md) and 20 paired seeds for every deep model (reports/v3/benchmark.md). That shows the seed spread is small (full_gated std 0.0018) but the split spread is larger (Elo std 0.0133 over 100 re-splits), so a single split can mislead more than a single seed.
+With three seeds a difference of 0.003 AUC cannot be separated from initialisation noise. v3 uses 100 seeds for the classical models (each seed a new random student split, reports/v3/benchmark_classical.md) and 20 paired seeds for every deep model (reports/v3/stage5/benchmark.md). That shows the seed spread is small (full_gated std 0.0018) but the split spread is larger (Elo std 0.0133 over 100 re-splits), so a single split can mislead more than a single seed.
 
 **32. Why only 20 seeds for the deep models when the target was 50?**
 Time: 11 deep models x 20 seeds x 5 epochs took 85.6 minutes on 6 CPU cores (seeds 0-9 first, 10-19 added later). We said so in the report and added a 1000-resample bootstrap over test students, reported separately from the seed uncertainty.

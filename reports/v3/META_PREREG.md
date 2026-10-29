@@ -6,7 +6,7 @@ results, except bug fixes, which will be listed at the end of this file with the
 ## Why
 
 In GatedKT and GatedKT+ the attempt count and hint flag reach the model only through a small metadata vector that
-feeds the gate; the no-metadata ablation of the original model gained just +0.0010 AUC (reports/v3/benchmark.md).
+feeds the gate; the no-metadata ablation of the original model gained just +0.0010 AUC (reports/v3/stage5/benchmark.md).
 In ASSISTments 2009 a hint request makes the first attempt count as wrong (P(correct | hint) = 0 in the train split)
 and answers with 2+ attempts are almost always wrong (P(correct) 0.035 at 2 attempts without a hint), so hints and
 attempts describe HOW a student got a question wrong. 14.7% of train interactions used a hint and 18.1% had more

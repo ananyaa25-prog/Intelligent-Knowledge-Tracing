@@ -5,7 +5,7 @@ GatedKT+ : an improved variant of our model (v3 follow-up). src/model.py and the
 existing checkpoints are unchanged; this is a separate model with the same
 interface as every baseline.
 
-Changes vs full_gated, each motivated by the v3 benchmark (reports/v3/benchmark.md):
+Changes vs full_gated, each motivated by the v3 benchmark (reports/v3/stage5/benchmark.md):
   1. Per-question difficulty (the largest gap to Elo on Eedi / Statics2011):
      question embedding e_q = c_skill + mu_q * d_skill + bucket  (Rasch-style, as in
      AKT, Ghosh et al. 2020) and a learned difficulty offset b_q subtracted from the

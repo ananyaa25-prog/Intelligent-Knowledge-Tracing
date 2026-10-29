@@ -57,9 +57,9 @@ These are contributions at the **system and evaluation** level, not new algorith
 
 | Claim | Evidence | Status |
 |---|---|---|
-| The full gated model beats the classical baselines (majority, skill mean, LR on counts, PFA, Elo, BKT, BKT+difficulty) on ASSISTments | 20 paired seeds, Holm-corrected paired t-test p < 1e-4, seed CI and student-bootstrap CI of the difference exclude 0 for every one; e.g. vs Elo +0.0449 (reports/v3/benchmark.md) | supported |
+| The full gated model beats the classical baselines (majority, skill mean, LR on counts, PFA, Elo, BKT, BKT+difficulty) on ASSISTments | 20 paired seeds, Holm-corrected paired t-test p < 1e-4, seed CI and student-bootstrap CI of the difference exclude 0 for every one; e.g. vs Elo +0.0449 (reports/v3/stage5/benchmark.md) | supported |
 | It beats the deep baselines | improves over DKT-GRU (+0.0055), DKT-LSTM (+0.0058), DKVMN-lite (+0.0077), SAKT-lite (+0.0760); comparable to classic DKT (+0.0012, Holm p 0.0213 but the student-bootstrap CI includes 0) | partly supported (not vs classic DKT) |
-| The gate helps | full vs no-gate ablation +0.0075, significant (benchmark.md) | supported (small effect) |
+| The gate helps | full vs no-gate ablation +0.0075, significant (stage5/benchmark.md) | supported (small effect) |
 | The skill graph helps | full vs no-graph ablation +0.0007, Holm p 0.0316 with 20 seeds (was not significant with 10) | statistically detectable, negligible size |
 | Difficulty buckets help | full vs no-difficulty +0.0089, significant | supported |
 | Response-time / attempt / hint metadata help | full vs no-metadata +0.0010, significant but tiny | supported, negligible size |

@@ -73,7 +73,7 @@ Optional simulated demo students for the dashboard's "Simulated demo" view (clea
 ```bash
 .venv/Scripts/python scripts/benchmark_seeds.py classical --seeds 100 --workers 5     # Stage 4, ~8 min
 .venv/Scripts/python scripts/benchmark_seeds.py deep --seeds 20 --epochs 5 --workers 6 # Stage 5, 85.6 min for 20 seeds (cached; resumable)
-.venv/Scripts/python scripts/benchmark_seeds.py report                                 # rebuild benchmark.md from cached predictions
+.venv/Scripts/python scripts/benchmark_seeds.py report                                 # rebuild stage5/benchmark.md from cached predictions
 .venv/Scripts/python scripts/build_by_band.py                                          # per-grade-band AUC
 .venv/Scripts/python scripts/fetch_datasets.py                                         # public downloads, else docs/DATASETS_TODO.md
 .venv/Scripts/python scripts/run_external_benchmark.py --seeds 3 --epochs 4            # Eedi per section + transfer, ~9 min
@@ -101,7 +101,7 @@ The legacy Node smoke tests (`server/tests/test_server.js`, `test_frontend_smoke
 | Report | What it shows |
 |---|---|
 | [reports/v3/FINAL_REPORT.md](reports/v3/FINAL_REPORT.md) | **v3**: stage status, tests, benchmark and policy tables, gates, weaknesses, commands |
-| [reports/v3/benchmark.md](reports/v3/benchmark.md) / [benchmark_classical.md](reports/v3/benchmark_classical.md) | **v3**: multi-seed benchmark, bootstrap, paired significance tests, ablations |
+| [reports/v3/stage5/benchmark.md](reports/v3/stage5/benchmark.md) / [benchmark_classical.md](reports/v3/benchmark_classical.md) | **v3**: multi-seed benchmark, bootstrap, paired significance tests, ablations |
 | [reports/v3/external_benchmark.md](reports/v3/external_benchmark.md) / [datasets.md](reports/v3/datasets.md) | **v3**: Eedi data per learner level, cross-level transfer |
 | [reports/v3/policy_comparison.md](reports/v3/policy_comparison.md) | **v3**: six difficulty policies on paired synthetic students |
 | [reports/v3/by_band.md](reports/v3/by_band.md), [generator_check.md](reports/v3/generator_check.md), [ui_check.md](reports/v3/ui_check.md), [e2e_http_check.md](reports/v3/e2e_http_check.md) | **v3**: per-band AUC, generator check, browser and HTTP checks |
