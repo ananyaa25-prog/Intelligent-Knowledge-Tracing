@@ -42,15 +42,15 @@ Every number below is copied from a generated report (file in brackets). Synthet
 
 ## v3 results (all numbers from reports/v3/)
 
-**Benchmark, ASSISTments official split, 10 seeds, 5 epochs for every deep model** [reports/v3/benchmark.md]
-- full_gated 0.8533 ± 0.0015 (95% CI 0.8523-0.8544). Classic DKT 0.8521, no-graph 0.8524, DKT-GRU 0.8474, DKVMN-lite 0.8453, Elo 0.8085, BKT+difficulty 0.7959, SAKT-lite 0.7779, PFA 0.7657.
-- Paired tests (Holm): improves over all classical baselines, SAKT-lite, DKVMN-lite, DKT-GRU/LSTM; **comparable** to classic DKT (+0.0012) and to its no-graph ablation (+0.0009).
-- Ablations: gate +0.0077, difficulty +0.0089, metadata +0.0011 (all significant); graph +0.0009 (not significant).
+**Benchmark, ASSISTments official split, 20 seeds, 5 epochs for every deep model** [reports/v3/benchmark.md]
+- full_gated 0.8533 ± 0.0018 (95% CI 0.8524-0.8541). Classic DKT 0.8521, no-graph 0.8526, DKT-GRU 0.8478, DKVMN-lite 0.8456, Elo 0.8084, BKT+difficulty 0.7959, SAKT-lite 0.7773, PFA 0.7657.
+- Paired tests (Holm): improves over all classical baselines, SAKT-lite, DKVMN-lite, DKT-GRU/LSTM; **comparable** to classic DKT (+0.0012; the student-bootstrap CI includes 0).
+- Ablations: gate +0.0075, difficulty +0.0089 (meaningful); metadata +0.0010 and graph +0.0007 (significant with 20 seeds but negligible; the graph was not significant with 10 seeds).
 - Fully trained v2 checkpoints (3 seeds, reference): 0.8713 / 0.8677 / 0.8657.
 
 **Classical baselines, 100 random re-splits** [reports/v3/benchmark_classical.md]: Elo 0.8094 ± 0.0133, LR-counts 0.7915, BKT+difficulty 0.7849, BKT 0.7701, PFA 0.7515, skill mean 0.6723.
 
-**By grade band (ASSISTments)** [reports/v3/by_band.md]: full_gated primary-level skills 0.8763, secondary 0.8364; no undergraduate skills exist in the data.
+**By grade band (ASSISTments)** [reports/v3/by_band.md]: full_gated primary-level skills 0.8759 (classic DKT 0.8814), secondary 0.8365; no undergraduate skills exist in the data.
 
 **Real data for other levels (Eedi, 3 seeds)** [reports/v3/external_benchmark.md]: primary-age full_gated 0.7765, DKT-GRU 0.7764, Elo 0.7728; secondary-age Elo 0.7601, full_gated 0.7581. Cross-level transfer costs 0.02-0.05 AUC.
 

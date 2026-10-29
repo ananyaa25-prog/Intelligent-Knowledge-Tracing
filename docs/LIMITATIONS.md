@@ -16,7 +16,7 @@
 
 ## v3 limitations
 
-- **Reduced training budget in the benchmark.** All deep models were trained for 5 epochs (v2 used 15) so 10 seeds fit in about 45 minutes; absolute AUCs are lower than the fully trained v2 checkpoints (0.8533 vs 0.8713 for full_gated) and the ranking could change with longer training. Only 10 seeds (not 50) were feasible for the deep models; test-sample uncertainty is covered by a 1000-resample bootstrap instead.
+- **Reduced training budget in the benchmark.** All deep models were trained for 5 epochs (v2 used 15) and 20 seeds took 85.6 minutes in total; absolute AUCs are lower than the fully trained v2 checkpoints (0.8533 vs 0.8713 for full_gated) and the ranking could change with longer training. Only 20 seeds (not 50) were feasible for the deep models; test-sample uncertainty is covered by a 1000-resample bootstrap instead.
 - **-lite baselines.** DKVMN-lite and SAKT-lite are simplified, untuned re-implementations; a gap to them is not a gap to the published models. AKT was not run.
 - **One main dataset.** The main comparison uses ASSISTments 2009 and one official split; per-band results reuse the same test students.
 - **External data.** Only Eedi (NeurIPS 2020) could be downloaded; it has no response times, attempts or hints (neutral values), sections come from an age rule (age at first answer, month-level birth dates), and only 3000 students per section, 3 seeds and 4 epochs were used. XES3G5M, Junyi, KDD Cup 2010, Statics2011 and ASSISTments 2012/2015 need logins or licence acceptance (docs/DATASETS_TODO.md).

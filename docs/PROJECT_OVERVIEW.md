@@ -57,13 +57,13 @@ These are contributions at the **system and evaluation** level, not new algorith
 
 | Claim | Evidence | Status |
 |---|---|---|
-| The full gated model beats the classical baselines (majority, skill mean, LR on counts, PFA, Elo, BKT, BKT+difficulty) on ASSISTments | 10 paired seeds, Holm-corrected paired t-test p < 1e-4, seed CI and student-bootstrap CI of the difference exclude 0 for every one; e.g. vs Elo +0.0449 (reports/v3/benchmark.md) | supported |
-| It beats the deep baselines | improves over DKT-GRU (+0.0060), DKT-LSTM (+0.0063), DKVMN-lite (+0.0080), SAKT-lite (+0.0754); comparable to classic DKT (+0.0012, Holm p 0.0910) | partly supported (not vs classic DKT) |
-| The gate helps | full vs no-gate ablation +0.0077, significant (benchmark.md) | supported (small effect) |
-| The skill graph helps | full vs no-graph ablation +0.0009, Holm p 0.0910: comparable | not supported |
+| The full gated model beats the classical baselines (majority, skill mean, LR on counts, PFA, Elo, BKT, BKT+difficulty) on ASSISTments | 20 paired seeds, Holm-corrected paired t-test p < 1e-4, seed CI and student-bootstrap CI of the difference exclude 0 for every one; e.g. vs Elo +0.0449 (reports/v3/benchmark.md) | supported |
+| It beats the deep baselines | improves over DKT-GRU (+0.0055), DKT-LSTM (+0.0058), DKVMN-lite (+0.0077), SAKT-lite (+0.0760); comparable to classic DKT (+0.0012, Holm p 0.0213 but the student-bootstrap CI includes 0) | partly supported (not vs classic DKT) |
+| The gate helps | full vs no-gate ablation +0.0075, significant (benchmark.md) | supported (small effect) |
+| The skill graph helps | full vs no-graph ablation +0.0007, Holm p 0.0316 with 20 seeds (was not significant with 10) | statistically detectable, negligible size |
 | Difficulty buckets help | full vs no-difficulty +0.0089, significant | supported |
-| Response-time / attempt / hint metadata help | full vs no-metadata +0.0011, significant but tiny | supported, negligible size |
-| Results are stable across seeds | full_gated test AUC 0.8533 ± 0.0015 over 10 seeds; classical 100 re-splits, e.g. Elo 0.8094 ± 0.0133 (benchmark_classical.md) | supported (seed spread small; split spread larger) |
+| Response-time / attempt / hint metadata help | full vs no-metadata +0.0010, significant but tiny | supported, negligible size |
+| Results are stable across seeds | full_gated test AUC 0.8533 ± 0.0018 over 20 seeds; classical 100 re-splits, e.g. Elo 0.8094 ± 0.0133 (benchmark_classical.md) | supported (seed spread small; split spread larger) |
 | The model works for other learner levels | Eedi primary-age learners: full_gated 0.7765 vs DKT-GRU 0.7764 vs Elo 0.7728; secondary-age: Elo 0.7601 vs full_gated 0.7581 (3 seeds, external_benchmark.md) | inconclusive: it works, but no advantage over DKT or Elo is shown |
 | A model trained on one level transfers to another | Eedi full_gated primary -> secondary 0.7306 (in-level 0.7581); secondary -> primary 0.7419 (in-level 0.7765) | not supported: transfer costs about 0.02-0.05 AUC |
 | The app is validated for undergraduate learners | no undergraduate dataset was available | not supported (transfer mode) |

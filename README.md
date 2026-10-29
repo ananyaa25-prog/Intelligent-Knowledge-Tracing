@@ -8,14 +8,14 @@ This is an **integrated, evaluated system built from standard parts** (knowledge
 
 | Feedback | What v3 does | Evidence |
 |---|---|---|
-| Many seeds, report variance | 100 seeds for 7 classical baselines (random re-splits); 10 seeds for 11 deep models / ablations at a reduced, equal budget, plus a 1000-resample bootstrap over test students; mean, std, variance, 95% CI | [reports/v3/benchmark_classical.md](reports/v3/benchmark_classical.md), [reports/v3/benchmark.md](reports/v3/benchmark.md) |
+| Many seeds, report variance | 100 seeds for 7 classical baselines (random re-splits); 20 seeds for 11 deep models / ablations at a reduced, equal budget, plus a 1000-resample bootstrap over test students; mean, std, variance, 95% CI | [reports/v3/benchmark_classical.md](reports/v3/benchmark_classical.md), [reports/v3/benchmark.md](reports/v3/benchmark.md) |
 | More baselines | majority, skill mean, logistic regression on counts, PFA, Elo, BKT (own EM), BKT+difficulty, DKT (classic / GRU / LSTM), DKVMN-lite, SAKT-lite, plus our ablations | [docs/BASELINES.md](docs/BASELINES.md) |
 | Learner levels | sections primary / secondary / undergraduate with grade labels, topics, difficulty parameters and a validation label | `src/serving/sections.py`, [reports/v3/by_band.md](reports/v3/by_band.md) |
 | Compare with existing solutions | paired significance tests against every baseline; related-work table | [reports/v3/benchmark.md](reports/v3/benchmark.md), [docs/RELATED_WORK_TABLE.md](docs/RELATED_WORK_TABLE.md) |
 | Random parametric questions | seeded offline generator driven by difficulty parameters, numeric / fraction / multiple-choice answers | [docs/QUESTION_GENERATOR.md](docs/QUESTION_GENERATOR.md), [reports/v3/generator_check.md](reports/v3/generator_check.md) |
 | Stronger, no false claims | real external data (Eedi) for primary/secondary, pre-registered policy gates, honesty audit | [reports/v3/external_benchmark.md](reports/v3/external_benchmark.md), [reports/v3/DEMO_CONFIG.md](reports/v3/DEMO_CONFIG.md), [reports/v3/FINAL_REPORT.md](reports/v3/FINAL_REPORT.md) |
 
-Headline (all numbers from reports/v3): with the same reduced training budget, the full gated model is significantly better than every classical baseline, SAKT-lite, DKVMN-lite and DKT-GRU/LSTM, but only comparable to classic DKT and to its own no-graph ablation; on the real Eedi data it is comparable to DKT and Elo. See [docs/RESULTS_SUMMARY.md](docs/RESULTS_SUMMARY.md).
+Headline (all numbers from reports/v3): with the same reduced training budget, the full gated model is significantly better than every classical baseline, SAKT-lite, DKVMN-lite and DKT-GRU/LSTM, but only comparable to classic DKT, and the skill graph adds a negligible +0.0007; on the real Eedi data it is comparable to DKT and Elo. See [docs/RESULTS_SUMMARY.md](docs/RESULTS_SUMMARY.md).
 
 ## Architecture
 
@@ -70,7 +70,7 @@ Optional simulated demo students for the dashboard's "Simulated demo" view (clea
 
 ```bash
 .venv/Scripts/python scripts/benchmark_seeds.py classical --seeds 100 --workers 5     # Stage 4, ~8 min
-.venv/Scripts/python scripts/benchmark_seeds.py deep --seeds 10 --epochs 5 --workers 6 # Stage 5, ~45 min (cached; resumable)
+.venv/Scripts/python scripts/benchmark_seeds.py deep --seeds 20 --epochs 5 --workers 6 # Stage 5, 85.6 min for 20 seeds (cached; resumable)
 .venv/Scripts/python scripts/benchmark_seeds.py report                                 # rebuild benchmark.md from cached predictions
 .venv/Scripts/python scripts/build_by_band.py                                          # per-grade-band AUC
 .venv/Scripts/python scripts/fetch_datasets.py                                         # public downloads, else docs/DATASETS_TODO.md

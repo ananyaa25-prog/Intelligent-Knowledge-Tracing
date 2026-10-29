@@ -9,13 +9,23 @@
     6,
     7,
     8,
-    9
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19
   ],
   "epochs": 5,
   "max_students": null,
   "tag": "e5_m0",
   "workers": 6,
-  "wall_minutes": 44.5,
+  "wall_minutes": 85.6,
   "deep_models": [
     "dkt_classic",
     "dkt_gru",
@@ -29,5 +39,7 @@
     "no_metadata",
     "no_difficulty"
   ],
-  "bootstrap": 1000
+  "bootstrap": 1000,
+  "wall_minutes_last_increment": 41.1,
+  "note": "seeds 0-9 trained in a first run (44.5 min), seeds 10-19 added later from the cache (41.1 min); wall_minutes is the cumulative training time"
 }

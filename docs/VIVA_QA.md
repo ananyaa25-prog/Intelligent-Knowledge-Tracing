@@ -95,25 +95,25 @@ No (fixed after user testing). Answers from earlier sessions feed every predicti
 ## v3: hard questions (numbers from reports/v3/)
 
 **31. Why many seeds instead of three?**
-With three seeds a difference of 0.003 AUC cannot be separated from initialisation noise. v3 uses 100 seeds for the classical models (each seed a new random student split, reports/v3/benchmark_classical.md) and 10 paired seeds for every deep model (reports/v3/benchmark.md). That shows the seed spread is small (full_gated std 0.0015) but the split spread is larger (Elo std 0.0133 over 100 re-splits), so a single split can mislead more than a single seed.
+With three seeds a difference of 0.003 AUC cannot be separated from initialisation noise. v3 uses 100 seeds for the classical models (each seed a new random student split, reports/v3/benchmark_classical.md) and 20 paired seeds for every deep model (reports/v3/benchmark.md). That shows the seed spread is small (full_gated std 0.0018) but the split spread is larger (Elo std 0.0133 over 100 re-splits), so a single split can mislead more than a single seed.
 
-**32. Why only 10 seeds for the deep models when the target was 50?**
-Time: 11 deep models x 10 seeds x 5 epochs already took 44.5 minutes on 6 CPU cores. We said so in the report and added a 1000-resample bootstrap over test students, reported separately from the seed uncertainty.
+**32. Why only 20 seeds for the deep models when the target was 50?**
+Time: 11 deep models x 20 seeds x 5 epochs took 85.6 minutes on 6 CPU cores (seeds 0-9 first, 10-19 added later). We said so in the report and added a 1000-resample bootstrap over test students, reported separately from the seed uncertainty.
 
 **33. Why these baselines?**
 They span the standard families: no-history references (majority, skill mean), count-based logistic models (LR, PFA), rating models (Elo), HMMs (BKT, BKT with per-difficulty guess/slip), RNNs (DKT classic/GRU/LSTM), memory networks (DKVMN-lite) and attention (SAKT-lite), plus our own ablations. Most were given the same difficulty buckets so the comparison is not just "with vs without difficulty" (docs/BASELINES.md).
 
 **34. Is the gain significant?**
-Against the classical baselines, SAKT-lite, DKVMN-lite and DKT-GRU/LSTM: yes (Holm-corrected paired t-test, seed CI and bootstrap CI exclude 0). Against classic DKT: no, +0.0012 with Holm p 0.0910, verdict "comparable". Effect sizes against deep models are small (+0.006 to +0.008 AUC).
+Against the classical baselines, SAKT-lite, DKVMN-lite and DKT-GRU/LSTM: yes (Holm-corrected paired t-test, seed CI and bootstrap CI exclude 0). Against classic DKT: no, +0.0012; the Holm-corrected t-test gives p 0.0213 but the bootstrap CI over test students includes 0, so the pre-set rule says "comparable". Effect sizes against deep models are small (+0.0055 to +0.0077 AUC).
 
 **35. Why compare under a reduced budget? Isn't that unfair to your model?**
 Every model got the same 5-epoch budget, so the comparison is fair between them; it may understate all of them. The fully trained v2 checkpoints (0.8713 for full_gated) are listed as reference rows, but only for our model, so they are not used in any significance test.
 
 **36. Why did the graph alone not help?**
-In v2 (graph_no_gate below dkt_only) and in v3 (no_graph ablation comparable to the full model, +0.0009, not significant) the PPMI co-occurrence graph adds little. Likely reasons: the graph is built from assignment co-occurrence, which mostly reflects curriculum order; the target skill and difficulty embeddings already carry most of what the graph encodes; and ASSISTments skill-builder sequences are mostly single-skill blocks. We do not claim a graph benefit.
+In v2 (graph_no_gate below dkt_only) and in v3 (no_graph ablation +0.0007: not significant with 10 seeds, significant but negligible with 20) the PPMI co-occurrence graph adds little. Likely reasons: the graph is built from assignment co-occurrence, which mostly reflects curriculum order; the target skill and difficulty embeddings already carry most of what the graph encodes; and ASSISTments skill-builder sequences are mostly single-skill blocks. We do not claim a graph benefit.
 
 **37. Then what does the gate do?**
-Removing the gate (averaging short-term, long-term and graph states instead) costs 0.0077 AUC, significant over 10 paired seeds. That is the only architectural component with a measurable benefit, and it is small.
+Removing the gate (averaging short-term, long-term and graph states instead) costs 0.0075 AUC, significant over 20 paired seeds. That is the only architectural component with a measurable benefit, and it is small.
 
 **38. How valid are the non-ASSISTments sections?**
 Secondary is served by the ASSISTments model and evaluated on ASSISTments plus Eedi secondary-age learners. Primary is labelled "validated" because models were evaluated on Eedi learners younger than 11, but the served model never saw those data, so the app shows no predictions there. Undergraduate has no data at all: transfer mode. On Eedi our model is comparable to DKT and Elo, not better (reports/v3/external_benchmark.md).
