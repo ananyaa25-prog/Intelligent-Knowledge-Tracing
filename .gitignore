@@ -16,3 +16,10 @@ data/backups/
 _tmp*/
 reports/screenshots/*.tmp
 .tools/
+# v3 outputs (large / regenerable)
+models_v3/*.pt
+data/processed_v3/*
+!data/processed_v3/.gitkeep
+data/external/*
+!data/external/.gitkeep
+!data/external/README.md

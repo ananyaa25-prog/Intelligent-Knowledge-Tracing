@@ -26,3 +26,11 @@ Baseline (before any change, run on an isolated copy of the baseline commit):
 | COULD: ensemble spread, session replay | SKIPPED | not started (optional) |
 | Dry run + fix | DONE | scripts/dry_run.py (strong/struggling/mixed via real API, temp DB); found 4/4-correct topic labelled Needs support -> evidence-conflict rule D26 + test; simulation, gates, e2e, browser QA re-run; 5 repeated dry runs pass | 78/15 (identical failure set) |
 | User-testing fixes | DONE | session completion + back-fill (student 12 visible), cross-session history (no blind warm-up, levels resume), revised model level rules (D27) -> re-simulated, Gate S now FAILS -> demo staircase, blended topic selection (D31, post hoc Rule T), no repeated questions, cautious evidence-conflict (D30), prediction cross-check reports/answer_response.md, grouped Needs-attention panel; dry runs 10/10 seeds | 85/15 (identical legacy failure set); e2e 287/306/306 |
+
+# Build log (v3: benchmark, sections, generator)
+
+Resume rule: start from the first v3 stage not marked DONE/SKIPPED/PARTIAL. Test counts via `python scripts/run_tests_v3.py` (pytest pass/fail; node suites pass/total; new failures vs v3 baseline).
+
+| Stage | Status | Summary | Tests |
+|---|---|---|---|
+| S1 recon + restore point | DONE | docs/ARCHITECTURE_NOTES_v3.md, branch feature/v3-benchmark, v3 folders, scripts/run_tests_v3.py, legacy failure list | 85/15; node 1/4; new 0 |
