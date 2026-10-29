@@ -15,9 +15,9 @@
       "medium",
       "medium",
       "medium",
+      "easy",
+      "easy",
       "medium",
-      "easy",
-      "easy",
       "easy",
       "easy",
       "easy",
@@ -28,19 +28,19 @@
       "medium",
       "medium"
     ],
-    "example_reason": "Topic 'Solving Systems of Linear Equations' had the lowest combined estimate (12%: model 12% combined with 0 of 0 earlier answers on it correct) among 5 eligible topics. Level medium: ensemble prediction closest to 70% among allowed levels (easy 31%, medium 15%, hard 7%). A progression rule (based on your answers on this topic) limited the levels.",
+    "example_reason": "Topic 'Solving Systems of Linear Equations' had the lowest combined estimate (6%: model 6% combined with 0 of 0 earlier answers on it correct) among 5 eligible topics. Level medium: ensemble prediction closest to 70% among allowed levels (easy 11%, medium 4%, hard 2%). A progression rule (based on your answers on this topic) limited the levels.",
     "profile_reliable": true,
     "statuses": {
       "Percents": "needs_support",
-      "Percent Discount": "needs_support",
+      "Percent Discount": "not_enough_evidence",
+      "Rate": "not_enough_evidence",
+      "Simplifying Expressions positive exponents": "not_enough_evidence",
       "Solving Systems of Linear Equations": "needs_support",
-      "Solving Systems of Linear Equations by Graphing": "not_enough_evidence",
       "Ordering Fractions": "not_enough_evidence",
-      "Equivalent Fractions": "needs_support",
-      "Pythagorean Theorem": "not_enough_evidence"
+      "Equivalent Fractions": "needs_support"
     },
     "passed": true,
-    "n_checks": 324,
+    "n_checks": 325,
     "failed_checks": []
   },
   {
@@ -56,17 +56,17 @@
       "medium",
       "medium",
       "medium",
+      "hard",
       "medium",
       "medium",
       "medium",
       "medium",
-      "easy",
-      "easy",
+      "medium",
       "easy",
       "easy",
       "easy"
     ],
-    "example_reason": "Topic 'Solving Systems of Linear Equations' had the lowest predicted success (17%) among 10 eligible topics. Level medium set by the staircase rule (one step per answer on this topic); predicted easy 36%, medium 17%, hard 7%.",
+    "example_reason": "Topic 'Polynomial Factors' had the lowest predicted success (8%) among 10 eligible topics. Level medium set by the staircase rule (one step per answer on this topic); predicted easy 19%, medium 8%, hard 3%.",
     "profile_reliable": true,
     "statuses": {
       "Percents": "not_enough_evidence",
@@ -74,14 +74,14 @@
       "Rate": "not_enough_evidence",
       "Polynomial Factors": "needs_support",
       "Simplifying Expressions positive exponents": "not_enough_evidence",
-      "Solving Systems of Linear Equations": "needs_support",
-      "Solving Systems of Linear Equations by Graphing": "not_enough_evidence",
+      "Solving Systems of Linear Equations": "not_enough_evidence",
+      "Solving Systems of Linear Equations by Graphing": "needs_support",
       "Ordering Fractions": "not_enough_evidence",
       "Equivalent Fractions": "needs_support",
       "Pythagorean Theorem": "not_enough_evidence"
     },
     "passed": true,
-    "n_checks": 306,
+    "n_checks": 305,
     "failed_checks": []
   },
   {
@@ -100,9 +100,9 @@
       "medium",
       "medium",
       "medium",
-      "easy",
-      "easy",
       "medium",
+      "easy",
+      "easy",
       "easy",
       "easy",
       "easy",
@@ -113,11 +113,11 @@
       "medium",
       "medium"
     ],
-    "example_reason": "Topic 'Solving Systems of Linear Equations' had the lowest combined estimate (11%: model 11% combined with 0 of 0 earlier answers on it correct) among 5 eligible topics. Level medium: ensemble prediction closest to 70% among allowed levels (easy 34%, medium 17%, hard 8%). A progression rule (based on your answers on this topic) limited the levels.",
+    "example_reason": "Topic 'Solving Systems of Linear Equations' had the lowest combined estimate (14%: model 14% combined with 0 of 0 earlier answers on it correct) among 5 eligible topics. Level medium: ensemble prediction closest to 70% among allowed levels (easy 30%, medium 15%, hard 7%). A progression rule (based on your answers on this topic) limited the levels.",
     "profile_reliable": true,
     "statuses": {
       "Percents": "needs_support",
-      "Percent Discount": "not_enough_evidence",
+      "Percent Discount": "needs_support",
       "Rate": "not_enough_evidence",
       "Polynomial Factors": "not_enough_evidence",
       "Solving Systems of Linear Equations": "needs_support",
@@ -125,7 +125,7 @@
       "Equivalent Fractions": "needs_support"
     },
     "passed": true,
-    "n_checks": 326,
+    "n_checks": 325,
     "failed_checks": []
   },
   {
@@ -144,12 +144,12 @@
       "medium",
       "easy",
       "easy",
-      "easy",
+      "medium",
       "medium",
       "easy",
       "easy"
     ],
-    "example_reason": "Topic 'Fractions' chosen from your answers so far (0 of 1 correct on it; topics with fewer correct answers come first) among 5 eligible topics. Level easy set by the staircase rule (one step per answer on this topic). No model prediction is used for this section.",
+    "example_reason": "Topic 'Addition and subtraction' chosen from your answers so far (0 of 1 correct on it; topics with fewer correct answers come first) among 5 eligible topics. Level easy set by the staircase rule (one step per answer on this topic). No model prediction is used for this section.",
     "profile_reliable": false,
     "statuses": {
       "Addition and subtraction": "needs_support",
@@ -181,9 +181,9 @@
       "easy",
       "easy",
       "easy",
-      "easy"
+      "medium"
     ],
-    "example_reason": "Topic 'Ratios, rates and percents' had the lowest predicted success (9%) among 5 eligible topics. Level medium set by the staircase rule (one step per answer on this topic); predicted easy 21%, medium 9%, hard 3%.",
+    "example_reason": "Topic 'Geometry (angles, Pythagoras, circles)' had the lowest predicted success (16%) among 5 eligible topics. Level medium set by the staircase rule (one step per answer on this topic); predicted easy 35%, medium 16%, hard 6%.",
     "profile_reliable": true,
     "statuses": {
       "Algebraic expressions": "needs_support",
@@ -206,11 +206,11 @@
       "easy",
       "easy",
       "easy",
-      "easy",
       "medium",
       "easy",
       "medium",
       "easy",
+      "medium",
       "easy",
       "easy"
     ],

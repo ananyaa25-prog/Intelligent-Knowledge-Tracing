@@ -24,7 +24,7 @@ def test_section_config_complete():
         assert s["grade_label"] and s["topics"] and set(s["difficulty"]) == {"easy", "medium", "hard"}
         assert s["validation"] in (VALIDATED, TRANSFER)
     assert SECTIONS["secondary"]["validation"] == VALIDATED
-    assert SECTIONS["undergraduate"]["validation"] == TRANSFER
+    assert SECTIONS["undergraduate"]["validation"] == VALIDATED      # Statics2011 undergraduates (D38)
     assert SECTIONS["primary"]["validation"] == VALIDATED          # Eedi primary-age data (Stage 7, D37)
     assert SECTIONS["primary"]["serving"] == "evidence_only"         # ...but the served model is ASSISTments-only
     assert SECTIONS["secondary"]["serving"] == "model" and SECTIONS["undergraduate"]["serving"] == "evidence_only"
@@ -171,3 +171,20 @@ def test_evidence_only_decision_has_no_model_numbers():
         assert d["topic_scores"] == {} and d["level_candidates"] == {}
         assert "%" not in d["reason"] and "model 50" not in d["reason"]
         s.record_answer(q["correct_answer"] if i % 2 else "x", 3000)
+
+
+def test_api_class_overview_per_section(client):
+    sid = client.post("/session/start", json={"student_id": "dashsec_student", "source": "live",
+                                              "section": "undergraduate"}).json()["session_id"]
+    for _ in range(3):
+        client.post(f"/session/{sid}/next", json={})
+        client.post(f"/session/{sid}/answer", json={"submitted_answer": "1", "response_time_ms": 2000})
+    d = client.get("/class/overview", params={"source": "live", "section": "undergraduate"}).json()
+    assert d["section"] == "undergraduate" and d["model_predictions"] is False
+    assert {s["skill_id"] for s in d["skills"]} == {str(t["id"]) for t in SECTIONS["undergraduate"]["topics"]}
+    assert all(set(st["topics"]) <= {s["skill_id"] for s in d["skills"]} for st in d["students"])
+    p = client.get("/class/overview", params={"source": "live", "section": "primary"}).json()
+    assert all(st["student_id"] != "dashsec_student" for st in p["students"])   # only that level's students
+    assert client.get("/class/overview", params={"section": "phd"}).status_code == 400
+    default = client.get("/class/overview", params={"source": "live"}).json()
+    assert "section" not in default and len(default["skills"]) == 10              # original overview unchanged

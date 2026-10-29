@@ -147,13 +147,22 @@
     if (lastData) renderAttention(lastData);
   }
 
+  let loadSeq = 0;   // v3: only the latest request may render (section tabs can overlap loads)
+
   async function load() {
     const empty = $('classOverviewEmpty');
+    const mySeq = ++loadSeq;
     try {
-      const r = await fetch(`/api/class/overview?source=${encodeURIComponent(source)}`);
+      // v3: learner-level section chosen in the dashboard tabs (sections_ui.js), if any
+      let sec = null;
+      try { sec = (typeof window.getDashboardSection === 'function') ? window.getDashboardSection() : null; } catch (e) { sec = null; }
+      const r = await fetch(`/api/class/overview?source=${encodeURIComponent(source)}` + (sec ? `&section=${encodeURIComponent(sec)}` : ''));
       if (!r.ok) throw new Error(`HTTP ${r.status}`);
-      lastData = await r.json();
+      const data = await r.json();
+      if (mySeq !== loadSeq) return;   // a newer request (e.g. another section tab) superseded this one
+      lastData = data;
       render(lastData);
+      try { if (typeof window.gktOverviewLoaded === 'function') window.gktOverviewLoaded(lastData); } catch (e) { /* optional */ }
     } catch (e) {
       $('classOverviewBody').style.display = 'none';
       empty.style.display = 'block';
@@ -170,6 +179,8 @@
     $('overviewSimBtn').setAttribute('aria-pressed', String(s === 'sample'));
     load();
   }
+
+  window.reloadClassOverview = () => load();   // v3: used by the section tabs
 
   window.addEventListener('DOMContentLoaded', () => {
     try {

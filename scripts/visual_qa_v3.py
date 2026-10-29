@@ -66,6 +66,14 @@ def main():
     for w, d in res["dashboard"].items():
         ok = ok and d["card"] and d["overflow_ok"]
         L.append(f"| {w} | {d['card']} | {'; '.join(d['labels'])} | {d['overflow_ok']} |")
+    L += ["", "| Dashboard level view | Width | Active tab | Overview topics (first columns) | ASSISTments matrix hidden | No overflow |",
+          "|---|---|---|---|---|---|"]
+    for w, d in res["dashboard"].items():
+        for lvl, v in (d.get("levels") or {}).items():
+            shows_original = any(h.startswith("Percents") for h in v["heat_header"])
+            good = bool(v["active_tab"]) and v["overflow_ok"] and (v["matrix_hidden"] == (lvl != "default"))                 and (shows_original == (lvl == "default"))   # each level view must show its own topics
+            ok = ok and good
+            L.append(f"| {lvl} | {w} | {v['active_tab']} | {', '.join(v['heat_header'][1:5])} | {v['matrix_hidden']} | {v['overflow_ok']} |")
     L += ["", f"Console errors: {len(res['console_errors'])}" + (f" ({'; '.join(res['console_errors'][:3])})" if res["console_errors"] else ""),
           "", f"**Result: {'PASS' if ok else 'FAIL'}.** Screenshots: " + ", ".join(f"screenshots/{s}" for s in res["screenshots"]), ""]
     (OUT / "ui_check.md").write_text("\n".join(L), encoding="utf-8")

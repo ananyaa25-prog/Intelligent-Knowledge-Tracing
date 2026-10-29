@@ -13,9 +13,9 @@ This is an **integrated, evaluated system built from standard parts** (knowledge
 | Learner levels | sections primary / secondary / undergraduate with grade labels, topics, difficulty parameters and a validation label | `src/serving/sections.py`, [reports/v3/by_band.md](reports/v3/by_band.md) |
 | Compare with existing solutions | paired significance tests against every baseline; related-work table | [reports/v3/benchmark.md](reports/v3/benchmark.md), [docs/RELATED_WORK_TABLE.md](docs/RELATED_WORK_TABLE.md) |
 | Random parametric questions | seeded offline generator driven by difficulty parameters, numeric / fraction / multiple-choice answers | [docs/QUESTION_GENERATOR.md](docs/QUESTION_GENERATOR.md), [reports/v3/generator_check.md](reports/v3/generator_check.md) |
-| Stronger, no false claims | real external data (Eedi) for primary/secondary, pre-registered policy gates, honesty audit | [reports/v3/external_benchmark.md](reports/v3/external_benchmark.md), [reports/v3/DEMO_CONFIG.md](reports/v3/DEMO_CONFIG.md), [reports/v3/FINAL_REPORT.md](reports/v3/FINAL_REPORT.md) |
+| Stronger, no false claims | real external data (Eedi for primary/secondary, Statics2011 for undergraduate), pre-registered policy gates, honesty audit | [reports/v3/external_benchmark.md](reports/v3/external_benchmark.md), [reports/v3/DEMO_CONFIG.md](reports/v3/DEMO_CONFIG.md), [reports/v3/FINAL_REPORT.md](reports/v3/FINAL_REPORT.md) |
 
-Headline (all numbers from reports/v3): with the same reduced training budget, the full gated model is significantly better than every classical baseline, SAKT-lite, DKVMN-lite and DKT-GRU/LSTM, but only comparable to classic DKT, and the skill graph adds a negligible +0.0007; on the real Eedi data it is comparable to DKT and Elo. See [docs/RESULTS_SUMMARY.md](docs/RESULTS_SUMMARY.md).
+Headline (all numbers from reports/v3): with the same reduced training budget, the full gated model is significantly better than every classical baseline, SAKT-lite, DKVMN-lite and DKT-GRU/LSTM, but only comparable to classic DKT, and the skill graph adds a negligible +0.0007; on the real Eedi data it is comparable to DKT and Elo, and on undergraduate Statics2011 data it is below Elo and logistic regression. See [docs/RESULTS_SUMMARY.md](docs/RESULTS_SUMMARY.md).
 
 ## Architecture
 
@@ -57,7 +57,9 @@ Then open `http://127.0.0.1:3000/` (quiz) and `http://127.0.0.1:3000/dashboard.h
 
 `demo.env` is now produced by `scripts/apply_gates_v3.py` from the pre-registered v3 gates ([reports/v3/DEMO_CONFIG.md](reports/v3/DEMO_CONFIG.md)): `POLICY=uncertainty` (passed Gate P; in simulation it falls back to the staircase on most decisions and flags them as low-confidence), `QUESTION_SOURCE=mixed` (passed Gate Q), and from v2 ([reports/DEMO_CONFIG.md](reports/DEMO_CONFIG.md)) `APPLY_CALIBRATION=true`, `SESSION_MODE=core5`, `TOPIC_SELECTION=evidence_blend`, `TARGET_P=0.70`. All settings are environment variables documented in `src/serving/policy_config.py`; their defaults are the original behaviour.
 
-Learner level: the login card has a "Learner level" picker (default = the original 10 topics). Primary and secondary are labelled "validated on real data"; undergraduate is "transfer mode, not validated". Only secondary uses the served model's predictions; primary and undergraduate sessions are evidence-only (see docs/DECISIONS.md D35, D37).
+Learner level: the login card has a "Learner level" picker (default = the original 10 topics). All three levels are labelled "validated on real data": secondary (ASSISTments + Eedi), primary (Eedi learners under 11) and undergraduate (Statics2011 university learners - engineering statics, not the app's maths topics). Only secondary uses the served model's predictions; primary and undergraduate sessions are evidence-only (see docs/DECISIONS.md D35, D37, D38).
+
+Teacher dashboard per learner level: `http://127.0.0.1:3000/dashboard.html?section=primary` (or `secondary`, `undergraduate`; no parameter = original view), also reachable through the tabs at the top of the dashboard (D39).
 
 Optional simulated demo students for the dashboard's "Simulated demo" view (clearly labelled, ids `sim_*`):
 

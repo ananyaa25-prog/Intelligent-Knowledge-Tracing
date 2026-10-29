@@ -149,25 +149,105 @@
     if (sub) sub.textContent = 'The served model was not trained on this level; topics follow your answers';
   }
 
-  // ---- teacher dashboard: sections card ---------------------------------------
+  // ---- teacher dashboard: one view per learner level ----------------------------
+  // Tabs Default / Primary / Secondary / Undergraduate. The chosen level is kept in the
+  // URL (dashboard.html?section=primary) so each level has its own link. A level view
+  // shows only that level's topics and students in the class overview; the original
+  // ASSISTments mastery matrix is hidden there because it only covers the original topics.
+  state.dashSection = null;
+
+  function legacyBlocks() {
+    var out = [];
+    var matrix = document.getElementById('matrixTitle');
+    if (matrix && matrix.closest('.card')) out.push(matrix.closest('.card'));
+    var stat = document.getElementById('statStudentCount');
+    if (stat && stat.closest('.card') && stat.closest('.card').parentElement) out.push(stat.closest('.card').parentElement);
+    var tabs = document.querySelector('.tab-group');
+    if (tabs) out.push(tabs);
+    var empty = document.getElementById('emptyState');
+    if (empty) out.push(empty);
+    return out;
+  }
+
+  function selectDashSection(id, push) {
+    state.dashSection = id || null;
+    var tabs = document.querySelectorAll('#sectionDashTabs button');
+    Array.prototype.forEach.call(tabs, function (b) {
+      var on = (b.getAttribute('data-section') || '') === (id || '');
+      b.classList.toggle('active', on);
+      b.setAttribute('aria-pressed', String(on));
+    });
+    var info = document.getElementById('sectionDashInfo');
+    var s = sectionById(id);
+    if (info) {
+      info.innerHTML = '';
+      if (!s) {
+        info.appendChild(el('span', { 'class': 'section-badge is-validated' }, 'validated on real data'));
+        info.appendChild(el('span', { 'class': 'section-topics' },
+          ' Original 10 ASSISTments topics (Grades 6-10); model predictions shown.'));
+      } else {
+        info.appendChild(el('span', { 'class': 'section-badge ' + (s.validated ? 'is-validated' : 'is-transfer') }, validationText(s)));
+        info.appendChild(el('span', { 'class': 'section-topics' }, ' ' + s.grade_label + '. Topics: ' +
+          (s.topics || []).map(function (t) { return t.name; }).join(', ') + '. ' +
+          (s.serving === 'model' ? 'Model predictions shown.' : 'Evidence-only: statuses come from the students\' answers; no model predictions.')));
+        info.appendChild(el('p', { 'class': 'section-note' }, s.validation_note));
+      }
+    }
+    legacyBlocks().forEach(function (n) {
+      if (n.id === 'emptyState') { if (id) n.style.display = 'none'; return; }
+      n.style.display = id ? 'none' : '';
+    });
+    var hidden = document.getElementById('sectionLegacyNote');
+    if (hidden) hidden.style.display = id ? '' : 'none';
+    if (push) {
+      try {
+        var url = new URL(window.location.href);
+        if (id) url.searchParams.set('section', id); else url.searchParams.delete('section');
+        window.history.replaceState(null, '', url.toString());
+      } catch (e) { /* ignore */ }
+    }
+    if (typeof window.reloadClassOverview === 'function') window.reloadClassOverview();
+    var card = document.getElementById('classOverviewCard');
+    if (push && id && card && card.scrollIntoView) card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
   function renderDashboardCard() {
     if (!/dashboard/.test(window.location.pathname) || document.getElementById('sectionsInfoCard')) return;
     var main = document.querySelector('main') || document.querySelector('.container') || document.body;
-    var card = el('section', { id: 'sectionsInfoCard', 'class': 'sections-info-card', 'aria-label': 'Learner-level sections' });
-    card.appendChild(el('h3', {}, 'Learner-level sections'));
-    var list = el('ul', { 'class': 'sections-info-list' });
-    state.sections.forEach(function (s) {
-      var li = el('li', {});
-      li.appendChild(el('strong', {}, s.label + ' (' + s.grade_label + '): '));
-      li.appendChild(el('span', { 'class': 'section-badge ' + (s.validated ? 'is-validated' : 'is-transfer') }, validationText(s)));
-      li.appendChild(el('span', { 'class': 'section-topics' }, ' ' + (s.topics || []).map(function (t) { return t.name; }).join(', ')));
-      list.appendChild(li);
+    var card = el('section', { id: 'sectionsInfoCard', 'class': 'sections-info-card', 'aria-label': 'Dashboard by learner level' });
+    card.appendChild(el('h3', {}, 'Dashboard by learner level'));
+    var tabs = el('div', { id: 'sectionDashTabs', 'class': 'section-dash-tabs', role: 'group', 'aria-label': 'Choose a learner level' });
+    var levels = [{ section: '', label: 'Default (original topics)' }].concat(state.sections);
+    levels.forEach(function (s) {
+      var b = el('button', { type: 'button', 'data-section': s.section || '', 'aria-pressed': 'false' }, s.label);
+      b.addEventListener('click', function () { selectDashSection(s.section || null, true); });
+      tabs.appendChild(b);
     });
-    card.appendChild(list);
-    card.appendChild(el('p', { 'class': 'section-note' },
-      'The class overview below uses the original topics. Section sessions are labelled on each student\'s results page.'));
+    card.appendChild(tabs);
+    card.appendChild(el('div', { id: 'sectionDashInfo', 'class': 'section-dash-info', 'aria-live': 'polite' }));
+    var note = el('p', { id: 'sectionLegacyNote', 'class': 'section-note' },
+      'The ASSISTments mastery matrix is hidden for this level (it only covers the original topics). The class overview below shows this level\'s students and topics.');
+    note.style.display = 'none';
+    card.appendChild(note);
     main.insertBefore(card, main.firstChild);
+    var initial = null;
+    try { initial = new URL(window.location.href).searchParams.get('section'); } catch (e) { initial = null; }
+    selectDashSection(sectionById(initial) ? initial : null, false);
   }
+
+  window.getDashboardSection = function () { return state.dashSection; };
+
+  // After each class-overview load: in evidence-only levels the footer must not say
+  // that statuses come from the model.
+  var defaultOverviewNote = null;
+  window.gktOverviewLoaded = function (data) {
+    var n = document.getElementById('classOverviewNote');
+    if (!n) return;
+    if (defaultOverviewNote === null) defaultOverviewNote = n.textContent;
+    n.textContent = (data && data.model_predictions === false)
+      ? 'Statuses are rule-based estimates from the students\' answers only (no model predictions for this level); suggestions are rule-based, for the teacher to judge.'
+      : defaultOverviewNote;
+  };
 
   async function loadSections() {
     try {

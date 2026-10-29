@@ -89,3 +89,22 @@ def test_split_and_bucket_train_only():
     dm = derive_difficulty_from_sequences(tr)
     for s in te:
         assert [dm.get((int(k), int(p)), 0) for k, p in zip(s["skill_seq"], s["problem_seq"])] == list(s["difficulty_seq"])
+
+
+def test_statics_adapter_on_fixture(tmp_path):
+    from data.adapters import statics
+    (tmp_path / "STATICS_qid_sid_sname").write_text("qid\tskillid\tskillname\n1\t1\ta\n2\t1\ta\n3\t2\tb\n4\t2\tb\n", encoding="utf-8")
+    rng = np.random.default_rng(0)
+    for name, n in (("STATICS_train.csv", 8), ("STATICS_test.csv", 3)):
+        lines = []
+        for _ in range(n):
+            L = 12
+            lines += [str(L), ",".join(str(int(q)) for q in rng.integers(1, 5, L)) + ",",
+                      ",".join(str(int(a)) for a in rng.integers(0, 2, L)) + ","]
+        (tmp_path / name).write_text("\n".join(lines) + "\n", encoding="utf-8")
+    assert statics.available(tmp_path)
+    d = statics.load(folder=tmp_path)
+    assert len(d["sequences"]) == 11 and d["n_rows_source"] == 132
+    assert {s["section"] for s in d["sequences"]} == {"undergraduate"}
+    assert d["num_skills"] == 2 and "response_time_missing_neutral_value" in d["flags"]
+    assert sum(len(s["skill_seq"]) for s in d["sequences"]) == 132

@@ -54,6 +54,8 @@ Every number below is copied from a generated report (file in brackets). Synthet
 
 **Real data for other levels (Eedi, 3 seeds)** [reports/v3/external_benchmark.md]: primary-age full_gated 0.7765, DKT-GRU 0.7764, Elo 0.7728; secondary-age Elo 0.7601, full_gated 0.7581. Cross-level transfer costs 0.02-0.05 AUC.
 
+**Undergraduate learners (Statics2011, engineering statics, 332 students, 3 seeds, 5 epochs)** [reports/v3/external_benchmark.md]: Elo 0.7977, LR-counts 0.7919, PFA 0.7819, BKT+difficulty 0.7752, full_gated 0.7652, DKT-GRU 0.7553, SAKT-lite 0.7342. Our model is below the classical baselines on this small dataset.
+
 **Difficulty policies, 100 paired synthetic students, demo setting** [reports/v3/policy_comparison.md]: in-band share staircase 43.2%, ZPD model 50.3%, Elo 51.5%, max-info 46.4%, uncertainty 45.9%, random 34.5%; status-accuracy differences not significant. Demo: POLICY=uncertainty, QUESTION_SOURCE=mixed by the pre-registered gates [reports/v3/DEMO_CONFIG.md]; the uncertainty policy uses the staircase on 59% of decisions.
 
 **Generator** [reports/v3/generator_check.md]: 23 topics; 100 tests pass; complexity ordered 23/23 (by construction), text proxy 17/23.

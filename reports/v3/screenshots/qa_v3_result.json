@@ -1,11 +1,11 @@
 {
-  "base": "http://127.0.0.1:54845",
+  "base": "http://127.0.0.1:55579",
   "runs": [
     {
       "section": "",
       "width": 1280,
       "questions": 16,
-      "mc_items": 1,
+      "mc_items": 0,
       "mc_buttons_ok": true,
       "verdict_leak": false,
       "overflow_ok": true,
@@ -57,6 +57,25 @@
       "badge": "Secondary · validated on real data",
       "end_state": "done",
       "results_banner": "Section: Secondary · validated on real data"
+    },
+    {
+      "section": "undergraduate",
+      "width": 1280,
+      "questions": 14,
+      "mc_items": 0,
+      "mc_buttons_ok": true,
+      "verdict_leak": false,
+      "overflow_ok": true,
+      "picker": true,
+      "picker_options": [
+        "",
+        "primary",
+        "secondary",
+        "undergraduate"
+      ],
+      "badge": "Undergraduate · validated on real data",
+      "end_state": "done",
+      "results_banner": "Section: Undergraduate · validated on real data. The served model was not trained on this level, so no model predictions are shown; results use your answers only."
     },
     {
       "section": "",
@@ -114,33 +133,173 @@
       "badge": "Secondary · validated on real data",
       "end_state": "done",
       "results_banner": "Section: Secondary · validated on real data"
+    },
+    {
+      "section": "undergraduate",
+      "width": 375,
+      "questions": 14,
+      "mc_items": 0,
+      "mc_buttons_ok": true,
+      "verdict_leak": false,
+      "overflow_ok": true,
+      "picker": true,
+      "picker_options": [
+        "",
+        "primary",
+        "secondary",
+        "undergraduate"
+      ],
+      "badge": "Undergraduate · validated on real data",
+      "end_state": "done",
+      "results_banner": "Section: Undergraduate · validated on real data. The served model was not trained on this level, so no model predictions are shown; results use your answers only."
     }
   ],
   "dashboard": {
     "375": {
       "card": true,
       "labels": [
-        "validated on real data",
-        "validated on real data",
-        "transfer mode, not validated"
+        "validated on real data"
       ],
-      "overflow_ok": true
+      "overflow_ok": true,
+      "levels": {
+        "default": {
+          "active_tab": "Default (original topics)",
+          "info": "validated on real data Original 10 ASSISTments topics (Grades 6-10); model predictions shown.",
+          "overview_label": "Live students (test/smoke/simulated accounts excluded)",
+          "heat_header": [
+            "Student",
+            "Percents",
+            "Percent Disco…",
+            "Rate",
+            "Polynomial Fa…",
+            "Simplifying E…",
+            "Solving Syste…",
+            "Solving Syste…"
+          ],
+          "matrix_hidden": false,
+          "overflow_ok": true
+        },
+        "primary": {
+          "active_tab": "Primary",
+          "info": "validated on real data Grades 1-5 (ages 6-11). Topics: Addition and subtraction, Multiplication and division, Fractions, Decimals and place value, Simple geometry (perimeter and area). Evidence-only: statuses come from the students' answers; no model predictions.Evaluated offline on real primary-age learners (Eedi / NeurIPS 2020 data, UK pupils younger than 11; reports/v3/external_benchmark.md). The served model is trained on ASSISTments only, so this section shows no model predictions: topic choice and results use the student's own answers.",
+          "overview_label": "Live students (test/smoke/simulated accounts excluded); Primary section only (Grades 1-5 (ages 6-11))",
+          "heat_header": [
+            "Student",
+            "Addition and …",
+            "Multiplicatio…",
+            "Fractions",
+            "Decimals and …",
+            "Simple geomet…"
+          ],
+          "matrix_hidden": true,
+          "overflow_ok": true
+        },
+        "secondary": {
+          "active_tab": "Secondary",
+          "info": "validated on real data Grades 6-10 (ages 11-16). Topics: Algebraic expressions, Linear equations, Ratios, rates and percents, Geometry (angles, Pythagoras, circles), Statistics (mean, median, mode, range). Model predictions shown.ASSISTments 2009 skill-builder (middle-school learners; the served model) and Eedi secondary-age learners (offline benchmark); reports/v3/by_band.md, reports/v3/external_benchmark.md.",
+          "overview_label": "Live students (test/smoke/simulated accounts excluded); Secondary section only (Grades 6-10 (ages 11-16))",
+          "heat_header": [
+            "Student",
+            "Algebraic exp…",
+            "Linear equati…",
+            "Ratios, rates…",
+            "Geometry (ang…",
+            "Statistics (m…"
+          ],
+          "matrix_hidden": true,
+          "overflow_ok": true
+        },
+        "undergraduate": {
+          "active_tab": "Undergraduate",
+          "info": "validated on real data First-year university. Topics: Calculus basics (derivatives), Linear algebra (2x2 matrices), Probability, Discrete maths (combinatorics, modular arithmetic). Evidence-only: statuses come from the students' answers; no model predictions.Evaluated offline on real undergraduate learners (Statics2011, CMU OLI Engineering Statics; reports/v3/external_benchmark.md) - a different subject from these maths topics, and our model was weaker there than Elo and logistic regression. The served model is trained on ASSISTments only, so this section shows no model predictions: topic choice and results use the student's own answers.",
+          "overview_label": "Live students (test/smoke/simulated accounts excluded); Undergraduate section only (First-year university)",
+          "heat_header": [
+            "Student",
+            "Calculus basi…",
+            "Linear algebr…",
+            "Probability",
+            "Discrete math…"
+          ],
+          "matrix_hidden": true,
+          "overflow_ok": true
+        }
+      }
     },
     "1280": {
       "card": true,
       "labels": [
-        "validated on real data",
-        "validated on real data",
-        "transfer mode, not validated"
+        "validated on real data"
       ],
-      "overflow_ok": true
+      "overflow_ok": true,
+      "levels": {
+        "default": {
+          "active_tab": "Default (original topics)",
+          "info": "validated on real data Original 10 ASSISTments topics (Grades 6-10); model predictions shown.",
+          "overview_label": "Live students (test/smoke/simulated accounts excluded)",
+          "heat_header": [
+            "Student",
+            "Percents",
+            "Percent Disco…",
+            "Rate",
+            "Polynomial Fa…",
+            "Simplifying E…",
+            "Solving Syste…",
+            "Solving Syste…"
+          ],
+          "matrix_hidden": false,
+          "overflow_ok": true
+        },
+        "primary": {
+          "active_tab": "Primary",
+          "info": "validated on real data Grades 1-5 (ages 6-11). Topics: Addition and subtraction, Multiplication and division, Fractions, Decimals and place value, Simple geometry (perimeter and area). Evidence-only: statuses come from the students' answers; no model predictions.Evaluated offline on real primary-age learners (Eedi / NeurIPS 2020 data, UK pupils younger than 11; reports/v3/external_benchmark.md). The served model is trained on ASSISTments only, so this section shows no model predictions: topic choice and results use the student's own answers.",
+          "overview_label": "Live students (test/smoke/simulated accounts excluded); Primary section only (Grades 1-5 (ages 6-11))",
+          "heat_header": [
+            "Student",
+            "Addition and …",
+            "Multiplicatio…",
+            "Fractions",
+            "Decimals and …",
+            "Simple geomet…"
+          ],
+          "matrix_hidden": true,
+          "overflow_ok": true
+        },
+        "secondary": {
+          "active_tab": "Secondary",
+          "info": "validated on real data Grades 6-10 (ages 11-16). Topics: Algebraic expressions, Linear equations, Ratios, rates and percents, Geometry (angles, Pythagoras, circles), Statistics (mean, median, mode, range). Model predictions shown.ASSISTments 2009 skill-builder (middle-school learners; the served model) and Eedi secondary-age learners (offline benchmark); reports/v3/by_band.md, reports/v3/external_benchmark.md.",
+          "overview_label": "Live students (test/smoke/simulated accounts excluded); Secondary section only (Grades 6-10 (ages 11-16))",
+          "heat_header": [
+            "Student",
+            "Algebraic exp…",
+            "Linear equati…",
+            "Ratios, rates…",
+            "Geometry (ang…",
+            "Statistics (m…"
+          ],
+          "matrix_hidden": true,
+          "overflow_ok": true
+        },
+        "undergraduate": {
+          "active_tab": "Undergraduate",
+          "info": "validated on real data First-year university. Topics: Calculus basics (derivatives), Linear algebra (2x2 matrices), Probability, Discrete maths (combinatorics, modular arithmetic). Evidence-only: statuses come from the students' answers; no model predictions.Evaluated offline on real undergraduate learners (Statics2011, CMU OLI Engineering Statics; reports/v3/external_benchmark.md) - a different subject from these maths topics, and our model was weaker there than Elo and logistic regression. The served model is trained on ASSISTments only, so this section shows no model predictions: topic choice and results use the student's own answers.",
+          "overview_label": "Live students (test/smoke/simulated accounts excluded); Undergraduate section only (First-year university)",
+          "heat_header": [
+            "Student",
+            "Calculus basi…",
+            "Linear algebr…",
+            "Probability",
+            "Discrete math…"
+          ],
+          "matrix_hidden": true,
+          "overflow_ok": true
+        }
+      }
     }
   },
   "console_errors": [],
   "screenshots": [
     "v3_login_default_1280.png",
     "v3_quiz_default_1280.png",
-    "v3_quiz_mc_default_1280.png",
     "v3_results_default_1280.png",
     "v3_login_primary_1280.png",
     "v3_quiz_primary_1280.png",
@@ -148,7 +307,14 @@
     "v3_login_secondary_1280.png",
     "v3_quiz_secondary_1280.png",
     "v3_results_secondary_1280.png",
+    "v3_login_undergraduate_1280.png",
+    "v3_quiz_undergraduate_1280.png",
+    "v3_results_undergraduate_1280.png",
     "v3_dashboard_1280.png",
+    "v3_dashboard_default_1280.png",
+    "v3_dashboard_primary_1280.png",
+    "v3_dashboard_secondary_1280.png",
+    "v3_dashboard_undergraduate_1280.png",
     "v3_login_default_375.png",
     "v3_quiz_default_375.png",
     "v3_quiz_mc_default_375.png",
@@ -159,6 +325,13 @@
     "v3_login_secondary_375.png",
     "v3_quiz_secondary_375.png",
     "v3_results_secondary_375.png",
-    "v3_dashboard_375.png"
+    "v3_login_undergraduate_375.png",
+    "v3_quiz_undergraduate_375.png",
+    "v3_results_undergraduate_375.png",
+    "v3_dashboard_375.png",
+    "v3_dashboard_default_375.png",
+    "v3_dashboard_primary_375.png",
+    "v3_dashboard_secondary_375.png",
+    "v3_dashboard_undergraduate_375.png"
   ]
 }

@@ -14,7 +14,7 @@ kt_sessions.db) were only read; new outputs are in models_v3/, reports/v3/, data
 | 4 Cheap-model benchmark | DONE | 100 seeds, two protocols [benchmark_classical.md]; a BKT numerical bug was found and fixed |
 | 5 Deep benchmark + significance | DONE (reduced) | 20 seeds (target 50 not feasible; 10 first, 10 added in a follow-up), 5 epochs instead of 15, 85.6 min in total (above the 30-40 min target); 1000-resample bootstrap; paired tests with Holm [benchmark.md] |
 | 6 Sections (backend) | DONE | sections.py, /session/start "section", GET /sections, per-band AUC [by_band.md] |
-| 7 Real datasets | PARTIAL | only Eedi / NeurIPS 2020 was publicly downloadable; 6 others need login or licence acceptance [docs/DATASETS_TODO.md]; Eedi benchmark per section + transfer [external_benchmark.md] |
+| 7 Real datasets | PARTIAL | Eedi / NeurIPS 2020 (public archive) and, in a follow-up, Statics2011 (public mirror, undergraduate) were obtained; 5 others need login or licence acceptance [docs/DATASETS_TODO.md]; benchmark per section + transfer [external_benchmark.md] |
 | 8 Question generator | DONE | 23 parametric topics, QUESTION_SOURCE flag (default bank), 100 tests [generator_check.md] |
 | 9 Policy comparison | DONE | 6 policies, 100 paired synthetic students, pre-registered gates [policy_comparison.md, DEMO_CONFIG.md] |
 | 10 UI integration | DONE | picker, labels, MC choices; e2e 6 configs PASS; browser QA 1280/375 PASS [e2e_http_check.md, ui_check.md] |
@@ -64,6 +64,11 @@ secondary-level skills [by_band.md].
 full_gated 0.7765, DKT-GRU 0.7764, Elo 0.7728; secondary Elo 0.7601, full_gated 0.7581, DKT-GRU 0.7575.
 Cross-level transfer: full_gated primary -> secondary 0.7306, secondary -> primary 0.7419.
 
+**Statics2011 (real undergraduate learners, engineering statics, 332 students, 3 seeds, 5 epochs)**
+[external_benchmark.md]: Elo 0.7977, LR-counts 0.7919, PFA 0.7819, BKT+difficulty 0.7752, full_gated 0.7652,
+DKT-GRU 0.7553. Seed-0 deep models are saved in models_v3/ (statics2011_undergraduate_*_seed0.pt); they are not
+used by the app, which cannot map its undergraduate maths topics to Statics skills.
+
 ## Policy comparison (100 paired synthetic students, demo setting) [policy_comparison.md]
 
 | Policy | In-band share | Pooled status accuracy | In-band diff vs staircase (95% t-CI) |
@@ -93,8 +98,9 @@ uncertainty-aware policy fell back to the staircase on 59% of level decisions.
 - Reduced training budget (5 epochs) and 20 instead of 50 seeds for the deep models; -lite baselines are not the
   published architectures; AKT was not run.
 - Only one external dataset; Eedi lacks response time / attempts / hints; sections by an age rule.
-- Primary is labelled "validated on real data" but the served model is ASSISTments-only, so primary sessions are
-  evidence-only; undergraduate has no data (transfer mode).
+- Primary and undergraduate are labelled "validated on real data" but the served model is ASSISTments-only, so
+  those sessions are evidence-only; the undergraduate data are engineering statics, not the app's maths topics,
+  and our model was below the classical baselines there.
 - Generated items: difficulty by construction, never answered by students or reviewed by a teacher.
 - Policy results come from synthetic students; the demo policy mostly behaves like the staircase.
 - No pilot, no learning-outcome or teacher evidence.
@@ -138,8 +144,8 @@ app.js, index.html, dashboard.html, style.css, e2e_http_check.py, start_demo.py,
 ## Things only the human can do
 
 1. Run a real pilot (docs/PILOT_GUIDE.md): consent, 15-30 students, logged sessions, then scripts/analyze_logs.py.
-2. Collect or obtain real data for the levels the served model does not cover (undergraduate; primary for the
-   served model), e.g. by downloading XES3G5M / Junyi / KDD Cup / Statics2011 after accepting their licences
+2. Collect or obtain real undergraduate MATHS data and primary data in the app's topics so the served model can
+   be trained for those levels (Statics2011 is a different subject), e.g. by downloading XES3G5M / Junyi / KDD Cup / Statics2011 after accepting their licences
    (docs/DATASETS_TODO.md), and retrain.
 3. Ask a teacher to review a sample of generated questions per topic and level (appropriate / wrong level / unclear).
 4. Check the Eedi licence terms before sharing any derived data, and verify citations marked "verify before citing".

@@ -1,6 +1,6 @@
 {
   "eedi": {
-    "status": "downloaded (657 MB) from the public archive",
+    "status": "available locally (1 file(s))",
     "folder": "data/external/eedi_neurips2020"
   },
   "xes3g5m": {
@@ -16,7 +16,7 @@
     "folder": "data/external/kddcup2010"
   },
   "statics2011": {
-    "status": "missing: manual download needed",
+    "status": "available locally (4 file(s))",
     "folder": "data/external/statics2011"
   },
   "assist2012": {

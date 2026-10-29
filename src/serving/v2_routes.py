@@ -8,6 +8,8 @@ existing route, field or signature changes.
   GET  /session/{id}/profile   mastery / readiness profile (contract B)
   GET  /student/{id}/profile   same, for a student id
   GET  /class/overview?source=live|sample   teacher overview (contract C)
+       v3: optional &section=primary|secondary|undergraduate -> overview of that learner
+       level only (its topics, its students); without it the original overview.
   POST /session/{id}/feedback  perceived difficulty + helpfulness (contract D)
 """
 
@@ -88,20 +90,40 @@ def student_profile(svc, student_id: str, session_id: Optional[str] = None,
             student_id=student_id,
         )
     else:
-        # v3 section session: the section's topics; transfer-mode sections are
-        # evidence-only (the model has no data for them), docs/DECISIONS.md D35.
-        from serving.adaptive_session import AdaptiveSession
-        probe = AdaptiveSession("profile", student_id, section=section)
-        prof = build_profile(
-            full_history=full,
-            topics=[{"raw_skill_id": t["raw_skill_id"], "skill_name": t["skill_name"]} for t in probe.topics],
-            predictor=probe._model_predictor(_safe_predictor(svc)) if probe.uses_model else None,
-            session_history=sess_hist,
-            session_id=session_id,
-            student_id=student_id,
-            reliable=None if probe.uses_model else False,
-        )
-        prof.update(probe.section_payload())
+        prof = _section_profile(svc, student_id, section, full, sess_hist, session_id)
+    prof["n_interactions"] = len(full)
+    if use_cache:
+        profile_cache.put(key, len(full), prof)
+    return prof
+
+
+def _section_profile(svc, student_id: str, section: str, full, sess_hist, session_id=None) -> Dict[str, Any]:
+    """v3 section profile: the section's topics; evidence-only sections (serving !=
+    model) get no model numbers (docs/DECISIONS.md D35, D37)."""
+    from serving.adaptive_session import AdaptiveSession
+    probe = AdaptiveSession("profile", student_id, section=section)
+    prof = build_profile(
+        full_history=full,
+        topics=[{"raw_skill_id": t["raw_skill_id"], "skill_name": t["skill_name"]} for t in probe.topics],
+        predictor=probe._model_predictor(_safe_predictor(svc)) if probe.uses_model else None,
+        session_history=sess_hist,
+        session_id=session_id,
+        student_id=student_id,
+        reliable=None if probe.uses_model else False,
+    )
+    prof.update(probe.section_payload())
+    return prof
+
+
+def student_section_profile(svc, student_id: str, section: str, use_cache: bool = True) -> Dict[str, Any]:
+    """Cumulative profile of one student on one learner-level section (v3 dashboards)."""
+    full = svc.session_manager.db.get_full_history(student_id)
+    key = f"{student_id}||section:{section}"
+    if use_cache:
+        cached = profile_cache.get(key, len(full))
+        if cached is not None:
+            return cached
+    prof = _section_profile(svc, student_id, section, full, [])
     prof["n_interactions"] = len(full)
     if use_cache:
         profile_cache.put(key, len(full), prof)
@@ -141,7 +163,9 @@ def list_students(svc, source: str) -> List[Dict[str, Any]]:
     return out
 
 
-def class_overview(svc, source: str = "live") -> Dict[str, Any]:
+def class_overview(svc, source: str = "live", section: Optional[str] = None) -> Dict[str, Any]:
+    if section is not None:
+        return section_overview(svc, source, section)
     names = {t["raw_skill_id"]: t["skill_name"] for t in TOPICS}
     students, counts, attention = [], {}, []
     for st in list_students(svc, source):
@@ -168,6 +192,55 @@ def class_overview(svc, source: str = "live") -> Dict[str, Any]:
     }
 
 
+def section_overview(svc, source: str, section: str) -> Dict[str, Any]:
+    """v3: class overview for ONE learner-level section: only that section's topics and
+    only students who answered at least one of them. Same response shape as the
+    original overview plus the section fields (label, validation, model_predictions)."""
+    from serving.sections import SECTIONS, section_info
+    info = section_info(section)
+    topic_ids = {t["id"] for t in SECTIONS[section]["topics"]}
+    names = {t["id"]: t["name"] for t in SECTIONS[section]["topics"]}
+    db = svc.session_manager.db
+    students, counts, attention = [], {}, []
+    for st in list_students(svc, source):
+        full = db.get_full_history(st["student_id"])
+        n_sec = 0
+        for h in full:
+            try:
+                n_sec += int(h.get("skill_id", h.get("topic"))) in topic_ids
+            except (TypeError, ValueError):
+                pass
+        if n_sec == 0:
+            continue
+        prof = student_section_profile(svc, st["student_id"], section)
+        topics = {}
+        for t in prof["topics"]:
+            topics[str(t["topic"])] = {"status": t["status"], "n_answers": t["n_answers"]}
+            counts[t["status"]] = counts.get(t["status"], 0) + 1
+            if t["status"] == "needs_support":
+                attention.append({"student_id": st["student_id"], "topic": t["topic"],
+                                  "skill_name": t["skill_name"], "status": t["status"],
+                                  "n_answers": t["n_answers"], "recommended_action": t["recommended_action"]})
+        students.append({"student_id": st["student_id"], "n_interactions": n_sec,
+                         "profile_reliable": prof["profile_reliable"], "topics": topics})
+    attention.sort(key=lambda a: (-a["n_answers"], a["student_id"]))
+    base = SAMPLE_LABEL if source == "sample" else "Live students (test/smoke/simulated accounts excluded)"
+    return {
+        "source": source,
+        "label": f"{base}; {info['label']} section only ({info['grade_label']})",
+        "skills": [{"skill_id": str(k), "name": v} for k, v in names.items()],
+        "students": students,
+        "status_counts": counts,
+        "needs_attention": attention,
+        "note": ("Statuses are rule-based estimates; recommended actions are rule-based suggestions."
+                 + ("" if info["serving"] == "model" else
+                    " This section is evidence-only: statuses come from the students' answers, not from model predictions.")),
+        "section": section, "section_label": info["label"], "grade_label": info["grade_label"],
+        "validation": info["validation"], "validated": info["validated"],
+        "model_predictions": info["serving"] == "model", "validation_note": info["validation_note"],
+    }
+
+
 def build_router(svc) -> APIRouter:
     router = APIRouter()
 
@@ -189,11 +262,16 @@ def build_router(svc) -> APIRouter:
         return student_profile(svc, student_id.strip(), session_id=None)
 
     @router.get("/class/overview")
-    def api_class_overview(source: str = "live"):
+    def api_class_overview(source: str = "live", section: Optional[str] = None):
         source = (source or "live").lower()
         if source not in ("live", "sample"):
             raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="source must be 'live' or 'sample'")
-        return class_overview(svc, source)
+        from serving.sections import normalise_section
+        try:
+            sec = normalise_section(section)
+        except ValueError as e:
+            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
+        return class_overview(svc, source, sec)
 
     @router.post("/session/{session_id}/feedback")
     def api_feedback(session_id: str, req: FeedbackRequest):

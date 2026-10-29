@@ -447,7 +447,10 @@ app.get('/api/class/overview', async (req, res) => {
   if (!['live', 'sample'].includes(source)) {
     return res.status(400).json({ error: "source must be 'live' or 'sample'" });
   }
-  const result = await forwardToPython(`/class/overview?source=${encodeURIComponent(source)}`, 'GET');
+  // v3: optional learner-level section (validated by the Python service)
+  const section = (req.query.section || '').toString().toLowerCase();
+  const sectionQs = section ? `&section=${encodeURIComponent(section)}` : '';
+  const result = await forwardToPython(`/class/overview?source=${encodeURIComponent(source)}${sectionQs}`, 'GET');
   if (result.error) return res.status(result.status).json(result.error);
   return res.status(result.status).json(result.data);
 });

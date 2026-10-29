@@ -92,6 +92,21 @@ async function play(page, section, width) {
         labels: await page.$$eval('#sectionsInfoCard .section-badge', bs => bs.map(b => b.textContent)).catch(() => []),
         overflow_ok: await overflow(page) };
       await shot(page, `v3_dashboard_${width}.png`, true);
+      // one dashboard view per learner level (tabs; also reachable as dashboard.html?section=...)
+      result.dashboard[width].levels = {};
+      for (const sec of ['', 'primary', 'secondary', 'undergraduate']) {
+        await page.goto(`${BASE}/dashboard.html${sec ? '?section=' + sec : ''}`, { waitUntil: 'networkidle2' });
+        await page.waitForSelector('#sectionDashTabs button.active', { timeout: 10000 }).catch(() => null);
+        await new Promise(r => setTimeout(r, 1500));
+        result.dashboard[width].levels[sec || 'default'] = await page.evaluate(() => ({
+          active_tab: (document.querySelector('#sectionDashTabs button.active') || {}).textContent || null,
+          info: (document.getElementById('sectionDashInfo') || {}).textContent || '',
+          overview_label: (document.getElementById('classOverviewLabel') || {}).textContent || '',
+          heat_header: Array.from(document.querySelectorAll('#classOverviewHeatmap thead th')).map(t => t.textContent.trim()).slice(0, 8),
+          matrix_hidden: (() => { const m = document.getElementById('matrixTitle'); const c = m && m.closest('.card'); return !!c && c.style.display === 'none'; })(),
+          overflow_ok: document.documentElement.scrollWidth <= window.innerWidth }));
+        await shot(page, `v3_dashboard_${sec || 'default'}_${width}.png`, true);
+      }
       await page.close();
     }
   } finally {

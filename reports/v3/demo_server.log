@@ -1,0 +1,200 @@
+Configuration: {'POLICY': 'uncertainty', 'TARGET_P': '0.70', 'APPLY_CALIBRATION': 'true', 'SESSION_MODE': 'core5', 'TOPIC_SELECTION': 'evidence_blend', 'QUESTION_SOURCE': 'mixed'}
+C:\Users\SANCHIT\Downloads\aiproj\aiproj\.venv\Lib\site-packages\torch\jit\_script.py:1491: FutureWarning: `torch.jit.script` is deprecated. Please switch to `torch.compile` or `torch.export`.
+  warnings.warn(
+INFO:     Started server process [83260]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+[InferenceService] Pre-loading model artifacts...
+[InferenceService] Computed RT stats: mean=9.978, std=1.550
+[InferenceService] Loading weights from C:\Users\SANCHIT\Downloads\aiproj\aiproj\data\processed\best_full_gated.pt...
+[InferenceService] Model successfully loaded (123 skills, max_seq_len=500)
+INFO:     127.0.0.1:54727 - "GET /health HTTP/1.1" 200 OK
+[NodeProxy] Backend proxy listening on http://localhost:3000
+[NodeProxy] Forwarding to Python service at http://127.0.0.1:8000
+INFO:     127.0.0.1:54731 - "GET /health HTTP/1.1" 200 OK
+
+============================================================
+  Student quiz        : http://127.0.0.1:3000/
+  Teacher dashboard   : http://127.0.0.1:3000/dashboard.html
+  Model internals     : http://127.0.0.1:3000/model-internals.html
+  FastAPI docs        : http://127.0.0.1:8000/docs
+  Learner level       : pick Primary / Secondary / Undergraduate on the login card
+                        (default = original 10 topics; labels show validated / transfer mode)
+  Question source     : mixed (sections always use the generator)
+============================================================
+Press Ctrl+C to stop.
+INFO:     127.0.0.1:54731 - "GET /sections HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57237 - "GET /sections HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57237 - "GET /sections HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50119 - "GET /sections HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62818 - "GET /student/11/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62818 - "POST /session/start HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62818 - "POST /session/60cdcd46-9742-435e-a8e1-2ed1c3a28f9a/next HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59110 - "POST /session/60cdcd46-9742-435e-a8e1-2ed1c3a28f9a/answer HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59110 - "POST /session/60cdcd46-9742-435e-a8e1-2ed1c3a28f9a/next HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60575 - "POST /session/60cdcd46-9742-435e-a8e1-2ed1c3a28f9a/answer HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60575 - "POST /session/60cdcd46-9742-435e-a8e1-2ed1c3a28f9a/next HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63761 - "POST /session/60cdcd46-9742-435e-a8e1-2ed1c3a28f9a/answer HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63761 - "POST /session/60cdcd46-9742-435e-a8e1-2ed1c3a28f9a/next HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63035 - "POST /session/60cdcd46-9742-435e-a8e1-2ed1c3a28f9a/answer HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63035 - "POST /session/60cdcd46-9742-435e-a8e1-2ed1c3a28f9a/next HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63035 - "POST /session/60cdcd46-9742-435e-a8e1-2ed1c3a28f9a/answer HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63035 - "POST /session/60cdcd46-9742-435e-a8e1-2ed1c3a28f9a/next HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59301 - "POST /session/60cdcd46-9742-435e-a8e1-2ed1c3a28f9a/answer HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59301 - "POST /session/60cdcd46-9742-435e-a8e1-2ed1c3a28f9a/next HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49193 - "POST /session/60cdcd46-9742-435e-a8e1-2ed1c3a28f9a/answer HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49193 - "POST /session/60cdcd46-9742-435e-a8e1-2ed1c3a28f9a/next HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64030 - "POST /session/60cdcd46-9742-435e-a8e1-2ed1c3a28f9a/answer HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64030 - "POST /session/60cdcd46-9742-435e-a8e1-2ed1c3a28f9a/next HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63222 - "POST /session/60cdcd46-9742-435e-a8e1-2ed1c3a28f9a/answer HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63222 - "POST /session/60cdcd46-9742-435e-a8e1-2ed1c3a28f9a/next HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52033 - "POST /session/60cdcd46-9742-435e-a8e1-2ed1c3a28f9a/answer HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52033 - "POST /session/60cdcd46-9742-435e-a8e1-2ed1c3a28f9a/next HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64458 - "POST /session/60cdcd46-9742-435e-a8e1-2ed1c3a28f9a/answer HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64458 - "POST /session/60cdcd46-9742-435e-a8e1-2ed1c3a28f9a/next HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53306 - "POST /session/60cdcd46-9742-435e-a8e1-2ed1c3a28f9a/answer HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53306 - "POST /session/60cdcd46-9742-435e-a8e1-2ed1c3a28f9a/next HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53306 - "POST /session/60cdcd46-9742-435e-a8e1-2ed1c3a28f9a/answer HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53306 - "POST /session/60cdcd46-9742-435e-a8e1-2ed1c3a28f9a/next HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53307 - "POST /session/60cdcd46-9742-435e-a8e1-2ed1c3a28f9a/answer HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53307 - "POST /session/60cdcd46-9742-435e-a8e1-2ed1c3a28f9a/next HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53307 - "POST /session/60cdcd46-9742-435e-a8e1-2ed1c3a28f9a/predict HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53307 - "GET /student/11/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54308 - "GET /session/60cdcd46-9742-435e-a8e1-2ed1c3a28f9a/profile HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53307 - "GET /graph/subgraph?student_id=11&session_id=60cdcd46-9742-435e-a8e1-2ed1c3a28f9a HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54307 - "GET /student/11/trend HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59236 - "GET /sections HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59237 - "GET /class/overview?source=live HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59236 - "GET /students/matrix?source=live HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49671 - "GET /class/overview?source=sample HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56007 - "GET /class/overview?source=live HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56009 - "POST /predict HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56010 - "POST /predict HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56009 - "POST /predict HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56010 - "POST /predict HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56009 - "POST /predict HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56010 - "POST /predict HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56009 - "POST /predict HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56010 - "POST /predict HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56009 - "POST /predict HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56010 - "POST /predict HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56009 - "POST /predict HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56010 - "POST /predict HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56009 - "GET /students/matrix?source=live HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62125 - "POST /predict HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62126 - "POST /predict HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62125 - "POST /predict HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62126 - "POST /predict HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62125 - "POST /predict HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62126 - "POST /predict HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62125 - "POST /predict HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62126 - "POST /predict HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62125 - "POST /predict HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62126 - "POST /predict HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62125 - "POST /predict HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62126 - "POST /predict HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62125 - "GET /students/matrix?source=live HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62125 - "GET /sections HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58967 - "GET /student/1/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58967 - "GET /student/10/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58967 - "GET /student/1012/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58967 - "POST /session/start HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58967 - "POST /session/e50acc2d-afdd-42a8-b639-58981304add5/next HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58967 - "POST /session/e50acc2d-afdd-42a8-b639-58981304add5/answer HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58967 - "POST /session/e50acc2d-afdd-42a8-b639-58981304add5/next HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52159 - "POST /session/e50acc2d-afdd-42a8-b639-58981304add5/answer HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52159 - "POST /session/e50acc2d-afdd-42a8-b639-58981304add5/next HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52159 - "POST /session/e50acc2d-afdd-42a8-b639-58981304add5/answer HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52159 - "POST /session/e50acc2d-afdd-42a8-b639-58981304add5/next HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52159 - "POST /session/e50acc2d-afdd-42a8-b639-58981304add5/answer HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52159 - "POST /session/e50acc2d-afdd-42a8-b639-58981304add5/next HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52159 - "POST /session/e50acc2d-afdd-42a8-b639-58981304add5/answer HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52159 - "POST /session/e50acc2d-afdd-42a8-b639-58981304add5/next HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52159 - "POST /session/e50acc2d-afdd-42a8-b639-58981304add5/answer HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52159 - "POST /session/e50acc2d-afdd-42a8-b639-58981304add5/next HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52159 - "POST /session/e50acc2d-afdd-42a8-b639-58981304add5/answer HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52159 - "POST /session/e50acc2d-afdd-42a8-b639-58981304add5/next HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52159 - "POST /session/e50acc2d-afdd-42a8-b639-58981304add5/answer HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52159 - "POST /session/e50acc2d-afdd-42a8-b639-58981304add5/next HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52159 - "POST /session/e50acc2d-afdd-42a8-b639-58981304add5/answer HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52159 - "POST /session/e50acc2d-afdd-42a8-b639-58981304add5/next HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52159 - "POST /session/e50acc2d-afdd-42a8-b639-58981304add5/answer HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52159 - "POST /session/e50acc2d-afdd-42a8-b639-58981304add5/next HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52159 - "POST /session/e50acc2d-afdd-42a8-b639-58981304add5/answer HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52159 - "POST /session/e50acc2d-afdd-42a8-b639-58981304add5/next HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52159 - "POST /session/e50acc2d-afdd-42a8-b639-58981304add5/answer HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52159 - "POST /session/e50acc2d-afdd-42a8-b639-58981304add5/next HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52159 - "POST /session/e50acc2d-afdd-42a8-b639-58981304add5/answer HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52159 - "POST /session/e50acc2d-afdd-42a8-b639-58981304add5/next HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52159 - "POST /session/e50acc2d-afdd-42a8-b639-58981304add5/answer HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52159 - "POST /session/e50acc2d-afdd-42a8-b639-58981304add5/next HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52159 - "POST /session/e50acc2d-afdd-42a8-b639-58981304add5/predict HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52159 - "GET /student/1012/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62223 - "GET /session/e50acc2d-afdd-42a8-b639-58981304add5/profile HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62222 - "GET /student/1012/trend HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52159 - "GET /graph/subgraph?student_id=1012&session_id=e50acc2d-afdd-42a8-b639-58981304add5 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56157 - "GET /sections HTTP/1.1" 200 OK
+[mastery] predictor failed, using evidence-only profile: maximum size for tensor at dimension 1 is 9 but size is 10
+INFO:     127.0.0.1:56159 - "GET /class/overview?source=live HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56158 - "GET /students/matrix?source=live HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61914 - "GET /sections HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63325 - "GET /student/5/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63325 - "GET /student/1/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63325 - "POST /session/start HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63325 - "POST /session/f7d8177d-c449-4e44-b5fa-c26170ad0ab8/next HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53527 - "GET /sections HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64955 - "POST /predict HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64956 - "POST /predict HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64955 - "POST /predict HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64956 - "POST /predict HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64955 - "POST /predict HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64956 - "POST /predict HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64955 - "POST /predict HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64956 - "POST /predict HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64955 - "POST /predict HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64956 - "POST /predict HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64955 - "POST /predict HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64956 - "POST /predict HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64955 - "GET /students/matrix?source=live HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64955 - "POST /session/start HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64955 - "POST /session/e9658766-6f18-43c5-a719-2367e7cd5f38/answer HTTP/1.1" 400 Bad Request
+INFO:     127.0.0.1:64955 - "POST /session/e9658766-6f18-43c5-a719-2367e7cd5f38/answer HTTP/1.1" 400 Bad Request
+INFO:     127.0.0.1:64955 - "POST /session/e9658766-6f18-43c5-a719-2367e7cd5f38/answer HTTP/1.1" 400 Bad Request
+INFO:     127.0.0.1:64955 - "POST /session/e9658766-6f18-43c5-a719-2367e7cd5f38/answer HTTP/1.1" 400 Bad Request
+INFO:     127.0.0.1:64955 - "POST /session/e9658766-6f18-43c5-a719-2367e7cd5f38/answer HTTP/1.1" 400 Bad Request
+INFO:     127.0.0.1:64955 - "POST /session/e9658766-6f18-43c5-a719-2367e7cd5f38/answer HTTP/1.1" 400 Bad Request
+INFO:     127.0.0.1:64955 - "POST /session/e9658766-6f18-43c5-a719-2367e7cd5f38/answer HTTP/1.1" 400 Bad Request
+INFO:     127.0.0.1:64955 - "POST /session/e9658766-6f18-43c5-a719-2367e7cd5f38/answer HTTP/1.1" 400 Bad Request
+INFO:     127.0.0.1:64955 - "POST /session/e9658766-6f18-43c5-a719-2367e7cd5f38/answer HTTP/1.1" 400 Bad Request
+INFO:     127.0.0.1:64955 - "POST /session/e9658766-6f18-43c5-a719-2367e7cd5f38/answer HTTP/1.1" 400 Bad Request
+INFO:     127.0.0.1:64955 - "POST /session/e9658766-6f18-43c5-a719-2367e7cd5f38/predict HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64955 - "POST /session/start HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64955 - "POST /session/712d2820-6eb9-4c67-8f2e-28bfd28e12a1/answer HTTP/1.1" 400 Bad Request
+INFO:     127.0.0.1:64955 - "POST /session/712d2820-6eb9-4c67-8f2e-28bfd28e12a1/answer HTTP/1.1" 400 Bad Request
+INFO:     127.0.0.1:64955 - "POST /session/712d2820-6eb9-4c67-8f2e-28bfd28e12a1/answer HTTP/1.1" 400 Bad Request
+INFO:     127.0.0.1:64955 - "POST /session/712d2820-6eb9-4c67-8f2e-28bfd28e12a1/answer HTTP/1.1" 400 Bad Request
+INFO:     127.0.0.1:64955 - "POST /session/712d2820-6eb9-4c67-8f2e-28bfd28e12a1/answer HTTP/1.1" 400 Bad Request
+INFO:     127.0.0.1:64955 - "POST /session/712d2820-6eb9-4c67-8f2e-28bfd28e12a1/answer HTTP/1.1" 400 Bad Request
+INFO:     127.0.0.1:64955 - "POST /session/712d2820-6eb9-4c67-8f2e-28bfd28e12a1/answer HTTP/1.1" 400 Bad Request
+INFO:     127.0.0.1:64955 - "POST /session/712d2820-6eb9-4c67-8f2e-28bfd28e12a1/answer HTTP/1.1" 400 Bad Request
+INFO:     127.0.0.1:64955 - "POST /session/712d2820-6eb9-4c67-8f2e-28bfd28e12a1/answer HTTP/1.1" 400 Bad Request
+INFO:     127.0.0.1:64955 - "POST /session/712d2820-6eb9-4c67-8f2e-28bfd28e12a1/answer HTTP/1.1" 400 Bad Request
+INFO:     127.0.0.1:64955 - "POST /session/712d2820-6eb9-4c67-8f2e-28bfd28e12a1/predict HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64955 - "POST /session/start HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64955 - "POST /session/3c69a959-0699-4a29-9d98-def28cecff05/answer HTTP/1.1" 400 Bad Request
+INFO:     127.0.0.1:64955 - "POST /session/3c69a959-0699-4a29-9d98-def28cecff05/answer HTTP/1.1" 400 Bad Request
+INFO:     127.0.0.1:64955 - "POST /session/3c69a959-0699-4a29-9d98-def28cecff05/answer HTTP/1.1" 400 Bad Request
+INFO:     127.0.0.1:64955 - "POST /session/3c69a959-0699-4a29-9d98-def28cecff05/answer HTTP/1.1" 400 Bad Request
+INFO:     127.0.0.1:64955 - "POST /session/3c69a959-0699-4a29-9d98-def28cecff05/answer HTTP/1.1" 400 Bad Request
+INFO:     127.0.0.1:64955 - "POST /session/3c69a959-0699-4a29-9d98-def28cecff05/answer HTTP/1.1" 400 Bad Request
+INFO:     127.0.0.1:64955 - "POST /session/3c69a959-0699-4a29-9d98-def28cecff05/answer HTTP/1.1" 400 Bad Request
+INFO:     127.0.0.1:64955 - "POST /session/3c69a959-0699-4a29-9d98-def28cecff05/answer HTTP/1.1" 400 Bad Request
+INFO:     127.0.0.1:64955 - "POST /session/3c69a959-0699-4a29-9d98-def28cecff05/answer HTTP/1.1" 400 Bad Request
+INFO:     127.0.0.1:64955 - "POST /session/3c69a959-0699-4a29-9d98-def28cecff05/answer HTTP/1.1" 400 Bad Request
+INFO:     127.0.0.1:64955 - "POST /session/3c69a959-0699-4a29-9d98-def28cecff05/predict HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64955 - "GET /students/matrix?source=live HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64958 - "GET /student/student_ui_410741/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64958 - "POST /session/start HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64958 - "POST /session/95956f32-a830-4156-9a79-b71a91a5478a/answer HTTP/1.1" 400 Bad Request
+INFO:     127.0.0.1:64960 - "POST /session/sess_test/answer HTTP/1.1" 404 Not Found

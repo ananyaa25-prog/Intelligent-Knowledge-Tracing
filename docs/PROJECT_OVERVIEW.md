@@ -66,7 +66,7 @@ These are contributions at the **system and evaluation** level, not new algorith
 | Results are stable across seeds | full_gated test AUC 0.8533 ± 0.0018 over 20 seeds; classical 100 re-splits, e.g. Elo 0.8094 ± 0.0133 (benchmark_classical.md) | supported (seed spread small; split spread larger) |
 | The model works for other learner levels | Eedi primary-age learners: full_gated 0.7765 vs DKT-GRU 0.7764 vs Elo 0.7728; secondary-age: Elo 0.7601 vs full_gated 0.7581 (3 seeds, external_benchmark.md) | inconclusive: it works, but no advantage over DKT or Elo is shown |
 | A model trained on one level transfers to another | Eedi full_gated primary -> secondary 0.7306 (in-level 0.7581); secondary -> primary 0.7419 (in-level 0.7765) | not supported: transfer costs about 0.02-0.05 AUC |
-| The app is validated for undergraduate learners | no undergraduate dataset was available | not supported (transfer mode) |
+| The approach works for undergraduate learners | Statics2011 (engineering statics, 332 students): full_gated 0.7652 vs Elo 0.7977, LR-counts 0.7919, PFA 0.7819 (external_benchmark.md) | not supported: evaluated, but below the classical baselines; different subject from the app's maths topics |
 | Model-guided difficulty puts more questions in the target band than the staircase (simulation) | in-band +7.2% (model), +8.3% (Elo), +2.8% (uncertainty), all significant (policy_comparison.md) | supported in simulation only |
 | Any policy gives more accurate statuses than the staircase | all status-accuracy differences non-significant (Holm p = 1.0) | inconclusive |
 | The uncertainty-aware policy uses the model ensemble | it fell back to the staircase on 59% of level decisions | partly: mostly behaves like the staircase |

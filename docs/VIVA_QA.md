@@ -116,7 +116,7 @@ In v2 (graph_no_gate below dkt_only) and in v3 (no_graph ablation +0.0007: not s
 Removing the gate (averaging short-term, long-term and graph states instead) costs 0.0075 AUC, significant over 20 paired seeds. That is the only architectural component with a measurable benefit, and it is small.
 
 **38. How valid are the non-ASSISTments sections?**
-Secondary is served by the ASSISTments model and evaluated on ASSISTments plus Eedi secondary-age learners. Primary is labelled "validated" because models were evaluated on Eedi learners younger than 11, but the served model never saw those data, so the app shows no predictions there. Undergraduate has no data at all: transfer mode. On Eedi our model is comparable to DKT and Elo, not better (reports/v3/external_benchmark.md).
+Secondary is served by the ASSISTments model and evaluated on ASSISTments plus Eedi secondary-age learners. Primary is labelled "validated" because models were evaluated on Eedi learners younger than 11, but the served model never saw those data, so the app shows no predictions there. Undergraduate is labelled validated because models were evaluated on Statics2011 university learners, but that course is engineering statics, not the app's maths topics, and our model scored below Elo, logistic regression and PFA there (0.7652 vs 0.7977); the app stays evidence-only for it. On Eedi our model is comparable to DKT and Elo, not better (reports/v3/external_benchmark.md).
 
 **39. Does a model trained on one level work on another?**
 Not well: on Eedi, full_gated trained on primary-age learners drops from 0.7581 (in-level) to 0.7306 on secondary-age learners, and secondary -> primary drops from 0.7765 to 0.7419. Every model in the transfer table loses 0.02-0.05 AUC.

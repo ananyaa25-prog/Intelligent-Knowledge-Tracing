@@ -10,8 +10,8 @@ A session started without a section keeps the original 10-topic behaviour.
 Validation status (docs/DECISIONS.md D33-D37):
 - A section is "validated on real data" only if a real dataset for that level was
   loaded and the model was evaluated on it: `secondary` (ASSISTments 2009 + Eedi
-  secondary-age learners) and `primary` (Eedi learners younger than 11, Stage 7).
-  `undergraduate` is "transfer mode: not validated on real data" (no dataset).
+  secondary-age learners), `primary` (Eedi learners younger than 11, Stage 7) and
+  `undergraduate` (Statics2011 university learners, engineering statics, D38).
 - Separately, `serving` says whether the app uses the served ASSISTments model for the
   section: only `secondary` ("model"). Primary is validated offline with a model trained
   on Eedi, which is not the served model, so the app stays evidence-only there.
@@ -81,10 +81,13 @@ SECTIONS: Dict[str, Dict[str, Any]] = {
     "undergraduate": {
         "label": "Undergraduate",
         "grade_label": "First-year university",
-        "validation": TRANSFER,
+        "validation": VALIDATED,
         "serving": "evidence_only",
-        "validation_note": "No undergraduate dataset was loaded and no ASSISTments skill is at this level; "
-                           "predictions are not available, topic choice uses the student's own answers only.",
+        "validation_note": "Evaluated offline on real undergraduate learners (Statics2011, CMU OLI Engineering "
+                           "Statics; reports/v3/external_benchmark.md) - a different subject from these maths "
+                           "topics, and our model was weaker there than Elo and logistic regression. The served "
+                           "model is trained on ASSISTments only, so this section shows no model predictions: "
+                           "topic choice and results use the student's own answers.",
         "difficulty": {
             "easy": {"digits": 1, "steps": 1, "negatives": False, "fractions": False},
             "medium": {"digits": 1, "steps": 2, "negatives": True, "fractions": False},

@@ -1,0 +1,10 @@
+[external] seeds = [0, 1, 2]; epochs = 5; max_students/section = 3000
+[external] statics2011: processed file present
+[external] 25 tasks
+  10/25 done, 1.2 min
+  20/25 done, 1.6 min
+  25/25 done, 1.9 min
+Pairs before filter: 1927, after filter: 972
+Pairs before filter: 1927, after filter: 972
+Pairs before filter: 1927, after filter: 972
+[external] done in 1.9 min -> reports/v3/external_benchmark.md

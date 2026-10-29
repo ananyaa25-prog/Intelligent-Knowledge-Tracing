@@ -58,9 +58,13 @@ DATASETS = [
      "url": None, "where": "https://pslcdatashop.web.cmu.edu/KDDCup/ (registration required)",
      "section": "secondary", "licence": "registration -> manual"},
     {"key": "statics2011", "name": "Statics2011 (OLI Engineering Statics, Fall 2011)", "folder": "statics2011",
-     "expect": ["the DataShop transaction export (tab-separated .txt)"], "url": None,
-     "where": "https://pslcdatashop.web.cmu.edu/ dataset 507 (login required)",
-     "section": "undergraduate (engineering statics, not maths)", "licence": "login -> manual"},
+     "expect": ["STATICS_train.csv", "STATICS_test.csv", "STATICS_qid_sid_sname", "STATICS_sid_sname"],
+     "url": None,
+     "mirror": "https://raw.githubusercontent.com/jennyzhang0215/DKVMN/master/data/STATICS/",
+     "where": "public mirror in the DKVMN authors' repository (github.com/jennyzhang0215/DKVMN, data/STATICS); "
+              "original: https://pslcdatashop.web.cmu.edu/ dataset 507 (login)",
+     "section": "undergraduate (engineering statics, not maths)",
+     "licence": "mirror has no licence file; original DataShop terms apply - academic use, check before redistributing"},
     {"key": "assist2012", "name": "ASSISTments 2012-2013 (school data with affect)", "folder": "assistments2012",
      "expect": ["2012-2013-data-with-predictions-4-final.csv"], "url": None,
      "where": "https://sites.google.com/site/assistmentsdata/datasets/2012-13-school-data-with-affect (manual)",
@@ -141,6 +145,14 @@ def main():
         files = _local_files(folder)
         if files:
             st = f"available locally ({len(files)} file(s))"
+        elif d.get("mirror") and not args.no_download and (not args.only or args.only == d["key"]):
+            print(f"[fetch] {d['name']}: downloading {len(d['expect'])} files from {d['mirror']}", flush=True)
+            try:
+                folder.mkdir(parents=True, exist_ok=True)
+                n = sum(_download(d["mirror"] + fn, folder / fn, args.max_mb, args.timeout) for fn in d["expect"])
+                st = f"downloaded ({n / 1e6:.1f} MB) from the public mirror"
+            except (urllib.error.URLError, socket.timeout, OSError, RuntimeError) as e:
+                st = f"missing: download failed ({type(e).__name__}: {str(e)[:120]})"
         elif args.no_download or (args.only and args.only != d["key"]) or not d["url"]:
             st = "missing: manual download needed" if not d["url"] else "missing: public download not attempted"
         else:

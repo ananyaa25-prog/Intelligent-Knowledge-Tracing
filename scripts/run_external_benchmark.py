@@ -45,7 +45,8 @@ from baselines import CLASSICAL  # noqa: E402
 from baselines.base import all_metrics, mean_ci  # noqa: E402
 
 OUT = ROOT / "reports" / "v3"
-ADAPTERS = {"eedi": "data.adapters.eedi"}
+ADAPTERS = {"eedi": "data.adapters.eedi", "statics2011": "data.adapters.statics"}
+MODELS_V3 = ROOT / "models_v3"
 DEEP = ["dkt_gru", "sakt_lite", "dkt_only", "full_gated"]
 TRANSFER_MODELS = ["elo", "bkt_diff", "dkt_gru", "full_gated"]
 
@@ -97,6 +98,8 @@ def _task(t):
         m = make_deep(model, S, seed=seed, epochs=epochs, **kw)
         m.fit(trs, sequences_to_split(va))
         p, y, _ = m.predict_split(sequences_to_split(te))
+        if os.environ.get("V3_SAVE_MODELS") == "1" and seed == 0 and train_sec == test_sec:
+            m.save(MODELS_V3 / f"{name}_{train_sec}_{model}_seed0.pt")   # models_v3/ only
     r = all_metrics(y, p)
     r.update({"dataset": name, "train_section": train_sec, "test_section": test_sec, "model": model,
               "seed": seed, "seconds": round(time.time() - t0, 1)})
@@ -111,13 +114,20 @@ def main():
     ap.add_argument("--max_len", type=int, default=200)
     ap.add_argument("--workers", type=int, default=max(1, min(6, (os.cpu_count() or 2) - 1)))
     ap.add_argument("--rebuild", action="store_true")
+    ap.add_argument("--datasets", default=None, help="comma-separated subset of " + ",".join(ADAPTERS))
+    ap.add_argument("--save-models", action="store_true", help="save seed-0 deep models to models_v3/")
     args = ap.parse_args()
+    if args.save_models:
+        os.environ["V3_SAVE_MODELS"] = "1"
+    wanted = set(args.datasets.split(",")) if args.datasets else set(ADAPTERS)
     seeds = list(range(args.seeds))
     print(f"[external] seeds = {seeds}; epochs = {args.epochs}; max_students/section = {args.max_students}")
     import importlib
     from data.adapters.common import PROCESSED_V3, load_processed
     status = {}
     for name, mod in ADAPTERS.items():
+        if name not in wanted:
+            continue
         ad = importlib.import_module(mod)
         if (PROCESSED_V3 / f"{name}.pkl").exists() and not args.rebuild:
             status[name] = "processed file present"
@@ -128,8 +138,8 @@ def main():
         else:
             status[name] = "raw files not available"
         print(f"[external] {name}: {status[name]}", flush=True)
-    names = [n for n in ADAPTERS if (PROCESSED_V3 / f"{n}.pkl").exists()]
-    write_datasets_md(status, names)
+    names = [n for n in ADAPTERS if n in wanted and (PROCESSED_V3 / f"{n}.pkl").exists()]
+    write_datasets_md(status, [n for n in ADAPTERS if (PROCESSED_V3 / f"{n}.pkl").exists()])
     if not names:
         (OUT / "external_benchmark.md").write_text(
             "# External datasets benchmark (Stage 7)\n\nNo external dataset was available, so nothing was run and "
@@ -164,6 +174,17 @@ def main():
     elapsed = (time.time() - t0) / 60
     rows.sort(key=lambda r: (r["dataset"], r["train_section"], r["test_section"], r["model"], r["seed"]))
     fields = ["dataset", "train_section", "test_section", "model", "seed", "auc", "acc", "brier", "ece", "n", "seconds"]
+    # keep rows of datasets not re-run this time (e.g. --datasets statics2011 keeps the Eedi rows)
+    old_csv = OUT / "external_benchmark.csv"
+    if old_csv.exists():
+        with open(old_csv, encoding="utf-8") as f:
+            for r in csv.DictReader(f):
+                if r["dataset"] not in names:
+                    for k in ("auc", "acc", "brier", "ece", "seconds"):
+                        r[k] = float(r[k])
+                    r["seed"], r["n"] = int(r["seed"]), int(r["n"])
+                    rows.append(r)
+        names = sorted({r["dataset"] for r in rows})
     with open(OUT / "external_benchmark.csv", "w", newline="", encoding="utf-8") as f:
         w = csv.DictWriter(f, fieldnames=fields, extrasaction="ignore")
         w.writeheader()
@@ -190,11 +211,10 @@ def write_datasets_md(status, names):
         by = {}
         for s in d["sequences"]:
             by.setdefault(s.get("section"), []).append(len(s["skill_seq"]))
-        L += ["", f"## {name}", "", f"Source: {d['source']}. Rows in source (tasks 1-2 train file, after joining "
-              f"answer dates): {d['n_rows_source']}. Section rule: {d['section_rule']}. Students in the source by "
+        L += ["", f"## {name}", "", f"Source: {d['source']}. Answer rows in the source files: {d['n_rows_source']}. Section rule: {d['section_rule']}. Students in the source by "
               f"section rule: {d['section_counts_all_students']}. Kept: a seeded sample of at most "
               f"{d['max_students_per_section']} students per section with >= 10 answers, first {d['max_len']} answers "
-              f"each. Skills: {d['num_skills']} (most specific subject of each question).",
+              f"each. Skills: {d['num_skills']}.",
               f"Metadata flags: {', '.join(d['flags']) or 'none'} (neutral values used).", "",
               "| Section | Students | Interactions | Mean length |", "|---|---|---|---|"]
         for sec, lens in sorted(by.items()):
