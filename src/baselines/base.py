@@ -42,7 +42,10 @@ def _np(x):
 
 
 def split_to_sequences(split: Dict[str, Any]) -> List[Dict[str, np.ndarray]]:
-    """Padded split dict -> list of per-student dicts of 1-D arrays (real steps only)."""
+    """Padded split dict -> list of per-student dicts of 1-D arrays (real steps only).
+    A list of such per-student dicts is returned unchanged."""
+    if isinstance(split, (list, tuple)):
+        return list(split)
     mask = _np(split["mask"]).astype(bool)
     arrays = {k: _np(split[k]) for k in SEQ_KEYS if k in split}
     out = []

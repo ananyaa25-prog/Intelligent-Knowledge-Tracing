@@ -133,3 +133,17 @@ def test_resplit_derives_difficulty_from_train_only():
             assert d == dm.get((int(k), int(p)), 0)
     tr2, _, _ = resplit(seqs, seed=11)
     assert [len(s["skill_seq"]) for s in tr] == [len(s["skill_seq"]) for s in tr2]
+
+
+def test_bkt_long_streak_stays_finite():
+    """Regression: with guess ~1e-6, a long correct streak followed by wrong
+    answers used to push P(known) above 1 and then to NaN."""
+    m = make_classical("bkt", NUM_SKILLS, seed=0)
+    m._init_params(NUM_SKILLS + 1)
+    m.G[:] = 1e-6
+    m.Sl[:] = 0.027
+    m.T[:] = 0.015
+    sk = np.full(500, 2)
+    co = np.r_[np.ones(300, dtype=int), np.zeros(200, dtype=int)]
+    p = m.predict_sequence(sk, co, np.full(500, 2))
+    assert np.all(np.isfinite(p)) and np.all((p >= 0) & (p <= 1))

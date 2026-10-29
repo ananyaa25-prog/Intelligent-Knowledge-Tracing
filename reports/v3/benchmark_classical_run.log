@@ -1,0 +1,12 @@
+[classical] seeds = 0..99 (100); workers = 5; max_students = None
+  20/200 tasks, 81s
+  40/200 tasks, 162s
+  60/200 tasks, 240s
+  80/200 tasks, 319s
+  100/200 tasks, 392s
+  120/200 tasks, 415s
+  140/200 tasks, 433s
+  160/200 tasks, 452s
+  180/200 tasks, 470s
+  200/200 tasks, 488s
+[classical] done in 8.1 min -> reports/v3/benchmark_classical.md

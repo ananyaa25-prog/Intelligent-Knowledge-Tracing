@@ -184,10 +184,13 @@ class BKTBaseline(BaseKT):
             if t >= n_pred_from:
                 out.append(p)
             if t < len(corrects):
+                # exact posterior denominators (1 - p computed as a sum, not a
+                # difference) and a clamp keep L inside [0, 1] numerically
                 if int(corrects[t]):
-                    post = L * (1 - Sl) / max(p, 1e-12)
+                    post = L * (1 - Sl) / max(L * (1 - Sl) + (1 - L) * G, 1e-300)
                 else:
-                    post = L * Sl / max(1 - p, 1e-12)
+                    post = L * Sl / max(L * Sl + (1 - L) * (1 - G), 1e-300)
+                post = min(max(post, 0.0), 1.0)
                 pk[k] = post + (1 - post) * self.T[k]
         return np.asarray(out, dtype=np.float64)
 
