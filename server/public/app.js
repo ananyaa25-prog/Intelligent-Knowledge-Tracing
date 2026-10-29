@@ -307,6 +307,22 @@ async function handleAnswerSubmit(e) {
 
     // Kept client-side for the results screen only; no verdict is shown here.
     const answerData = await res.json().catch(() => null);
+
+    // v3 (MAX_ATTEMPTS > 1): a wrong attempt with tries left keeps the same question.
+    if (answerData && answerData.retry) {
+      gktHook('onSubmitError');   // clears the "adapting" indicator; nothing failed
+      gktHook('onRetry', answerData);
+      answerInput.value = '';
+      answerInput.disabled = false;
+      submitBtn.disabled = false;
+      answerInput.focus();
+      questionStartTime = performance.now();
+      timerInterval = setInterval(() => {
+        const elapsedSec = ((performance.now() - questionStartTime) / 1000).toFixed(1);
+        liveTimerText.textContent = `Response time: ${elapsedSec}s`;
+      }, 100);
+      return;
+    }
     if (answerData) gktHook('onAnswer', answerData);
 
     // No correct/incorrect verdict is shown; go straight to the next question.

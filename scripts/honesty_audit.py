@@ -25,7 +25,7 @@ ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "reports" / "v3" / "honesty_audit.md"
 DOCS = [ROOT / "README.md"] + sorted((ROOT / "docs").glob("*.md"))
 CLAIM_FILES = DOCS + sorted((ROOT / "reports" / "v3").glob("*.md"))
-FORBIDDEN = [r"\b(the|our|is the) first\b(?! (?:question|questions|answer|answers|two|2|session|seed|run|stage|time|commit|line|item|medium))",
+FORBIDDEN = [r"\b(the|our|is the) first\b(?! (?:question|questions|answer|answers|two|2|session|seed|run|stage|time|commit|line|item|medium|attempt|attempts|try))",
              r"\bfirst (to|system|model|approach|method|work|tool|platform)\b",
              r"\bnovel\b", r"state[- ]of[- ]the[- ]art", r"\bSOTA\b", r"\boutperform", r"\bproves?\b",
              r"\bgroundbreaking\b", r"\brevolutionary\b", r"\bbest[- ]in[- ]class\b"]

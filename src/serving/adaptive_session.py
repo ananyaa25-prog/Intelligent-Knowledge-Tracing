@@ -90,7 +90,8 @@ class AdaptiveSession:
                  core_topics: Optional[List[int]] = None,
                  prior_history: Optional[List[Dict[str, Any]]] = None,
                  topic_selection: Optional[str] = None, section: Optional[str] = None,
-                 question_source: Optional[str] = None):
+                 question_source: Optional[str] = None, hints_enabled: Optional[bool] = None,
+                 max_attempts: Optional[int] = None):
         self.session_id = session_id
         self.student_id = student_id
         cfg = get_config()
@@ -104,6 +105,9 @@ class AdaptiveSession:
         # only reports whether a real dataset for the level was evaluated
         self.uses_model = self.section is None or SECTIONS[self.section].get("serving") == "model"
         self.question_source = question_source or getattr(cfg, "question_source", "bank")
+        # v3 hints / retries (defaults: off, one attempt = the existing behaviour)
+        self.hints_enabled = bool(cfg.hints_enabled if hints_enabled is None else hints_enabled)
+        self.max_attempts = max(1, min(3, int(cfg.max_attempts if max_attempts is None else max_attempts)))
         self.policy = policy or cfg.policy
         self.session_mode = session_mode or cfg.session_mode
         self.target_p = float(target_p if target_p is not None else cfg.target_p)
@@ -587,13 +591,41 @@ class AdaptiveSession:
         self.phase = "done"
         return None
 
+    def request_hint(self) -> Dict[str, Any]:
+        """v3 (HINTS_ENABLED): strategy hint for the pending question. As in ASSISTments, a
+        hint asked before the first attempt makes the question count as not correct on the
+        first try; hint_used = 1 is stored and given to the model either way."""
+        if self.pending is None:
+            raise ValueError("No pending question for this session; call next_question first.")
+        if not self.hints_enabled:
+            raise ValueError("Hints are disabled (HINTS_ENABLED=false).")
+        from questions.hints import hint_for
+        p = self.pending
+        if not p.get("_hint_used"):
+            p["_hint_used"] = 1
+            p["_hint_before_first"] = not p.get("_attempts")
+        return {"position": p["position"], "hint_text": hint_for(self.topic_by_id[p["topic"]]),
+                "hint_used": 1, "counts_as_first_try_wrong": bool(p["_hint_before_first"]),
+                "attempts_used": len(p.get("_attempts", []))}
+
     def record_answer(self, submitted_answer: Any, response_time_ms: float, hint_used: int = 0) -> Optional[Dict[str, Any]]:
         if self.pending is None:
             raise ValueError("No pending question for this session; call next_question first.")
 
         pending = self.pending
         topic = pending["topic"]
-        is_correct = self.check(submitted_answer, pending)
+        attempt_correct = self.check(submitted_answer, pending)
+        attempts = pending.setdefault("_attempts", [])
+        attempts.append({"correct": bool(attempt_correct), "response_time_ms": float(response_time_ms)})
+        if not attempt_correct and len(attempts) < self.max_attempts:
+            # v3 (MAX_ATTEMPTS > 1): the question stays pending and can be answered again
+            return {"retry": True, "position": pending["position"], "topic": topic, "correct": 0,
+                    "attempt_correct": 0, "attempts_used": len(attempts),
+                    "attempts_left": self.max_attempts - len(attempts),
+                    "hint_used": int(pending.get("_hint_used", 0))}
+        # `correct` is the first-attempt result without a hint asked before it (ASSISTments
+        # semantics); with the default flags this equals the single answer's result.
+        is_correct = attempts[0]["correct"] and not pending.get("_hint_before_first")
 
         # Staircase reacts to the actual answer only.
         idx = LEVEL_INDEX[self.levels[topic]]
@@ -609,9 +641,10 @@ class AdaptiveSession:
             "difficulty_bucket": pending["difficulty_bucket"],
             "correct": 1 if is_correct else 0,
             "p_before": pending["predicted_p"],
-            "response_time_ms": float(response_time_ms),
-            "attempt_count": 1,
-            "hint_used": int(hint_used),
+            "response_time_ms": attempts[0]["response_time_ms"],
+            "attempt_count": len(attempts),
+            "hint_used": int(hint_used or pending.get("_hint_used", 0)),
+            "solved": 1 if attempt_correct else 0,
             "question_text": pending["question_text"],
             "correct_answer": pending["correct_answer"],
             "is_probe": int(pending["is_probe"]),
@@ -743,6 +776,13 @@ class AdaptiveSessionManager:
                       hint_used: int = 0) -> Dict[str, Any]:
         sess = self.get(session_id)
         inter = sess.record_answer(submitted_answer, response_time_ms, hint_used)
+        if inter.get("retry"):
+            # v3: wrong attempt with tries left; nothing is stored until the question ends
+            self.log({"event": "retry", "session_id": session_id, "student_id": sess.student_id,
+                      "position": inter["position"], "topic": inter["topic"],
+                      "attempts_used": inter["attempts_used"], "hint_used": inter["hint_used"],
+                      "timestamp": datetime.now(timezone.utc).isoformat()})
+            return inter
         self.store(session_id, sess.student_id, inter)
         if self.on_answer is not None:
             try:
@@ -763,6 +803,14 @@ class AdaptiveSessionManager:
             "timestamp": inter["timestamp"],
         })
         return inter
+
+    def request_hint(self, session_id: str) -> Dict[str, Any]:
+        sess = self.get(session_id)
+        out = sess.request_hint()
+        self.log({"event": "hint", "session_id": session_id, "student_id": sess.student_id,
+                  "position": out["position"], "attempts_used": out["attempts_used"],
+                  "timestamp": datetime.now(timezone.utc).isoformat()})
+        return out
 
     def history(self, session_id: str) -> List[Dict[str, Any]]:
         return self.get(session_id).history

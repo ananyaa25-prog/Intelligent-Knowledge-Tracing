@@ -1,0 +1,32 @@
+[
+  {
+    "outcome": "correct, 1 attempt, no hint",
+    "p_next": 0.7707237005233765,
+    "gate_short": 0.49010327458381653
+  },
+  {
+    "outcome": "wrong, 1 attempt, no hint",
+    "p_next": 0.4085906744003296,
+    "gate_short": 0.524155855178833
+  },
+  {
+    "outcome": "wrong, 2 attempts, no hint",
+    "p_next": 0.5787547826766968,
+    "gate_short": 0.5072440505027771
+  },
+  {
+    "outcome": "wrong, 3+ attempts, no hint",
+    "p_next": 0.5292078852653503,
+    "gate_short": 0.5066751837730408
+  },
+  {
+    "outcome": "wrong, hint used, 1 attempt",
+    "p_next": 0.4480505883693695,
+    "gate_short": 0.5147237777709961
+  },
+  {
+    "outcome": "wrong, hint used, 3+ attempts",
+    "p_next": 0.5004895329475403,
+    "gate_short": 0.4852082431316376
+  }
+]

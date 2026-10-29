@@ -201,6 +201,17 @@ app.post('/api/session/:sessionId/answer', async (req, res) => {
   return res.status(result.status).json(result.data);
 });
 
+// v3: strategy hint for the pending question (backend flag HINTS_ENABLED)
+app.post('/api/session/:sessionId/hint', async (req, res) => {
+  const { sessionId } = req.params;
+  if (!sessionId || sessionId.trim() === '') {
+    return res.status(400).json({ error: 'sessionId parameter is required' });
+  }
+  const result = await forwardToPython(`/session/${encodeURIComponent(sessionId)}/hint`, 'POST', {});
+  if (result.error) return res.status(result.status).json(result.error);
+  return res.status(result.status).json(result.data);
+});
+
 app.get('/api/session/:sessionId/history', async (req, res) => {
   const { sessionId } = req.params;
   const result = await forwardToPython(`/session/${encodeURIComponent(sessionId)}/history`, 'GET');

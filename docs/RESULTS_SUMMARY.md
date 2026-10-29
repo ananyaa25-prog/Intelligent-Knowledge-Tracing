@@ -68,3 +68,5 @@ early stopping for every deep model. gkt_plus_elo test AUC: ASSISTments 0.8702 (
 Eedi primary 0.7901 (DKT-GRU 0.7788, Elo 0.7728); Eedi secondary 0.7725 (DKT-GRU 0.7620, Elo 0.7602); Statics2011
 0.8111 (Elo 0.7975), pretrained on ASSISTments 0.8154. "Better" than both DKT classic and Elo on all four datasets
 by the pre-registered rule. The served app model is unchanged.
+
+**Hints and attempts inside the GRUs and the gate (pre-registered, reports/v3/META_PREREG.md; reports/v3/meta_assist.md, ASSISTments, 10 seeds)**: gkt_plus_meta 0.8687 vs gate-only gkt_plus 0.8696 (comparable, -0.0008), no-metadata 0.8683 (comparable), GRU-only 0.8689 (comparable); still better than DKT classic (+0.0074) and DKT-GRU (+0.0076). Hints and attempts do change the model's predictions (seed-0 model: wrong after a hint 0.4481 vs wrong without help 0.4086, mean P(next) after a correct answer 0.7707), but they do not raise test AUC. The app now has a hint button and retries (demo.env: HINTS_ENABLED=true, MAX_ATTEMPTS=2); the served model is unchanged (reports/v3/meta_serving_check.md).

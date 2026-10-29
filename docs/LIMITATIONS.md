@@ -26,3 +26,5 @@
 - **Generator.** Difficulty levels are parameter-based; no teacher has reviewed the items and no student has answered them, so it is unknown whether "hard" items are harder for students or curriculum-appropriate.
 - **Policy simulation.** Synthetic students only; status-accuracy differences were not significant; the uncertainty-aware demo policy falls back to the staircase on 59% of decisions; the Elo level difficulties learned from ASSISTments happen to be close to the simulator's generating values, which favours Elo in simulation.
 - **No pilot.** There is still no real-student or teacher evidence about learning, usability or usefulness.
+
+- Hints and attempts (v3 follow-up): the hint texts are one strategy hint per topic, written for this project and not reviewed by a teacher. Feeding hints and attempts into the GRUs and the gate did not improve test AUC on ASSISTments (reports/v3/meta_assist.md), and only ASSISTments has hint / attempt data. With MAX_ATTEMPTS > 1 the student learns that an answer was wrong, unlike the original no-verdict quiz.

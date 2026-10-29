@@ -56,4 +56,4 @@ gate).
 
 ## Bug fixes after pre-registration
 
-(none yet)
+None. Results: reports/v3/meta_assist.md and reports/v3/meta_serving_check.md.

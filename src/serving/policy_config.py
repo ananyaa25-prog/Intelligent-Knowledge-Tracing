@@ -30,6 +30,15 @@ Environment variables (all optional):
                        the 10 original topics; generated = src/questions/generator.py;
                        mixed = alternate bank / generated). Section sessions always use
                        the generator (they have no bank).
+  HINTS_ENABLED        true|false (v3; default false). Shows a hint button. As in ASSISTments, a
+                       hint asked before the first attempt makes the question count as not
+                       correct on the first try; hint_used is stored and passed to the model.
+  MAX_ATTEMPTS         1-3 (v3; default 1 = one answer per question, no feedback). With 2-3 a wrong
+                       answer may be retried; `correct` stays the FIRST-attempt result and
+                       attempt_count records the number of tries (ASSISTments semantics).
+  SERVING_MODEL        gated_kt | gkt_plus_meta (v3; default gated_kt = the existing checkpoint).
+                       gkt_plus_meta serves models_v3/gkt_plus_meta_assist_seed0.pt, which uses
+                       hints and attempts inside its GRUs and gate (reports/v3/meta_assist.md).
   KT_DB_PATH           optional override of the SQLite DB path
   KT_LOG_PATH          optional override of the JSONL session-log path
 """
@@ -53,6 +62,7 @@ VALID_POLICIES = ("staircase", "model", "random", "elo", "maxinfo", "uncertainty
 VALID_SESSION_MODES = ("full10", "core5")
 VALID_TOPIC_SELECTIONS = ("model", "evidence_blend")
 VALID_QUESTION_SOURCES = ("bank", "generated", "mixed")
+VALID_SERVING_MODELS = ("gated_kt", "gkt_plus_meta")
 
 # Defaults (documented above). Changing them changes the system's behaviour.
 DEFAULT_POLICY = "staircase"           # existing staircase rule
@@ -61,6 +71,9 @@ DEFAULT_APPLY_CALIBRATION = False      # raw model probabilities, as before
 DEFAULT_SESSION_MODE = "full10"        # existing 10-topic session
 DEFAULT_TOPIC_SELECTION = "model"      # existing rule: lowest predicted P
 DEFAULT_QUESTION_SOURCE = "bank"       # existing template bank (v3 flag)
+DEFAULT_HINTS_ENABLED = False          # no hint button (v3 flag)
+DEFAULT_MAX_ATTEMPTS = 1               # one answer per question (v3 flag)
+DEFAULT_SERVING_MODEL = "gated_kt"     # existing checkpoint (v3 flag)
 EVIDENCE_PRIOR_WEIGHT = 2.0            # evidence_blend: model prediction counts like 2 answers
 DEFAULT_CORE_TOPICS = [50, 48, 204, 203, 350]  # fractions, percents, linear systems
 DEFAULT_T_PROF = 0.70                  # "proficient at a level" threshold
@@ -142,6 +155,9 @@ class PolicyConfig:
     monotone_warn: float = DEFAULT_MONOTONE_WARN
     exclude_student_regex: str = DEFAULT_EXCLUDE_STUDENT_REGEX
     question_source: str = DEFAULT_QUESTION_SOURCE
+    hints_enabled: bool = DEFAULT_HINTS_ENABLED
+    max_attempts: int = DEFAULT_MAX_ATTEMPTS
+    serving_model: str = DEFAULT_SERVING_MODEL
     db_path: Optional[str] = None
     log_path: Optional[str] = None
 
@@ -170,6 +186,9 @@ def get_config() -> PolicyConfig:
         monotone_warn=_env_float("MONOTONE_WARN", DEFAULT_MONOTONE_WARN),
         exclude_student_regex=os.environ.get("EXCLUDE_STUDENT_REGEX") or DEFAULT_EXCLUDE_STUDENT_REGEX,
         question_source=_env_str("QUESTION_SOURCE", DEFAULT_QUESTION_SOURCE, VALID_QUESTION_SOURCES),
+        hints_enabled=_env_bool("HINTS_ENABLED", DEFAULT_HINTS_ENABLED),
+        max_attempts=max(1, min(3, _env_int("MAX_ATTEMPTS", DEFAULT_MAX_ATTEMPTS))),
+        serving_model=_env_str("SERVING_MODEL", DEFAULT_SERVING_MODEL, VALID_SERVING_MODELS),
         db_path=os.environ.get("KT_DB_PATH") or None,
         log_path=os.environ.get("KT_LOG_PATH") or None,
     )

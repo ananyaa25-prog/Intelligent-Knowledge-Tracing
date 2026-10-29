@@ -148,3 +148,6 @@ and it is not yet the model the app serves.
 **47. Where does the improvement come from?**
 Mostly from per-question difficulty learned from training data (gkt_plus vs full_gated +0.0060 to +0.0169); the Elo
 blend adds little AUC but improves calibration. The skill graph was removed because it added only +0.0007.
+
+**48. Do hints and attempts matter to your model?**
+They are now real inputs: the app records them, and in GatedKT+ they change both GRU states and the gate. In a pre-registered test this did not raise test AUC over feeding them to the gate only (-0.0008, comparable; reports/v3/meta_assist.md), so we do not claim an improvement. They do change individual predictions, e.g. a wrong answer after a hint lowers the next prediction less than a wrong answer without help.

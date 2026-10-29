@@ -40,6 +40,7 @@ from graph_encoder import adjacency_to_edge_index
 from train import compute_rt_stats
 from serving.session import session_manager
 from serving.calibration import maybe_calibrate
+from serving.policy_config import get_config
 from serving.adaptive_session import (
     AdaptiveSession, AdaptiveSessionManager, MAIN_QUESTIONS, TOPIC_BY_ID, TOPIC_IDS,
 )
@@ -50,6 +51,7 @@ PROJECT_ROOT = SRC_DIR.parent
 WINDOWED_DATA_PATH = PROJECT_ROOT / "data" / "processed" / "windowed_data.pkl"
 SKILL_GRAPH_PATH = PROJECT_ROOT / "data" / "processed" / "skill_graph.pkl"
 MODEL_CHECKPOINT_PATH = PROJECT_ROOT / "data" / "processed" / "best_full_gated.pt"
+GKT_PLUS_META_PATH = PROJECT_ROOT / "models_v3" / "gkt_plus_meta_assist_seed0.pt"   # v3, SERVING_MODEL flag
 SESSION_LOG_PATH = PROJECT_ROOT / "data" / "processed" / "session_logs.jsonl"
 # Optional override (policy_config KT_LOG_PATH), e.g. tests writing to a temp copy.
 if os.environ.get("KT_LOG_PATH"):
@@ -189,6 +191,7 @@ class ModelArtifacts:
         self.rt_std: float = 1.2
         self.num_skills: int = 123
         self.max_seq_len: int = 200
+        self.model_name: str = "gated_kt"
         self.is_loaded: bool = False
 
     def load(self):
@@ -234,6 +237,22 @@ class ModelArtifacts:
             raise FileNotFoundError(
                 f"No model checkpoint found. Checked: {MODEL_CHECKPOINT_PATH}, {FALLBACK_CHECKPOINT_PATH}, {SEED42_CHECKPOINT_PATH}"
             )
+
+        serving = get_config().serving_model
+        if serving == "gkt_plus_meta" and GKT_PLUS_META_PATH.exists():
+            # v3 flag SERVING_MODEL=gkt_plus_meta: hints / attempts inside the GRUs and the gate
+            from baselines.gkt_plus import ServingGKTPlus, _GKTPlusNet
+            state = torch.load(GKT_PLUS_META_PATH, map_location="cpu")
+            net = _GKTPlusNet(self.num_skills, int(state["prob_mu.weight"].shape[0]) - 1, self.rt_mean, self.rt_std,
+                              meta_mode="full")
+            net.load_state_dict(state)
+            self.model = ServingGKTPlus(net)
+            self.model_name = "gkt_plus_meta"
+            self.is_loaded = True
+            print(f"[InferenceService] Serving GatedKT+ meta from {GKT_PLUS_META_PATH}")
+            return
+        if serving == "gkt_plus_meta":
+            print(f"[InferenceService] Warning: {GKT_PLUS_META_PATH} not found; serving the default model.")
 
         print(f"[InferenceService] Loading weights from {ckpt_path}...")
         self.model = GatedKTModel(
@@ -811,7 +830,22 @@ def api_next_question(session_id: str):
         "question_source": q.get("question_source", "bank"),
         "answer_type": q.get("answer_type", "numeric"),
         **({"choices": q["choices"]} if q.get("choices") else {}),
+        "hints_enabled": adaptive_manager.get(session_id).hints_enabled,
+        "max_attempts": adaptive_manager.get(session_id).max_attempts,
     }
+
+
+@app.post("/session/{session_id}/hint")
+def api_request_hint(session_id: str):
+    """v3 (HINTS_ENABLED=true): strategy hint for the pending question."""
+    try:
+        _get_adaptive_session(session_id)
+        out = adaptive_manager.request_hint(session_id)
+    except KeyError:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Session '{session_id}' not found")
+    except ValueError as e:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
+    return {"session_id": session_id, **out}
 
 
 @app.post("/session/{session_id}/answer")
@@ -829,10 +863,22 @@ def api_submit_answer(session_id: str, req: AnswerRequest):
     except ValueError as e:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
 
+    if res.get("retry"):
+        # v3 (MAX_ATTEMPTS > 1): wrong attempt, the same question may be answered again
+        return {"session_id": session_id, "position": res["position"], "correct": 0, "retry": True,
+                "attempt_correct": 0, "attempts_used": res["attempts_used"], "attempts_left": res["attempts_left"],
+                "hint_used": res["hint_used"], "is_complete": False}
+    sess = adaptive_manager.get(session_id)
     return {
         "session_id": session_id,
         "position": res["position"],
         "correct": res["correct"],
+        # v3 additive fields
+        "retry": False,
+        "attempt_correct": res.get("solved", res["correct"]),
+        "attempt_count": res.get("attempt_count", 1),
+        "hint_used": res.get("hint_used", 0),
+        "show_feedback": sess.max_attempts > 1,
         "difficulty_bucket": res["difficulty_bucket"],
         "level": res["level"],
         "is_probe": bool(res["is_probe"]),

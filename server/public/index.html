@@ -311,6 +311,14 @@
           </div>
         </form>
 
+        <!-- v3: hint / retry controls (hints_ui.js; hidden unless HINTS_ENABLED or MAX_ATTEMPTS > 1) -->
+        <div id="hintRow" class="hint-row" style="display: none;">
+          <button type="button" id="hintBtn" class="hint-btn">Show a hint</button>
+          <span id="attemptInfo" class="attempt-info"></span>
+        </div>
+        <div id="retryMsg" class="retry-msg" role="status" style="display: none;"></div>
+        <div id="hintBox" class="hint-box" role="note" style="display: none;"></div>
+
         <div class="timer-indicator">
           <span id="liveTimerText" class="timer-pill">Response time: 0.0s</span>
         </div>
@@ -447,6 +455,7 @@
   <script>window.Chart || document.write('<script src="https://cdn.jsdelivr.net/npm/chart.js"><\/script>');</script>
   <script src="adaptive_ui.js"></script>
   <script src="sections_ui.js"></script>
+  <script src="hints_ui.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

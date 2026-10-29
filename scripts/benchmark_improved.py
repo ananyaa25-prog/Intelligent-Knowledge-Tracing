@@ -25,9 +25,16 @@ bootstrap (--bootstrap resamples). "better than X" only if Holm p < 0.05 AND the
 CI and the bootstrap CI of the difference both exclude 0; "worse than X" likewise;
 otherwise "comparable".
 
+--experiment meta (ASSISTments only, reports/v3/META_PREREG.md): hints and attempts in
+the GRU input and the gate (gkt_plus_meta) vs gate-only (gkt_plus) and the ablations
+gkt_plus_meta_gru / gkt_plus_nometa; gkt_plus, dkt_classic, dkt_gru predictions are
+reused from the cache. Also writes a descriptive sensitivity table for the seed-0 model
+and saves it to models_v3/gkt_plus_meta_assist_seed0.pt (used for serving).
+
 Usage: python scripts/benchmark_improved.py --dataset assist --seeds 20 --epochs 15 --patience 3 --workers 6
-Outputs: reports/v3/improved_<dataset>.md / .csv, cached predictions in
-data/processed_v3/improved_preds/
+       python scripts/benchmark_improved.py --experiment meta --seeds 10
+Outputs: reports/v3/improved_<dataset>.md / .csv (meta: reports/v3/meta_assist.md / .csv),
+cached predictions in data/processed_v3/improved_preds/
 """
 
 from __future__ import annotations
@@ -58,6 +65,11 @@ MODELS_V3 = ROOT / "models_v3"
 DEEP = ["gkt_plus_elo", "full_gated", "dkt_classic", "dkt_gru"]   # gkt_plus_elo also yields gkt_plus
 CLASSICAL = ["elo", "logreg_counts"]
 PRETRAIN_PATH = MODELS_V3 / "gkt_plus_assist_seed0.pt"
+META_PATH = MODELS_V3 / "gkt_plus_meta_assist_seed0.pt"
+META_MODELS = ["gkt_plus_meta", "gkt_plus_meta_gru", "gkt_plus_nometa", "gkt_plus", "dkt_classic", "dkt_gru"]
+META_COMPARE = [("gkt_plus_meta", m) for m in ("gkt_plus", "gkt_plus_nometa", "gkt_plus_meta_gru", "dkt_classic",
+                                                "dkt_gru")] + \
+               [("gkt_plus_meta_gru", "gkt_plus_nometa"), ("gkt_plus", "gkt_plus_nometa")]
 PRIMARY = "gkt_plus_elo"
 COMPARE = [("gkt_plus_elo", m) for m in ("dkt_classic", "elo", "full_gated", "dkt_gru", "logreg_counts", "gkt_plus")] + \
           [("gkt_plus", m) for m in ("dkt_classic", "elo", "full_gated")]
@@ -129,6 +141,9 @@ def _task(t):
         _save(dataset, "gkt_plus", seed, tag, pg, yg, og, time.time() - t0, {"from": "gkt_plus_elo run"})
         if dataset == "assist" and seed == 0:
             m.gkt.save(PRETRAIN_PATH)        # used to pretrain gkt_plus_pt on Statics2011
+    if model == "gkt_plus_meta" and dataset == "assist" and seed == 0:
+        m.save(META_PATH)                    # sensitivity table + optional serving (SERVING_MODEL)
+        np.save(META_PATH.with_suffix(".problems.npy"), np.asarray(m._problem_index))
     _save(dataset, model, seed, tag, p, y, o, time.time() - t0, extra)
     return model
 
@@ -137,11 +152,16 @@ def run(args):
     seeds = list(range(args.seeds))
     tag = f"e{args.epochs}_p{args.patience}"
     models = DEEP + CLASSICAL + (["gkt_plus_pt"] if args.dataset == "statics" else [])
+    if args.experiment == "meta":
+        args.dataset = "assist"
+        models = META_MODELS
     if args.dataset == "statics" and not PRETRAIN_PATH.exists():
         raise SystemExit("run --dataset assist first (it saves the pretrained GatedKT+ for Statics)")
     tasks = [(args.dataset, m, s, args.epochs, args.patience, tag) for s in seeds for m in models
              if not (m in ("logreg_counts",) and s > 0)]
     tasks = [t for t in tasks if not _path(t[0], t[1], t[2], t[5]).exists()]
+    if args.experiment == "meta" and any(t[1] in ("gkt_plus", "dkt_classic", "dkt_gru") for t in tasks):
+        raise SystemExit("meta reuses cached gkt_plus / dkt predictions: run --dataset assist first")
     tasks.sort(key=lambda t: (t[1] not in ("gkt_plus_elo", "full_gated", "gkt_plus_pt"), t[2]))
     print(f"[improved] dataset {args.dataset}; seeds {seeds[0]}..{seeds[-1]}; epochs {args.epochs}, patience "
           f"{args.patience}; tuned {tuned()}; {len(tasks)} tasks to run", flush=True)
@@ -154,12 +174,51 @@ def run(args):
     report(args, seeds, tag, (time.time() - t0) / 60)
 
 
+def sensitivity(n_hist=8, max_students=400):
+    """Descriptive: seed-0 gkt_plus_meta, ASSISTments test histories. The LAST history answer is set to
+    each outcome (everything else unchanged) and the mean P(next correct) on the student's actual next
+    skill and the mean gate value (weight on the short-term state) are recorded."""
+    import torch
+    from baselines.deep import make_deep
+    from baselines.ours import rt_stats_from_split
+    tr, va, te, S, _ = load_dataset("assist")
+    m = make_deep("gkt_plus_meta", S, seed=0, rt_stats=rt_stats_from_split(tr), **tuned())
+    m._problem_index = np.load(META_PATH.with_suffix(".problems.npy"))
+    net = m.build_net()
+    net.load_state_dict(torch.load(META_PATH, map_location="cpu"))
+    net.eval()
+    variants = [("correct, 1 attempt, no hint", 1, 1, 0), ("wrong, 1 attempt, no hint", 0, 1, 0),
+                ("wrong, 2 attempts, no hint", 0, 2, 0), ("wrong, 3+ attempts, no hint", 0, 4, 0),
+                ("wrong, hint used, 1 attempt", 0, 1, 1), ("wrong, hint used, 3+ attempts", 0, 4, 1)]
+    mask = np.asarray(te["mask"]).astype(bool)
+    rows = [i for i in range(mask.shape[0]) if mask[i].sum() > n_hist][:max_students]
+    def col(k, dt):
+        return torch.as_tensor(np.asarray(te[k])[rows, :n_hist + 1]).to(dt)
+    sk, co, rt = col("skill_seq", torch.long), col("correct_seq", torch.long), col("response_time_seq", torch.float)
+    at, hi, di = col("attempt_seq", torch.float), col("hint_seq", torch.float), col("difficulty_seq", torch.long)
+    pr = torch.as_tensor(m.map_problems(torch.as_tensor(np.asarray(te["problem_seq"])[rows, :n_hist + 1])))
+    mk = torch.ones_like(rt)
+    out = []
+    with torch.no_grad():
+        for label, c, a, h in variants:
+            co2, at2, hi2 = co.clone(), at.clone(), hi.clone()
+            co2[:, n_hist - 1], at2[:, n_hist - 1], hi2[:, n_hist - 1] = c, a, h
+            p, g = net(sk, co2, mk, rt, at2, hi2, di, pr, return_gate=True)
+            out.append({"outcome": label, "p_next": float(p[:, n_hist - 1].mean()),
+                        "gate_short": float(g[:, n_hist - 1].mean())})
+    return out, len(rows)
+
+
 def report(args, seeds, tag, minutes):
     from scipy import stats
     from benchmark_deep import _FastAUC, _holm
+    meta = args.experiment == "meta"
+    primary = "gkt_plus_meta" if meta else PRIMARY
     preds = {}
     for f in sorted(PRED.glob(f"{args.dataset}__*__{tag}.npz")):
         _, model, s, _ = f.stem.split("__")
+        if meta and model not in META_MODELS:
+            continue
         z = np.load(f)
         preds.setdefault(model, {})[int(s[1:])] = {"p": z["p"].astype(float), "y": z["y"].astype(int),
                                                    "owner": z["owner"], "extra": json.loads(str(z["extra"]))}
@@ -176,7 +235,7 @@ def report(args, seeds, tag, minutes):
         c = mean_ci([r["auc"] for r in rows if r["model"] == m])
         summ[m] = {"auc": c, "brier": float(np.mean([r["brier"] for r in rows if r["model"] == m])),
                    "ece": float(np.mean([r["ece"] for r in rows if r["model"] == m]))}
-    n_st = int(next(iter(preds[PRIMARY].values()))["owner"].max()) + 1
+    n_st = int(next(iter(preds[primary].values()))["owner"].max()) + 1
     rng = np.random.default_rng(12345)
     fast = {m: [_FastAUC(preds[m][s]["p"], preds[m][s]["y"], preds[m][s]["owner"]) for s in seeds if s in preds[m]]
             for m in preds}
@@ -186,7 +245,8 @@ def report(args, seeds, tag, minutes):
         for m in preds:
             boot[m][b] = np.mean([f(cnt) for f in fast[m]])
     comps = []
-    pairs = list(COMPARE) + ([("gkt_plus_pt", "gkt_plus"), ("gkt_plus_pt", "elo")] if "gkt_plus_pt" in preds else [])
+    pairs = list(META_COMPARE if meta else COMPARE) + \
+        ([("gkt_plus_pt", "gkt_plus"), ("gkt_plus_pt", "elo")] if "gkt_plus_pt" in preds else [])
     for a, bm in pairs:
         if a not in preds or bm not in preds:
             continue
@@ -205,18 +265,20 @@ def report(args, seeds, tag, minutes):
         pos = c["ci_lo"] > 0 and c["boot_lo"] > 0
         neg = c["ci_hi"] < 0 and c["boot_hi"] < 0
         c["verdict"] = ("better" if h < 0.05 and pos else ("worse" if h < 0.05 and neg else "comparable"))
-    with open(OUT / f"improved_{args.dataset}.csv", "w", newline="", encoding="utf-8") as f:
+    stem = "meta_assist" if meta else f"improved_{args.dataset}"
+    with open(OUT / f"{stem}.csv", "w", newline="", encoding="utf-8") as f:
         w = csv.DictWriter(f, fieldnames=["model", "seed", "auc", "acc", "brier", "ece", "n"], extrasaction="ignore")
         w.writeheader()
         for r in sorted(rows, key=lambda r: (r["model"], r["seed"])):
             w.writerow({k: (round(v, 6) if isinstance(v, float) else v) for k, v in r.items()})
-    blends = [preds[PRIMARY][s]["extra"].get("blend") for s in seeds if s in preds[PRIMARY]]
+    blends = [preds[primary][s]["extra"].get("blend") for s in seeds if s in preds[primary]]
     bw = {k: float(np.mean([b[k] for b in blends if b])) for k in ("gkt_plus", "elo", "bias")} if any(blends) else {}
     f4 = lambda v: "n/a" if v is None or v != v else f"{v:.4f}"
-    L = [f"# Improved model benchmark: {args.dataset}", "",
-         f"Generated by `python scripts/benchmark_improved.py --dataset {args.dataset} --seeds {args.seeds} --epochs "
+    cmd = "--experiment meta" if meta else f"--dataset {args.dataset}"
+    L = [f"# {'Hints and attempts in the GRU and the gate: assist' if meta else 'Improved model benchmark: ' + args.dataset}", "",
+         f"Generated by `python scripts/benchmark_improved.py {cmd} --seeds {args.seeds} --epochs "
          f"{args.epochs} --patience {args.patience} --workers {args.workers}` (this run: {minutes:.1f} min of new work). "
-         f"Pre-registration: reports/v3/IMPROVED_PREREG.md. Seeds {seeds[0]}..{seeds[-1]}; test students {n_st}.", "",
+         f"Pre-registration: reports/v3/{'META' if meta else 'IMPROVED'}_PREREG.md. Seeds {seeds[0]}..{seeds[-1]}; test students {n_st}.", "",
          f"Same budget for every deep model: up to {args.epochs} epochs, early stopping (patience {args.patience}) on "
          f"validation AUC. GatedKT+ settings chosen on validation only: {tuned()}. Mean Elo-blend weights (logit scale, "
          f"fitted on validation): {', '.join(f'{k} {v:+.3f}' for k, v in bw.items()) or 'n/a'}.", "",
@@ -234,8 +296,22 @@ def report(args, seeds, tag, minutes):
                  f"[{c['boot_lo']:+.4f}, {c['boot_hi']:+.4f}] | {c['t_p_holm']:.4f} | {c['w_p']:.4f} | **{c['verdict']}** |")
     L += ["", "Verdict rule: 'better' only if the Holm-corrected paired t-test p < 0.05 and both CIs of the difference "
           "exclude 0; 'worse' symmetrically; otherwise 'comparable'. Deterministic logreg_counts is fitted once.", ""]
-    (OUT / f"improved_{args.dataset}.md").write_text("\n".join(L), encoding="utf-8")
-    print(f"[improved] reports/v3/improved_{args.dataset}.md written", flush=True)
+    if meta and META_PATH.exists():
+        sens, n = sensitivity()
+        base = sens[0]
+        L += ["## Sensitivity of the seed-0 gkt_plus_meta model (descriptive, not a test)", "",
+              f"{n} test students, first 9 interactions each. Only the 8th (last history) answer is changed; P(next) "
+              "is the mean predicted P(correct) on the student's actual 9th question; gate = mean weight on the "
+              "short-term state after the changed step.", "",
+              "| Last answer recorded as | Mean P(next correct) | Change vs correct | Mean gate (short-term) |",
+              "|---|---|---|---|"]
+        for r in sens:
+            L.append(f"| {r['outcome']} | {r['p_next']:.4f} | {r['p_next'] - base['p_next']:+.4f} | "
+                     f"{r['gate_short']:.4f} |")
+        L.append("")
+        (OUT / f"{stem}_sensitivity.json").write_text(json.dumps(sens, indent=2), encoding="utf-8")
+    (OUT / f"{stem}.md").write_text("\n".join(L), encoding="utf-8")
+    print(f"[improved] reports/v3/{stem}.md written", flush=True)
 
 
 def main():
@@ -247,7 +323,10 @@ def main():
     ap.add_argument("--workers", type=int, default=6)
     ap.add_argument("--bootstrap", type=int, default=1000)
     ap.add_argument("--report-only", action="store_true")
+    ap.add_argument("--experiment", choices=["improved", "meta"], default="improved")
     args = ap.parse_args()
+    if args.experiment == "meta":
+        args.dataset = "assist"
     if args.report_only:
         report(args, list(range(args.seeds)), f"e{args.epochs}_p{args.patience}", 0.0)
     else:

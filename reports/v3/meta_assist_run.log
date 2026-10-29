@@ -1,0 +1,8 @@
+[improved] dataset assist; seeds 0..9; epochs 15, patience 3; tuned {'dropout': 0.3, 'weight_decay': 1e-05}; 30 tasks to run
+  5/30 done, 18.8 min
+  10/30 done, 36.4 min
+  15/30 done, 52.5 min
+  20/30 done, 70.7 min
+  25/30 done, 85.2 min
+  30/30 done, 86.1 min
+[improved] reports/v3/meta_assist.md written
