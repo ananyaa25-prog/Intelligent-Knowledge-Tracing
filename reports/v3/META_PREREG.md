@@ -45,6 +45,15 @@ A descriptive check (no test, not a claim of correctness) is also reported: for 
 the predicted P(next correct) and the mean gate value change when the last answer of a test history is recorded as
 wrong without help, wrong after 2 / 3 attempts, or wrong with a hint.
 
+## Demo rule (added 2026-10-30, still before any test result of these models)
+
+The app gets the hint button and retries behind HINTS_ENABLED / MAX_ATTEMPTS (defaults off). demo.env sets
+SERVING_MODEL=gkt_plus_meta only if BOTH hold: (1) gkt_plus_meta is not "worse" than gkt_plus in
+reports/v3/meta_assist.md, and (2) the saved seed-0 gkt_plus_meta checkpoint's ASSISTments test AUC is at least the
+test AUC of the currently served checkpoint (data/processed/best_full_gated.pt), both computed by the same script.
+Otherwise demo.env keeps SERVING_MODEL=gated_kt (that model still receives hints and attempts, but only through its
+gate).
+
 ## Bug fixes after pre-registration
 
 (none yet)
