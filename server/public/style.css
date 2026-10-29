@@ -662,3 +662,23 @@ html, body { overflow-x: hidden; }
 .na-table th, .na-table td { text-align: left; padding: 8px; border-bottom: 1px solid var(--border-color); vertical-align: top; }
 .na-table th { color: var(--text-secondary); font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.04em; }
 .na-more { background: var(--grey-100); color: var(--neutral-text); border-color: var(--grey-300); }
+
+/* ---- v3: learner-level sections (sections_ui.js) ---- */
+.section-picker { margin-top: 14px; display: flex; flex-direction: column; gap: 6px; }
+.section-label { font-size: 0.82rem; font-weight: 600; color: var(--text-secondary); }
+.section-select { width: 100%; max-width: 100%; padding: 9px 10px; font-size: 0.9rem; border: 1px solid var(--border-color); border-radius: 8px; background: #fff; color: #0f172a; }
+.section-note { font-size: 0.8rem; color: var(--text-secondary); margin: 0; line-height: 1.45; overflow-wrap: anywhere; }
+.section-note.is-transfer { color: #92400e; }
+.section-badge { display: inline-block; margin-left: 8px; padding: 2px 10px; border-radius: 999px; font-size: 0.74rem; font-weight: 600; border: 1px solid transparent; white-space: normal; }
+.section-badge.is-validated { background: #ecfdf5; color: #065f46; border-color: #a7f3d0; }
+.section-badge.is-transfer { background: #fffbeb; color: #92400e; border-color: #fde68a; }
+.section-results { display: block; margin: 0 0 14px 0; padding: 10px 14px; border-radius: 8px; font-size: 0.86rem; line-height: 1.45; }
+.answer-choices { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.choice-btn { padding: 8px 12px; border: 1px solid var(--border-color); border-radius: 8px; background: #fff; color: #0f172a; font-size: 0.9rem; cursor: pointer; text-align: left; max-width: 100%; overflow-wrap: anywhere; }
+.choice-btn:hover, .choice-btn:focus-visible { border-color: var(--accent-blue); outline: none; }
+.choice-btn.is-selected { border-color: var(--accent-blue); background: #eff6ff; }
+.sections-info-card { margin: 0 0 18px 0; padding: 14px 16px; border: 1px solid var(--border-color); border-radius: 10px; background: #fff; }
+.sections-info-card h3 { font-size: 1rem; margin: 0 0 8px 0; }
+.sections-info-list { list-style: none; padding: 0; margin: 0 0 8px 0; display: flex; flex-direction: column; gap: 6px; font-size: 0.84rem; }
+.sections-info-list .section-badge { margin-left: 0; }
+.section-topics { color: var(--text-secondary); overflow-wrap: anywhere; }

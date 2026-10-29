@@ -169,6 +169,17 @@ async function handleLoginSubmit(e) {
   await startQuizForStudent(currentStudentId);
 }
 
+// v3: adds the learner-level section chosen on the login card, if sections_ui.js
+// is loaded and a section was picked; otherwise the original payload.
+function startPayload(studentId) {
+  const payload = { student_id: studentId, source: 'live' };
+  try {
+    const section = (typeof window.getSelectedSection === 'function') ? window.getSelectedSection() : null;
+    if (section) payload.section = section;
+  } catch (e) { /* optional */ }
+  return payload;
+}
+
 async function startQuizForStudent(studentId) {
   if (timerInterval) clearInterval(timerInterval);
   loginSection.style.display = 'none';
@@ -181,7 +192,7 @@ async function startQuizForStudent(studentId) {
     const res = await fetch('/api/session/start', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ student_id: studentId, source: 'live' })
+      body: JSON.stringify(startPayload(studentId))
     });
 
     if (!res.ok) {
@@ -193,6 +204,10 @@ async function startQuizForStudent(studentId) {
     currentSessionId = data.session_id;
     currentStudentId = data.student_id;
     gktHook('resetSession', currentSessionId);
+    // v3: section label on quiz/results (sections_ui.js, feature-detected)
+    try {
+      if (typeof window.gktSectionStarted === 'function') window.gktSectionStarted(data);
+    } catch (e) { /* optional */ }
 
     activeStudentBadge.textContent = `Student: ${currentStudentId}`;
 
