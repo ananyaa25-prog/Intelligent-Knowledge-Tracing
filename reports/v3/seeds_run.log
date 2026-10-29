@@ -1,0 +1,346 @@
+[seeds] timing one epoch of each model (in parallel, as in the real runs) ...
+  seed 10000: dkt_only (timing) started
+  seed 10002: full_gated (timing) started
+  seed 10004: graph_no_gate (timing) started
+  seed 10001: graph_no_gate (timing) started
+  seed 10003: dkt_only (timing) started
+  seed 10005: full_gated (timing) started
+[seeds] one epoch ~51 s per run; 50 seeds x 3 models at 15 epochs ~6.38 h; chosen {'epochs': 5, 'patience': 3, 'max_students': 0, 'seeds': 50} ~2.12 h
+[seeds] reduction: epochs reduced from 15 to 5, early stopping with patience 3
+[seeds] fixed split: seeds [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49]
+  seed 0: graph_no_gate (fixed) started
+  seed 1: dkt_only (fixed) started
+  seed 0: dkt_only (fixed) started
+  seed 0: full_gated (fixed) started
+  seed 1: graph_no_gate (fixed) started
+  seed 1: full_gated (fixed) started
+  seed 2: dkt_only (fixed) started
+  seed 0: dkt_only test AUC 0.8471 (fixed split 1/150, 3.2 min)
+  seed 2: graph_no_gate (fixed) started
+  seed 1: dkt_only test AUC 0.8457 (fixed split 2/150, 3.2 min)
+  seed 2: full_gated (fixed) started
+  seed 0: graph_no_gate test AUC 0.8461 (fixed split 3/150, 3.2 min)
+  seed 1: graph_no_gate test AUC 0.8452 (fixed split 4/150, 3.2 min)
+  seed 3: dkt_only (fixed) started
+  seed 3: graph_no_gate (fixed) started
+  seed 1: full_gated test AUC 0.8535 (fixed split 5/150, 3.3 min)
+  seed 3: full_gated (fixed) started
+  seed 0: full_gated test AUC 0.8513 (fixed split 6/150, 3.4 min)
+  seed 4: dkt_only (fixed) started
+  seed 2: dkt_only test AUC 0.8488 (fixed split 7/150, 6.2 min)
+  seed 4: graph_no_gate (fixed) started
+  seed 3: dkt_only test AUC 0.8468 (fixed split 8/150, 6.3 min)
+  seed 4: full_gated (fixed) started
+  seed 2: graph_no_gate test AUC 0.8478 (fixed split 9/150, 6.3 min)
+  seed 3: graph_no_gate test AUC 0.8458 (fixed split 10/150, 6.4 min)
+  seed 5: dkt_only (fixed) started
+  seed 5: graph_no_gate (fixed) started
+  seed 2: full_gated test AUC 0.8546 (fixed split 11/150, 6.4 min)
+  seed 5: full_gated (fixed) started
+  seed 3: full_gated test AUC 0.8531 (fixed split 12/150, 6.6 min)
+  seed 6: dkt_only (fixed) started
+  seed 4: dkt_only test AUC 0.8478 (fixed split 13/150, 9.3 min)
+  seed 6: graph_no_gate (fixed) started
+  seed 4: graph_no_gate test AUC 0.8458 (fixed split 14/150, 9.4 min)
+  seed 6: full_gated (fixed) started
+  seed 5: dkt_only test AUC 0.8459 (fixed split 15/150, 9.5 min)
+  seed 7: dkt_only (fixed) started
+  seed 4: full_gated test AUC 0.8546 (fixed split 16/150, 9.5 min)
+  seed 7: graph_no_gate (fixed) started
+  seed 5: graph_no_gate test AUC 0.8457 (fixed split 17/150, 9.5 min)
+  seed 7: full_gated (fixed) started
+  seed 5: full_gated test AUC 0.8548 (fixed split 18/150, 9.8 min)
+  seed 8: dkt_only (fixed) started
+  seed 6: dkt_only test AUC 0.8440 (fixed split 19/150, 12.3 min)
+  seed 8: graph_no_gate (fixed) started
+  seed 6: graph_no_gate test AUC 0.8459 (fixed split 20/150, 12.5 min)
+  seed 7: dkt_only test AUC 0.8468 (fixed split 21/150, 12.6 min)
+  seed 8: full_gated (fixed) started
+  seed 9: dkt_only (fixed) started
+  seed 7: graph_no_gate test AUC 0.8459 (fixed split 22/150, 12.6 min)
+  seed 6: full_gated test AUC 0.8525 (fixed split 23/150, 12.7 min)
+  seed 9: graph_no_gate (fixed) started
+  seed 9: full_gated (fixed) started
+  seed 7: full_gated test AUC 0.8542 (fixed split 24/150, 12.9 min)
+  seed 8: dkt_only test AUC 0.8454 (fixed split 25/150, 15.4 min)
+  seed 10: dkt_only (fixed) started
+  seed 10: graph_no_gate (fixed) started
+  seed 8: graph_no_gate test AUC 0.8428 (fixed split 26/150, 15.5 min)
+  seed 10: full_gated (fixed) started
+  seed 9: dkt_only test AUC 0.8445 (fixed split 27/150, 15.7 min)
+  seed 9: graph_no_gate test AUC 0.8448 (fixed split 28/150, 15.7 min)
+  seed 11: dkt_only (fixed) started
+  seed 8: full_gated test AUC 0.8505 (fixed split 29/150, 15.8 min)
+  seed 11: graph_no_gate (fixed) started
+  seed 11: full_gated (fixed) started
+  seed 9: full_gated test AUC 0.8541 (fixed split 30/150, 16.1 min)
+  seed 10: dkt_only test AUC 0.8438 (fixed split 31/150, 18.4 min)
+  seed 12: dkt_only (fixed) started
+  seed 12: graph_no_gate (fixed) started
+  seed 10: graph_no_gate test AUC 0.8421 (fixed split 32/150, 18.6 min)
+  seed 12: full_gated (fixed) started
+  seed 11: dkt_only test AUC 0.8493 (fixed split 33/150, 18.7 min)
+  seed 13: dkt_only (fixed) started
+  seed 11: graph_no_gate test AUC 0.8478 (fixed split 34/150, 18.8 min)
+  seed 13: graph_no_gate (fixed) started
+  seed 10: full_gated test AUC 0.8503 (fixed split 35/150, 18.8 min)
+  seed 11: full_gated test AUC 0.8557 (fixed split 36/150, 19.3 min)
+  seed 13: full_gated (fixed) started
+  seed 14: dkt_only (fixed) started
+  seed 12: dkt_only test AUC 0.8487 (fixed split 37/150, 21.5 min)
+  seed 12: graph_no_gate test AUC 0.8451 (fixed split 38/150, 21.7 min)
+  seed 14: graph_no_gate (fixed) started
+  seed 14: full_gated (fixed) started
+  seed 13: dkt_only test AUC 0.8488 (fixed split 39/150, 21.9 min)
+  seed 12: full_gated test AUC 0.8522 (fixed split 40/150, 21.9 min)
+  seed 15: dkt_only (fixed) started
+  seed 15: graph_no_gate (fixed) started
+  seed 13: graph_no_gate test AUC 0.8486 (fixed split 41/150, 22.0 min)
+  seed 15: full_gated (fixed) started
+  seed 13: full_gated test AUC 0.8554 (fixed split 42/150, 22.6 min)
+  seed 16: dkt_only (fixed) started
+  seed 14: dkt_only test AUC 0.8439 (fixed split 43/150, 24.5 min)
+  seed 16: graph_no_gate (fixed) started
+  seed 14: graph_no_gate test AUC 0.8438 (fixed split 44/150, 24.9 min)
+  seed 16: full_gated (fixed) started
+  seed 15: dkt_only test AUC 0.8478 (fixed split 45/150, 25.0 min)
+  seed 15: graph_no_gate test AUC 0.8459 (fixed split 46/150, 25.1 min)
+  seed 17: dkt_only (fixed) started
+  seed 17: graph_no_gate (fixed) started
+  seed 14: full_gated test AUC 0.8514 (fixed split 47/150, 25.1 min)
+  seed 17: full_gated (fixed) started
+  seed 15: full_gated test AUC 0.8552 (fixed split 48/150, 25.8 min)
+  seed 18: dkt_only (fixed) started
+  seed 16: dkt_only test AUC 0.8465 (fixed split 49/150, 27.6 min)
+  seed 18: graph_no_gate (fixed) started
+  seed 16: graph_no_gate test AUC 0.8447 (fixed split 50/150, 27.9 min)
+  seed 18: full_gated (fixed) started
+  seed 17: dkt_only test AUC 0.8496 (fixed split 51/150, 28.1 min)
+  seed 19: dkt_only (fixed) started
+  seed 17: graph_no_gate test AUC 0.8501 (fixed split 52/150, 28.2 min)
+  seed 19: graph_no_gate (fixed) started
+  seed 16: full_gated test AUC 0.8509 (fixed split 53/150, 28.2 min)
+  seed 19: full_gated (fixed) started
+  seed 17: full_gated test AUC 0.8559 (fixed split 54/150, 29.0 min)
+  seed 20: dkt_only (fixed) started
+  seed 18: dkt_only test AUC 0.8470 (fixed split 55/150, 30.6 min)
+  seed 20: graph_no_gate (fixed) started
+  seed 18: graph_no_gate test AUC 0.8427 (fixed split 56/150, 31.0 min)
+  seed 20: full_gated (fixed) started
+  seed 19: dkt_only test AUC 0.8490 (fixed split 57/150, 31.2 min)
+  seed 21: dkt_only (fixed) started
+  seed 19: graph_no_gate test AUC 0.8480 (fixed split 58/150, 31.3 min)
+  seed 18: full_gated test AUC 0.8515 (fixed split 59/150, 31.3 min)
+  seed 21: graph_no_gate (fixed) started
+  seed 21: full_gated (fixed) started
+  seed 19: full_gated test AUC 0.8539 (fixed split 60/150, 32.1 min)
+  seed 22: dkt_only (fixed) started
+  seed 20: dkt_only test AUC 0.8441 (fixed split 61/150, 33.6 min)
+  seed 22: graph_no_gate (fixed) started
+  seed 20: graph_no_gate test AUC 0.8463 (fixed split 62/150, 34.1 min)
+  seed 22: full_gated (fixed) started
+  seed 21: dkt_only test AUC 0.8468 (fixed split 63/150, 34.3 min)
+  seed 23: dkt_only (fixed) started
+  seed 20: full_gated test AUC 0.8546 (fixed split 64/150, 34.4 min)
+  seed 21: graph_no_gate test AUC 0.8470 (fixed split 65/150, 34.4 min)
+  seed 23: graph_no_gate (fixed) started
+  seed 21: full_gated test AUC 0.8534 (fixed split 66/150, 35.3 min)
+  seed 23: full_gated (fixed) started
+  seed 24: dkt_only (fixed) started
+  seed 22: dkt_only test AUC 0.8455 (fixed split 67/150, 36.7 min)
+  seed 24: graph_no_gate (fixed) started
+  seed 22: graph_no_gate test AUC 0.8444 (fixed split 68/150, 37.1 min)
+  seed 24: full_gated (fixed) started
+  seed 23: dkt_only test AUC 0.8473 (fixed split 69/150, 37.4 min)
+  seed 25: dkt_only (fixed) started
+  seed 23: graph_no_gate test AUC 0.8452 (fixed split 70/150, 37.5 min)
+  seed 25: graph_no_gate (fixed) started
+  seed 22: full_gated test AUC 0.8531 (fixed split 71/150, 37.5 min)
+  seed 23: full_gated test AUC 0.8529 (fixed split 72/150, 38.5 min)
+  seed 25: full_gated (fixed) started
+  seed 26: dkt_only (fixed) started
+  seed 24: dkt_only test AUC 0.8496 (fixed split 73/150, 39.7 min)
+  seed 26: graph_no_gate (fixed) started
+  seed 24: graph_no_gate test AUC 0.8475 (fixed split 74/150, 40.2 min)
+  seed 26: full_gated (fixed) started
+  seed 25: dkt_only test AUC 0.8478 (fixed split 75/150, 40.5 min)
+  seed 27: dkt_only (fixed) started
+  seed 25: graph_no_gate test AUC 0.8427 (fixed split 76/150, 40.6 min)
+  seed 24: full_gated test AUC 0.8542 (fixed split 77/150, 40.6 min)
+  seed 27: graph_no_gate (fixed) started
+  seed 27: full_gated (fixed) started
+  seed 25: full_gated test AUC 0.8530 (fixed split 78/150, 41.7 min)
+  seed 28: dkt_only (fixed) started
+  seed 26: dkt_only test AUC 0.8481 (fixed split 79/150, 42.7 min)
+  seed 28: graph_no_gate (fixed) started
+  seed 26: graph_no_gate test AUC 0.8449 (fixed split 80/150, 43.3 min)
+  seed 28: full_gated (fixed) started
+  seed 27: dkt_only test AUC 0.8468 (fixed split 81/150, 43.5 min)
+  seed 27: graph_no_gate test AUC 0.8458 (fixed split 82/150, 43.7 min)
+  seed 29: dkt_only (fixed) started
+  seed 29: graph_no_gate (fixed) started
+  seed 26: full_gated test AUC 0.8520 (fixed split 83/150, 43.7 min)
+  seed 29: full_gated (fixed) started
+  seed 27: full_gated test AUC 0.8542 (fixed split 84/150, 44.9 min)
+  seed 30: dkt_only (fixed) started
+  seed 28: dkt_only test AUC 0.8470 (fixed split 85/150, 45.8 min)
+  seed 30: graph_no_gate (fixed) started
+  seed 28: graph_no_gate test AUC 0.8462 (fixed split 86/150, 46.3 min)
+  seed 30: full_gated (fixed) started
+  seed 29: dkt_only test AUC 0.8455 (fixed split 87/150, 46.7 min)
+  seed 31: dkt_only (fixed) started
+  seed 28: full_gated test AUC 0.8505 (fixed split 88/150, 46.7 min)
+  seed 29: graph_no_gate test AUC 0.8458 (fixed split 89/150, 46.8 min)
+  seed 31: graph_no_gate (fixed) started
+  seed 31: full_gated (fixed) started
+  seed 29: full_gated test AUC 0.8538 (fixed split 90/150, 48.1 min)
+  seed 32: dkt_only (fixed) started
+  seed 30: dkt_only test AUC 0.8465 (fixed split 91/150, 48.8 min)
+  seed 32: graph_no_gate (fixed) started
+  seed 30: graph_no_gate test AUC 0.8448 (fixed split 92/150, 49.4 min)
+  seed 32: full_gated (fixed) started
+  seed 31: dkt_only test AUC 0.8475 (fixed split 93/150, 49.7 min)
+  seed 33: dkt_only (fixed) started
+  seed 31: graph_no_gate test AUC 0.8463 (fixed split 94/150, 49.8 min)
+  seed 33: graph_no_gate (fixed) started
+  seed 30: full_gated test AUC 0.8528 (fixed split 95/150, 49.9 min)
+  seed 31: full_gated test AUC 0.8508 (fixed split 96/150, 51.3 min)
+  seed 33: full_gated (fixed) started
+  seed 34: dkt_only (fixed) started
+  seed 32: dkt_only test AUC 0.8479 (fixed split 97/150, 51.8 min)
+  seed 34: graph_no_gate (fixed) started
+  seed 32: graph_no_gate test AUC 0.8491 (fixed split 98/150, 52.5 min)
+  seed 34: full_gated (fixed) started
+  seed 33: dkt_only test AUC 0.8472 (fixed split 99/150, 52.9 min)
+  seed 35: dkt_only (fixed) started
+  seed 32: full_gated test AUC 0.8551 (fixed split 100/150, 52.9 min)
+  seed 35: graph_no_gate (fixed) started
+  seed 33: graph_no_gate test AUC 0.8475 (fixed split 101/150, 53.0 min)
+  seed 35: full_gated (fixed) started
+  seed 33: full_gated test AUC 0.8525 (fixed split 102/150, 54.5 min)
+  seed 36: dkt_only (fixed) started
+  seed 34: dkt_only test AUC 0.8472 (fixed split 103/150, 54.9 min)
+  seed 36: graph_no_gate (fixed) started
+  seed 34: graph_no_gate test AUC 0.8471 (fixed split 104/150, 55.6 min)
+  seed 36: full_gated (fixed) started
+  seed 35: dkt_only test AUC 0.8496 (fixed split 105/150, 55.9 min)
+  seed 37: dkt_only (fixed) started
+  seed 35: graph_no_gate test AUC 0.8478 (fixed split 106/150, 56.1 min)
+  seed 37: graph_no_gate (fixed) started
+  seed 34: full_gated test AUC 0.8537 (fixed split 107/150, 56.1 min)
+  seed 37: full_gated (fixed) started
+  seed 35: full_gated test AUC 0.8551 (fixed split 108/150, 57.7 min)
+  seed 38: dkt_only (fixed) started
+  seed 36: dkt_only test AUC 0.8467 (fixed split 109/150, 57.9 min)
+  seed 38: graph_no_gate (fixed) started
+  seed 36: graph_no_gate test AUC 0.8445 (fixed split 110/150, 58.7 min)
+  seed 38: full_gated (fixed) started
+  seed 37: dkt_only test AUC 0.8439 (fixed split 111/150, 59.1 min)
+  seed 39: dkt_only (fixed) started
+  seed 37: graph_no_gate test AUC 0.8437 (fixed split 112/150, 59.2 min)
+  seed 39: graph_no_gate (fixed) started
+  seed 36: full_gated test AUC 0.8529 (fixed split 113/150, 59.2 min)
+  seed 39: full_gated (fixed) started
+  seed 37: full_gated test AUC 0.8507 (fixed split 114/150, 60.9 min)
+  seed 40: dkt_only (fixed) started
+  seed 38: dkt_only test AUC 0.8474 (fixed split 115/150, 60.9 min)
+  seed 40: graph_no_gate (fixed) started
+  seed 38: graph_no_gate test AUC 0.8438 (fixed split 116/150, 61.8 min)
+  seed 40: full_gated (fixed) started
+  seed 39: dkt_only test AUC 0.8487 (fixed split 117/150, 62.2 min)
+  seed 41: dkt_only (fixed) started
+  seed 39: graph_no_gate test AUC 0.8477 (fixed split 118/150, 62.2 min)
+  seed 38: full_gated test AUC 0.8527 (fixed split 119/150, 62.3 min)
+  seed 41: graph_no_gate (fixed) started
+  seed 41: full_gated (fixed) started
+  seed 40: dkt_only test AUC 0.8471 (fixed split 120/150, 64.0 min)
+  seed 42: dkt_only (fixed) started
+  seed 39: full_gated test AUC 0.8531 (fixed split 121/150, 64.1 min)
+  seed 42: graph_no_gate (fixed) started
+  seed 40: graph_no_gate test AUC 0.8456 (fixed split 122/150, 64.8 min)
+  seed 42: full_gated (fixed) started
+  seed 41: dkt_only test AUC 0.8458 (fixed split 123/150, 65.3 min)
+  seed 43: dkt_only (fixed) started
+  seed 41: graph_no_gate test AUC 0.8456 (fixed split 124/150, 65.4 min)
+  seed 43: graph_no_gate (fixed) started
+  seed 40: full_gated test AUC 0.8534 (fixed split 125/150, 65.4 min)
+  seed 43: full_gated (fixed) started
+  seed 42: dkt_only test AUC 0.8513 (fixed split 126/150, 67.1 min)
+  seed 44: dkt_only (fixed) started
+  seed 41: full_gated test AUC 0.8522 (fixed split 127/150, 67.2 min)
+  seed 44: graph_no_gate (fixed) started
+  seed 42: graph_no_gate test AUC 0.8460 (fixed split 128/150, 67.9 min)
+  seed 44: full_gated (fixed) started
+  seed 43: dkt_only test AUC 0.8471 (fixed split 129/150, 68.4 min)
+  seed 45: dkt_only (fixed) started
+  seed 42: full_gated test AUC 0.8536 (fixed split 130/150, 68.5 min)
+  seed 45: graph_no_gate (fixed) started
+  seed 43: graph_no_gate test AUC 0.8463 (fixed split 131/150, 68.5 min)
+  seed 44: dkt_only test AUC 0.8430 (fixed split 132/150, 70.3 min)
+  seed 45: full_gated (fixed) started
+  seed 46: dkt_only (fixed) started
+  seed 43: full_gated test AUC 0.8539 (fixed split 133/150, 70.3 min)
+  seed 46: graph_no_gate (fixed) started
+  seed 44: graph_no_gate test AUC 0.8450 (fixed split 134/150, 71.0 min)
+  seed 46: full_gated (fixed) started
+  seed 45: dkt_only test AUC 0.8467 (fixed split 135/150, 71.5 min)
+  seed 47: dkt_only (fixed) started
+  seed 45: graph_no_gate test AUC 0.8450 (fixed split 136/150, 71.6 min)
+  seed 47: graph_no_gate (fixed) started
+  seed 44: full_gated test AUC 0.8519 (fixed split 137/150, 71.7 min)
+  seed 47: full_gated (fixed) started
+  seed 46: dkt_only test AUC 0.8442 (fixed split 138/150, 73.4 min)
+  seed 48: dkt_only (fixed) started
+  seed 45: full_gated test AUC 0.8535 (fixed split 139/150, 73.5 min)
+  seed 48: graph_no_gate (fixed) started
+  seed 46: graph_no_gate test AUC 0.8444 (fixed split 140/150, 74.1 min)
+  seed 48: full_gated (fixed) started
+  seed 47: dkt_only test AUC 0.8486 (fixed split 141/150, 74.6 min)
+  seed 49: dkt_only (fixed) started
+  seed 46: full_gated test AUC 0.8524 (fixed split 142/150, 74.7 min)
+  seed 49: graph_no_gate (fixed) started
+  seed 47: graph_no_gate test AUC 0.8475 (fixed split 143/150, 74.7 min)
+  seed 49: full_gated (fixed) started
+  seed 48: dkt_only test AUC 0.8477 (fixed split 144/150, 76.5 min)
+  seed 47: full_gated test AUC 0.8534 (fixed split 145/150, 76.6 min)
+  seed 48: graph_no_gate test AUC 0.8475 (fixed split 146/150, 77.1 min)
+  seed 49: dkt_only test AUC 0.8473 (fixed split 147/150, 77.6 min)
+  seed 49: graph_no_gate test AUC 0.8469 (fixed split 148/150, 77.7 min)
+  seed 48: full_gated test AUC 0.8549 (fixed split 149/150, 77.7 min)
+  seed 49: full_gated test AUC 0.8535 (fixed split 150/150, 79.0 min)
+[seeds] student re-split: seeds [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+  seed 1: dkt_only (resplit) started
+  seed 0: dkt_only (resplit) started
+  seed 0: full_gated (resplit) started
+  seed 0: graph_no_gate (resplit) started
+  seed 1: full_gated (resplit) started
+  seed 1: graph_no_gate (resplit) started
+multiprocessing.pool.RemoteTraceback: 
+"""
+Traceback (most recent call last):
+  File "C:\Users\SANCHIT\AppData\Local\Programs\Python\Python311\Lib\multiprocessing\pool.py", line 125, in worker
+    result = (True, func(*args, **kwds))
+                    ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\SANCHIT\Downloads\aiproj\aiproj\scripts\run_seeds.py", line 121, in _task
+    graph = graph_from_train(tr, d["num_skills"]) if model != "dkt_only" else None
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\SANCHIT\Downloads\aiproj\aiproj\src\data\adapters\common.py", line 122, in graph_from_train
+    win[i, :len(s["window_id_seq"])] = s["window_id_seq"]
+                                       ~^^^^^^^^^^^^^^^^^
+KeyError: 'window_id_seq'
+"""
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\SANCHIT\Downloads\aiproj\aiproj\scripts\run_seeds.py", line 423, in <module>
+    main()
+  File "C:\Users\SANCHIT\Downloads\aiproj\aiproj\scripts\run_seeds.py", line 419, in main
+    run(args)
+  File "C:\Users\SANCHIT\Downloads\aiproj\aiproj\scripts\run_seeds.py", line 237, in run
+    _run_pool(tasks, args.workers, "re-split")
+  File "C:\Users\SANCHIT\Downloads\aiproj\aiproj\scripts\run_seeds.py", line 151, in _run_pool
+    for i, r in enumerate(pool.imap_unordered(_task, tasks)):
+  File "C:\Users\SANCHIT\AppData\Local\Programs\Python\Python311\Lib\multiprocessing\pool.py", line 873, in next
+    raise value
+KeyError: 'window_id_seq'

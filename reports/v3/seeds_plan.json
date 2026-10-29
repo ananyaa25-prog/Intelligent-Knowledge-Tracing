@@ -1,0 +1,22 @@
+{
+  "per_epoch_seconds": 51.0,
+  "timing_wall_seconds": 56.8,
+  "budget_hours": 3.5,
+  "workers": 6,
+  "requested": {
+    "epochs": 15,
+    "max_students": 0,
+    "seeds": 50
+  },
+  "chosen": {
+    "epochs": 5,
+    "patience": 3,
+    "max_students": 0,
+    "seeds": 50
+  },
+  "estimate_hours": 2.12,
+  "estimate_full_hours": 6.38,
+  "reductions": [
+    "epochs reduced from 15 to 5, early stopping with patience 3"
+  ]
+}
