@@ -1,0 +1,6 @@
+[seed] 2026
+[InferenceService] Pre-loading model artifacts...
+[InferenceService] Computed RT stats: mean=9.978, std=1.550
+[InferenceService] Loading weights from C:\Users\SANCHIT\Downloads\aiproj\aiproj\data\processed\best_full_gated.pt...
+[InferenceService] Model successfully loaded (123 skills, max_seq_len=500)
+[simulate_v3] random: in-band 0.345, status 0.513; staircase: in-band 0.432, status 0.483; elo: in-band 0.515, status 0.495; maxinfo: in-band 0.464, status 0.498; model: in-band 0.503, status 0.473; uncertainty: in-band 0.459, status 0.504

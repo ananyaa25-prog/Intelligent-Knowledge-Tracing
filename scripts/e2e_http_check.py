@@ -56,9 +56,16 @@ class Check:
 
 
 def play(base, chk, student, expect, rng):
-    st, d = http_json("POST", f"{base}/api/session/start", {"student_id": student, "source": "live"})
+    body = {"student_id": student, "source": "live"}
+    if expect.get("section"):
+        body["section"] = expect["section"]          # v3 section session
+    st, d = http_json("POST", f"{base}/api/session/start", body)
     chk("session start 200", st == 200, st)
     sid = d["session_id"]
+    if "section" in expect:
+        chk("v3: start echoes section", d.get("section") == expect["section"], d.get("section"))
+        chk("v3: start carries validation label", d.get("validation") in (
+            "validated on real data", "transfer mode: not validated on real data"), d.get("validation"))
     served = []
     for _ in range(40):
         st, q = http_json("POST", f"{base}/api/session/{sid}/next", {})
@@ -74,8 +81,17 @@ def play(base, chk, student, expect, rng):
         chk("A: decision keys", DECISION_KEYS <= set((q.get("decision") or {}).keys()), q.get("decision"))
         chk("A: decision.chosen_level == level", (q.get("decision") or {}).get("chosen_level") == q["level"])
         chk("A: no verdict/answer key in question", not ({"correct", "correct_answer", "is_correct"} & set(q.keys())))
-        if not q["is_probe"] and q["position"] > 2:
+        if not q["is_probe"] and q["position"] > 2 and expect.get("predicts", True):
             chk("A: predicted_p before every non-probe question (after warm-up)", q["predicted_p"] is not None, q["position"])
+        if not expect.get("predicts", True):
+            chk("v3: transfer mode shows no prediction", q["predicted_p"] is None, q["position"])
+        if "section" in expect or expect.get("question_source"):
+            chk("v3: answer_type present", q.get("answer_type") in ("numeric", "fraction", "mc"), q.get("answer_type"))
+            if q.get("answer_type") == "mc":
+                chk("v3: mc question carries choices", isinstance(q.get("choices"), list) and len(q["choices"]) >= 2)
+        if expect.get("section"):
+            chk("v3: section question is generated", q.get("question_source") == "generated", q.get("question_source"))
+            chk("v3: /next carries section label", q.get("section") == expect["section"] and "validation" in q)
         served.append(q)
         ans = rng.choice(["1", "2", "5", "10", "0.5"])
         st, a = http_json("POST", f"{base}/api/session/{sid}/answer",
@@ -89,11 +105,17 @@ def play(base, chk, student, expect, rng):
         chk("core5: total_questions == 16", all(q["total_questions"] == 16 for q in served), {q["total_questions"] for q in served})
         chk("core5: 16 questions served", len(served) == 16, len(served))
     else:
-        chk("full10: >= 15 questions", len(served) >= 15, len(served))
+        n_min = expect.get("min_questions", 15)
+        chk(f"full10: >= {n_min} questions", len(served) >= n_min, len(served))
+    if expect.get("question_source") == "mixed":
+        srcs = [q.get("question_source", "bank") for q in served]
+        chk("v3: mixed serves bank and generated items", "bank" in srcs and "generated" in srcs, srcs)
+    chk("v3: no repeated question text", len({q["question_text"] for q in served}) == len(served))
     return sid, served
 
 
 def run_config(name, env_extra, expect):
+    expect = dict(expect)
     chk = Check()
     tmp = Path(tempfile.mkdtemp(prefix=f"kt_e2e_{name}_"))
     log = tmp / "logs.jsonl"
@@ -115,7 +137,8 @@ def run_config(name, env_extra, expect):
             chk("B: thresholds keys", set(p.get("thresholds", {}).keys()) == {"T_PROF", "T_READY", "MIN_ANSWERS"})
             chk("B: topic keys", all(TOPIC_KEYS <= set(t.keys()) for t in p.get("topics", [])))
             chk("B: unasked measured=false", all(u.get("measured") is False for u in p.get("unasked", [])))
-            chk("B: 10 topics covered", len(p.get("topics", [])) + len(p.get("unasked", [])) == 10)
+            n_top = expect.get("n_topics", 10)
+            chk(f"B: {n_top} topics covered", len(p.get("topics", [])) + len(p.get("unasked", [])) == n_top)
             summary["profile_reliable"] = p.get("profile_reliable")
             summary["statuses"] = {t["skill_name"]: t["status"] for t in p.get("topics", [])}
             st, p2 = http_json("GET", f"{base}/api/student/{student}/profile")
@@ -147,7 +170,9 @@ def run_config(name, env_extra, expect):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--only", default="staircase,candidate,demo")
+    ap.add_argument("--out-dir", default=None, help="v3: write the report here (default reports/)")
     args = ap.parse_args()
+    out_dir = Path(args.out_dir) if args.out_dir else REPORTS_DIR
     wanted = args.only.split(",")
     configs = []
     if "staircase" in wanted:
@@ -158,11 +183,31 @@ def main():
     demo_env = PROJECT_ROOT / "demo.env"
     if "demo" in wanted and demo_env.exists():
         d = load_env_file(demo_env)
+        d = {k: v for k, v in d.items() if k in ("POLICY", "APPLY_CALIBRATION", "SESSION_MODE", "TARGET_P", "TOPIC_SELECTION",
+                                                 "QUESTION_SOURCE")}
+        configs.append(("demo", d, {"policy": d.get("POLICY", "staircase"), "mode": d.get("SESSION_MODE", "full10"),
+                                    **({"question_source": d["QUESTION_SOURCE"]} if d.get("QUESTION_SOURCE") else {})}))
+    # v3 configurations (only when asked for): QUESTION_SOURCE=mixed and section sessions
+    if "mixed" in wanted:
+        configs.append(("mixed", {"QUESTION_SOURCE": "mixed"},
+                        {"policy": "staircase", "mode": "full10", "question_source": "mixed"}))
+    if "demo_mixed" in wanted and demo_env.exists():
+        d = load_env_file(demo_env)
         d = {k: v for k, v in d.items() if k in ("POLICY", "APPLY_CALIBRATION", "SESSION_MODE", "TARGET_P", "TOPIC_SELECTION")}
-        configs.append(("demo", d, {"policy": d.get("POLICY", "staircase"), "mode": d.get("SESSION_MODE", "full10")}))
+        d["QUESTION_SOURCE"] = "mixed"
+        configs.append(("demo_mixed", d, {"policy": d.get("POLICY", "staircase"), "mode": d.get("SESSION_MODE", "full10"),
+                                          "question_source": "mixed"}))
+    from serving.sections import SECTIONS
+    for sec in ("primary", "secondary", "undergraduate"):
+        if f"section_{sec}" in wanted:
+            n = len(SECTIONS[sec]["topics"])
+            configs.append((f"section_{sec}", {}, {"policy": "staircase", "mode": "full10", "section": sec, "n_topics": n,
+                                                  "predicts": SECTIONS[sec]["serving"] == "model",
+                                                  "min_questions": min(15, 3 * n)}))
     results = [run_config(*c) for c in configs]
     REPORTS_DIR.mkdir(exist_ok=True)
-    (REPORTS_DIR / "e2e_http_check.json").write_text(json.dumps(results, indent=2), encoding="utf-8")
+    out_dir.mkdir(parents=True, exist_ok=True)
+    (out_dir / "e2e_http_check.json").write_text(json.dumps(results, indent=2), encoding="utf-8")
     L = ["# End-to-end HTTP check", "",
          f"Generated {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC')} by `scripts/e2e_http_check.py`: real FastAPI + Node proxy "
          "on free ports, temporary DB copy and log, one scripted session per configuration through `/api/*`.", "",
@@ -177,7 +222,7 @@ def main():
           "shows it during the quiz (SHOW_VERDICT=false).", ""]
     for r in results:
         L.append(f"- {r['config']}: example decision reason: \"{r.get('example_reason', '')}\"")
-    (REPORTS_DIR / "e2e_http_check.md").write_text("\n".join(L) + "\n", encoding="utf-8")
+    (out_dir / "e2e_http_check.md").write_text("\n".join(L) + "\n", encoding="utf-8")
     print("\n".join(L))
     return 0 if all(r["passed"] for r in results) else 1
 

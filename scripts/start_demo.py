@@ -38,7 +38,7 @@ def main():
     ap.add_argument("--node-port", type=int, default=3000)
     args = ap.parse_args()
     env = {} if args.defaults else load_env_file(args.env_file)
-    print("Configuration:", env or "defaults (staircase, full10, no calibration)")
+    print("Configuration:", env or "defaults (staircase, full10, no calibration, question bank)")
     svc = Services(env, py_port=args.py_port, node_port=args.node_port, quiet=False)
     try:
         svc.start()
@@ -51,6 +51,9 @@ def main():
     print(f"  Teacher dashboard   : {base}/dashboard.html")
     print(f"  Model internals     : {base}/model-internals.html")
     print(f"  FastAPI docs        : http://127.0.0.1:{args.py_port}/docs")
+    print("  Learner level       : pick Primary / Secondary / Undergraduate on the login card")
+    print("                        (default = original 10 topics; labels show validated / transfer mode)")
+    print(f"  Question source     : {env.get('QUESTION_SOURCE', 'bank')} (sections always use the generator)")
     print("=" * 60)
     print("Press Ctrl+C to stop.")
     try:

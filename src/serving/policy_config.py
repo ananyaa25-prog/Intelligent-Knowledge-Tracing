@@ -11,6 +11,7 @@ called, so tests and scripts can change them without re-importing modules.
 
 Environment variables (all optional):
   POLICY               staircase | model | random   (difficulty rule; default staircase)
+                       v3 adds elo | maxinfo | uncertainty (src/serving/policies_v3.py)
   TARGET_P             float, target P(correct) for POLICY=model (default 0.70)
   APPLY_CALIBRATION    true|false, apply temperature scaling in the predictor (default false)
   SESSION_MODE         full10 | core5 (default full10)
@@ -48,7 +49,7 @@ PROFILE_RELIABILITY_PATH = PROCESSED_DIR / "profile_reliability.json"
 # Output of scripts/fit_calibration.py; read by the predictor when enabled.
 CALIBRATION_PATH = PROCESSED_DIR / "calibration.json"
 
-VALID_POLICIES = ("staircase", "model", "random")
+VALID_POLICIES = ("staircase", "model", "random", "elo", "maxinfo", "uncertainty")
 VALID_SESSION_MODES = ("full10", "core5")
 VALID_TOPIC_SELECTIONS = ("model", "evidence_blend")
 VALID_QUESTION_SOURCES = ("bank", "generated", "mixed")

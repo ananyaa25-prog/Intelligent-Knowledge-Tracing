@@ -335,6 +335,21 @@ class AdaptiveSession:
 
         parts = []
         topic_scores = {str(t): round(v, 4) for t, v in self.last_topic_scores.items()} if kind == "main" else {}
+        if self.section is not None and not self.uses_model:
+            # evidence-only section: no model numbers anywhere in the decision (D35/D37)
+            th = [h for h in self.context() if _item_topic(h) == topic]
+            n_c = sum(int(h["correct"]) for h in th)
+            if kind == "warmup":
+                parts.append("Warm-up question: topic picked at random at Medium.")
+            elif kind == "probe":
+                parts.append(f"Check question on '{name}', a topic not asked yet.")
+            else:
+                parts.append(f"Topic '{name}' chosen from your answers so far ({n_c} of {len(th)} correct on it; "
+                             f"topics with fewer correct answers come first) among {len(self.last_topic_scores)} eligible topics.")
+                parts.append(f"Level {level} set by the staircase rule (one step per answer on this topic).")
+            return {"policy": self.policy, "topic_selection": self.topic_selection, "topic_scores": {},
+                    "level_candidates": {}, "chosen_level": level, "reason": " ".join(parts),
+                    "guardrail": None, "fallback": False}
         if kind == "warmup":
             parts.append("Warm-up question: topic picked at random at Medium; the model needs 2 answers before it can predict.")
         elif kind == "probe":
@@ -518,8 +533,8 @@ class AdaptiveSession:
             if self.pending is not None:
                 self.pending["predicted_p"] = None
             if q.get("decision"):
-                q["decision"]["reason"] = (q["decision"]["reason"] + " Transfer mode: no model prediction "
-                                           "for this section; topics are chosen from your own answers.").strip()
+                q["decision"]["reason"] = (q["decision"]["reason"] + " No model prediction is used for this "
+                                           "section.").strip()
         return q
 
     def _next_question(self, predictor=None) -> Optional[Dict[str, Any]]:

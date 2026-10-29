@@ -1,0 +1,9 @@
+{
+  "b": {
+    "easy": -1.1169,
+    "medium": 0.0,
+    "hard": 1.162
+  },
+  "seed": 0,
+  "source": "EloBaseline on windowed_data train split"
+}

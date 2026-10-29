@@ -160,3 +160,14 @@ def test_api_section_flow(client, section):
     assert seen == {t["id"] for t in SECTIONS[section]["topics"]}
     # the student's legacy endpoints keep working with section answers in the history
     assert client.post(f"/student/pytest_sec_{section}/predict").status_code == 200
+
+
+def test_evidence_only_decision_has_no_model_numbers():
+    random.seed(4)
+    s = AdaptiveSession("t", "stud", section="primary")
+    for i in range(6):
+        q = s.next_question(lambda h, c: [0.5] * len(c))
+        d = q["decision"]
+        assert d["topic_scores"] == {} and d["level_candidates"] == {}
+        assert "%" not in d["reason"] and "model 50" not in d["reason"]
+        s.record_answer(q["correct_answer"] if i % 2 else "x", 3000)
