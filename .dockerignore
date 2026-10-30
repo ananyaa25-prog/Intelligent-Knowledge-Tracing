@@ -1,0 +1,14 @@
+.git
+.venv
+**/__pycache__
+.pytest_cache
+server/node_modules
+data/raw
+data/external
+data/processed_v3
+data/backups
+data/processed/windowed_data.pkl
+data/processed/kt_sessions.db*
+data/processed/session_logs.jsonl
+reports/**/*.pdf
+deploy

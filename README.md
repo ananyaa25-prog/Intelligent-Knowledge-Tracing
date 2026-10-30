@@ -120,3 +120,17 @@ The legacy Node smoke tests (`server/tests/test_server.js`, `test_frontend_smoke
 Documentation: [BASELINES](docs/BASELINES.md) · [QUESTION_GENERATOR](docs/QUESTION_GENERATOR.md) · [RELATED_WORK_TABLE](docs/RELATED_WORK_TABLE.md) · [DATASETS_TODO](docs/DATASETS_TODO.md) · [ARCHITECTURE_NOTES_v3](docs/ARCHITECTURE_NOTES_v3.md) · [PROJECT_OVERVIEW](docs/PROJECT_OVERVIEW.md) · [DEMO_SCRIPT](docs/DEMO_SCRIPT.md) · [VIVA_QA](docs/VIVA_QA.md) · [LIMITATIONS](docs/LIMITATIONS.md) · [PILOT_GUIDE](docs/PILOT_GUIDE.md) · [DECISIONS](docs/DECISIONS.md) · [ARCHITECTURE_NOTES](docs/ARCHITECTURE_NOTES.md) · [BUILD_LOG](docs/BUILD_LOG.md)
 
 Rehearsal: `.venv/Scripts/python scripts/dry_run.py --seed 1` plays a strong, a struggling, a mixed and a returning student through the real API on a temporary database.
+
+## Deployment
+
+The trained models (`data/processed/best_*.pt`) and the skill graph are in the repository, so the app runs straight after cloning. The 77 MB processed dataset is not; the service then reads the same response-time statistics from `data/processed/rt_stats.json`. To rebuild the dataset, put the ASSISTments 2009 skill-builder file in `data/raw/skill_builder_data.csv` and run `python src/dataset.py`.
+
+Run everything in one container:
+
+```
+docker build -t gatedkt .
+docker run -p 7860:7860 gatedkt
+# open http://localhost:7860/
+```
+
+Live hosting on Hugging Face Spaces: create a Space with the Docker SDK and upload the two files in `deploy/huggingface/`. That Dockerfile clones this repository and builds it. Answers entered on the hosted app are stored inside the container and are reset whenever it restarts.

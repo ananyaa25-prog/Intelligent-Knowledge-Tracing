@@ -1,0 +1,6 @@
+{
+  "rt_mean": 9.978135108947754,
+  "rt_std": 1.5499072074890137,
+  "max_seq_len": 500,
+  "source": "compute_rt_stats on data/processed/windowed_data.pkl train split (scripts: deployment prep)"
+}

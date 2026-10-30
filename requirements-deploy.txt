@@ -1,0 +1,11 @@
+# Runtime packages for the hosted app (Dockerfile). torch is installed first from the CPU index.
+torch-geometric==2.8.0.post1
+numpy==2.4.6
+pandas==3.0.5
+scipy==1.17.1
+scikit-learn==1.9.1
+matplotlib==3.11.2
+fastapi==0.143.0
+uvicorn==0.54.0
+pydantic==2.14.0
+httpx==0.28.1

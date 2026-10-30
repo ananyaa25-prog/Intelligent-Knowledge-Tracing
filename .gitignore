@@ -9,6 +9,9 @@ server/node_modules/
 data/raw/
 data/processed/*.pkl
 data/processed/*.pt
+# ...except the small trained models and graph the app needs (about 3.2 MB in total)
+!data/processed/best_*.pt
+!data/processed/skill_graph.pkl
 data/processed/kt_sessions.db*
 data/processed/session_logs.jsonl
 data/backups/

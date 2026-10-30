@@ -50,6 +50,7 @@ from serving.sections import normalise_section, model_items, all_sections_info
 PROJECT_ROOT = SRC_DIR.parent
 WINDOWED_DATA_PATH = PROJECT_ROOT / "data" / "processed" / "windowed_data.pkl"
 SKILL_GRAPH_PATH = PROJECT_ROOT / "data" / "processed" / "skill_graph.pkl"
+RT_STATS_PATH = PROJECT_ROOT / "data" / "processed" / "rt_stats.json"   # used only if windowed_data.pkl is absent
 MODEL_CHECKPOINT_PATH = PROJECT_ROOT / "data" / "processed" / "best_full_gated.pt"
 GKT_PLUS_META_PATH = PROJECT_ROOT / "models_v3" / "gkt_plus_meta_assist_seed0.pt"   # v3, SERVING_MODEL flag
 SESSION_LOG_PATH = PROJECT_ROOT / "data" / "processed" / "session_logs.jsonl"
@@ -223,6 +224,12 @@ class ModelArtifacts:
             self.rt_mean, self.rt_std = compute_rt_stats(train_split)
             self.max_seq_len = train_split["skill_seq"].shape[1]
             print(f"[InferenceService] Computed RT stats: mean={self.rt_mean:.3f}, std={self.rt_std:.3f}")
+        elif RT_STATS_PATH.exists():
+            # Deployment without the 77 MB pickle: same stats, saved once from it.
+            stats = json.loads(RT_STATS_PATH.read_text(encoding="utf-8"))
+            self.rt_mean, self.rt_std = float(stats["rt_mean"]), float(stats["rt_std"])
+            self.max_seq_len = int(stats["max_seq_len"])
+            print(f"[InferenceService] RT stats from rt_stats.json: mean={self.rt_mean:.3f}, std={self.rt_std:.3f}")
         else:
             print("[InferenceService] Warning: windowed_data.pkl not found, using default RT stats.")
 
