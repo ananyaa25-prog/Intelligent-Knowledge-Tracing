@@ -59,11 +59,18 @@ if (fs.existsSync(sampleStudentsPath)) {
   }
 }
 
+function resolvePythonUrl(endpointPath) {
+  const base = (process.env.PYTHON_BASE_URL || process.env.INFERENCE_SERVICE_URL || 'http://127.0.0.1:8000').replace(/\/predict\/?$/, '');
+  const cleanPath = endpointPath.replace(/^\/+/, '');
+  const cleanBase = base.endsWith('/') ? base : `${base}/`;
+  return new URL(cleanPath, cleanBase).toString();
+}
+
 /**
  * Forward HTTP requests to the Python FastAPI service with timeout and error handling.
  */
 async function forwardToPython(endpointPath, method = 'GET', body = null) {
-  const url = `${PYTHON_BASE_URL}${endpointPath}`;
+  const url = resolvePythonUrl(endpointPath);
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), UPSTREAM_TIMEOUT_MS);
 
@@ -252,7 +259,7 @@ app.get('/api/session/:sessionId/gate_detail', async (req, res) => {
 
 app.get('/api/session/:sessionId/gate_plot.png', async (req, res) => {
   const { sessionId } = req.params;
-  const url = `${PYTHON_BASE_URL}/session/${encodeURIComponent(sessionId)}/gate_plot.png`;
+  const url = resolvePythonUrl(`/session/${encodeURIComponent(sessionId)}/gate_plot.png`);
   try {
     const upstreamRes = await fetch(url);
     if (!upstreamRes.ok) {
