@@ -1,3 +1,13 @@
+---
+title: GatedKT
+emoji: 📈
+colorFrom: blue
+colorTo: indigo
+sdk: docker
+app_port: 7860
+pinned: false
+---
+
 # GatedKT adaptive assessment
 
 GatedKT is a dynamic maths assessment built around a knowledge-tracing model. Before every question the model predicts the student's probability of answering correctly. That prediction (blended with the student's own record on each topic) chooses the next **topic**; the **difficulty level** (Easy / Medium / Hard) follows a staircase in the demo configuration, with an optional model-guided policy. Answers from earlier sessions carry over. After each answer the student's history is updated. At the end the system shows a per-topic **mastery / readiness profile** (Not enough evidence / Needs support / Developing / Proficient / Mastered, plus "ready for harder questions"). Teachers see a class overview with a grouped "Needs attention" panel.
